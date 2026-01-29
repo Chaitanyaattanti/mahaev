@@ -131,7 +131,7 @@ function Datasets() {
                 e.currentTarget.style.background = "#5a9f7e";
               }}
             >
-              📥 Download Dataset
+              Download Dataset
             </button>
           </div>
         ))
