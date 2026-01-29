@@ -84,7 +84,7 @@ function Deliverables() {
   return (
     <div style={containerStyle}>
       <div style={headerStyle}>
-        <h1>Timeline and Outcomes </h1>
+        <h1>Timeline and Deliverables </h1>
         <p style={subtitleStyle}>
           Three-year timeline for Smart Battery Safety Diagnostic System development
         </p>

@@ -46,7 +46,7 @@ function Navbar() {
       </div>
       <div style={navLinksStyle}>
         <Link to="/" style={getLinkStyle("/")}>Home</Link>
-        <Link to="/deliverables" style={getLinkStyle("/deliverables")}>Timeline and Outcomes</Link>
+        <Link to="/deliverables" style={getLinkStyle("/deliverables")}>Project Overview</Link>
         <Link to="/datasets" style={getLinkStyle("/datasets")}>Datasets</Link>
         <Link to="/team" style={getLinkStyle("/team")}>Team</Link>
       </div>

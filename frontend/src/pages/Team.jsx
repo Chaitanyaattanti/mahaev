@@ -37,9 +37,6 @@ function Team() {
     <div style={containerStyle}>
       <div style={headerStyle}>
         <h1>Project Team</h1>
-        <p style={subtitleStyle}>
-          Team members working on This Project
-        </p>
       </div>
 
       <div style={listStyle}>

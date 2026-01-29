@@ -19,7 +19,7 @@ function Home() {
     fontSize: "1.1rem",
     color: "#555",
     maxWidth: "900px",
-    margin: "1.5rem auto",
+    margin: "0",
     lineHeight: "1.8",
     textAlign: "left",
   };
@@ -49,38 +49,61 @@ function Home() {
 
   const logoContainerStyle = {
     display: "flex",
-    justifyContent: "center",
+    justifyContent: "space-between",
     alignItems: "center",
-    gap: "3rem",
+    gap: "2rem",
     marginBottom: "2rem",
     padding: "2rem",
-    flexWrap: "wrap",
-    background: "#f9f9f9",
-    borderRadius: "8px",
-    border: "1px solid #ddd",
   };
 
   const logoStyle = {
-    height: "120px",
+    height: "100px",
     width: "auto",
     objectFit: "contain",
-    background: "white",
-    padding: "1rem",
-    borderRadius: "8px",
-    border: "1px solid #e0e0e0",
+    flex: "0 0 auto",
+  };
+
+  const iitgnLogoStyle = {
+    ...logoStyle,
+    mixBlendMode: "multiply",
+  };
+
+  const centerContentStyle = {
+    flex: "1",
+    textAlign: "center",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+  };
+
+  const titleStyle = {
+    fontSize: "2.5rem",
+    fontWeight: "bold",
+    color: "#5a9f7e",
+    margin: "0",
+    marginBottom: "0.5rem",
+  };
+
+  const subtitleStyle = {
+    fontSize: "1.2rem",
+    color: "#333",
+    margin: "0",
   };
 
   return (
     <div style={containerStyle}>
       <div style={logoContainerStyle}>
-        <img src="/ANRF.png" alt="VidyutAI Logo" style={logoStyle} />
         <img src="/spel-logo.png" alt="SPEL Lab Logo" style={logoStyle} />
-        <img src="/iitgn-logo.png" alt="IIT Gandhinagar Logo" style={logoStyle} />
-        <img src="/enphase.png" alt="Enphase Logo" style={logoStyle} />
+        
+        <div style={centerContentStyle}>
+          <h1 style={titleStyle}>MAHA-EV DASHBOARD</h1>
+        </div>
+        
+        <img src="/icon.jpeg" alt="IIT Gandhinagar Logo" style={logoStyle} />
       </div>
       
       <div style={headerStyle}>
-        <h1>VidyutAI - AI Center of Excellence</h1>
         <h2 style={{fontSize: "1.5rem", color: "#5a9f7e", marginTop: "1rem"}}>Smart Battery Safety Diagnostic System</h2>
       </div>
 
@@ -105,16 +128,7 @@ function Home() {
         </ul>
       </div>
 
-      <div style={sectionStyle}>
-        <h2>Technology Stack</h2>
-        <div style={techStackStyle}>
-          <span style={badgeStyle}>React</span>
-          <span style={badgeStyle}>Node.js</span>
-          <span style={badgeStyle}>Express</span>
-          <span style={badgeStyle}>MySQL</span>
-          <span style={badgeStyle}>AI/ML</span>
-        </div>
-      </div>
+
     </div>
   );
 }
