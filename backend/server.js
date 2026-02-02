@@ -4,8 +4,12 @@ const path = require("path");
 const db = require("./db");
 
 const app = express();
+require('dotenv').config();
 
-app.use(cors());
+app.use(cors({
+  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+  credentials: true
+}));
 app.use(express.json());
 
 // Serve static files from datasets folder
@@ -52,6 +56,7 @@ app.get("/download/:filename", (req, res) => {
   });
 });
 
-app.listen(3000, () => {
-  console.log("🚀 Server running at http://localhost:3000");
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`🚀 Server running at http://localhost:${PORT}`);
 });
