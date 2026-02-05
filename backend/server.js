@@ -41,19 +41,19 @@ app.get("/datasets", (req, res) => {
         dataset_name: "LG 18650HG2 Li-ion Battery Data",
         dataset_description: "High-precision lithium-ion battery testing data from McMaster University. Includes charge-discharge cycles, voltage-current measurements, and thermal data.",
         dataset_source: "Kollmeyer et al. (2020), Mendeley Data",
-        dataset_url: "dataset1.zip"
+        dataset_url: "https://iitgnacin-my.sharepoint.com/:u:/g/personal/23110052_iitgn_ac_in/IQCbLn73osAxTa6EEObs0vZZAZEyqG5wS7hWUHYot4FTBFs?e=AvoJbM"
       },
       {
         dataset_name: "Mechanically Induced Thermal Runaway",
         dataset_description: "Comprehensive safety testing data examining thermal runaway behavior in Li-ion batteries across various applications.",
         dataset_source: "Lin et al. (2024), Mendeley Data",
-        dataset_url: "dataset2.zip"
+        dataset_url: "https://iitgnacin-my.sharepoint.com/:u:/g/personal/23110052_iitgn_ac_in/IQDYgt8MArzSSY2rACKpK9iiAdHRgEu1NSN0AthSKGtm5Po?e=63d8Gk"
       },
       {
           dataset_name: "Mechanically Induced Thermal Runaway (V1)",
           dataset_description: "Initial version of comprehensive safety testing data examining thermal runaway behavior in Li-ion batteries.",
           dataset_source: "Lin et al. (2023), Mendeley Data",
-          dataset_url: "dataset3.zip"
+          dataset_url: "https://iitgnacin-my.sharepoint.com/:u:/g/personal/23110052_iitgn_ac_in/IQCuwiOmg5aeSrNIe8QtB0AtAdFcaNu5WgH99RuorGLMm8Y?e=1ATFId"
       },
       {
           dataset_name: "CALCE Battery Data",
