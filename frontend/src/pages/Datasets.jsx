@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
+import { API_URL } from "../config";
 
 function Datasets() {
   const [datasets, setDatasets] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("http://localhost:3000/datasets")
+    fetch(`${API_URL}/datasets`)
       .then(res => res.json())
       .then(data => {
         setDatasets(data);
@@ -24,7 +25,7 @@ function Datasets() {
       window.open(url, '_blank');
     } else {
       // Local file - use download endpoint
-      const downloadUrl = `http://localhost:3000/download/${url}`;
+      const downloadUrl = `${API_URL}/download/${url}`;
       const link = document.createElement('a');
       link.href = downloadUrl;
       link.download = name || 'dataset';
