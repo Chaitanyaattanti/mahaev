@@ -71,7 +71,7 @@ function Datasets() {
   const buttonStyle = {
     display: "inline-block",
     padding: "0.8rem 2rem",
-    background: "#5a9f7e",
+    background: "#1e293b",
     color: "white",
     borderRadius: "5px",
     textDecoration: "none",
@@ -120,7 +120,7 @@ function Datasets() {
               {d.dataset_description}
             </p>
             <p style={sourceStyle}>
-              <strong style={{color: "#5a9f7e"}}>Source:</strong> {d.dataset_source}
+              <strong style={{color: "#1e293b"}}>Source:</strong> {d.dataset_source}
             </p>
             <a 
               href={
@@ -132,10 +132,10 @@ function Datasets() {
               rel="noopener noreferrer"
               style={buttonStyle}
               onMouseEnter={(e) => {
-                e.currentTarget.style.background = "#3d7a5e";
+                e.currentTarget.style.background = "#334155";
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.background = "#5a9f7e";
+                e.currentTarget.style.background = "#1e293b";
               }}
             >
               Download Dataset

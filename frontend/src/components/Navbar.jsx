@@ -5,11 +5,12 @@ function Navbar() {
   
   const navStyle = {
     padding: "1rem 2rem",
-    background: "#5a9f7e",
+    background: "#ffffff",
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
     boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+    borderBottom: "1px solid #e2e8f0",
   };
 
   const logoContainerStyle = {
@@ -18,10 +19,21 @@ function Navbar() {
     gap: "1rem",
   };
 
+  const leftSectionStyle = {
+    display: "flex",
+    alignItems: "center",
+    gap: "3rem",
+  };
+
+  const logoImageStyle = {
+    height: "50px",
+    width: "auto",
+  };
+
   const logoTextStyle = {
     fontSize: "1.3rem",
-    fontWeight: "600",
-    color: "white",
+    fontWeight: "700",
+    color: "#1e293b",
   };
 
   const navLinksStyle = {
@@ -31,24 +43,30 @@ function Navbar() {
   };
 
   const getLinkStyle = (path) => ({
-    color: "white",
+    color: location.pathname === path ? "#1e293b" : "#64748b",
     fontWeight: location.pathname === path ? "600" : "500",
     padding: "0.5rem 1rem",
     borderRadius: "5px",
     transition: "all 0.3s ease",
-    background: location.pathname === path ? "rgba(255, 255, 255, 0.2)" : "transparent",
+    background: location.pathname === path ? "#f1f5f9" : "transparent",
   });
 
   return (
     <nav style={navStyle}>
-      <div style={logoContainerStyle}>
-        <div style={logoTextStyle}>MAHA-EV-DASHBOARD</div>
+      <div style={leftSectionStyle}>
+        <div style={logoContainerStyle}>
+          <img src="/spel-logo.png" alt="SPEL Logo" style={logoImageStyle} />
+          <div style={logoTextStyle}>MAHA-EV-DASHBOARD</div>
+        </div>
+        <div style={navLinksStyle}>
+          <Link to="/" style={getLinkStyle("/")}>Home</Link>
+          <Link to="/deliverables" style={getLinkStyle("/deliverables")}>Project Overview</Link>
+          <Link to="/datasets" style={getLinkStyle("/datasets")}>Datasets</Link>
+          <Link to="/team" style={getLinkStyle("/team")}>Team</Link>
+        </div>
       </div>
-      <div style={navLinksStyle}>
-        <Link to="/" style={getLinkStyle("/")}>Home</Link>
-        <Link to="/deliverables" style={getLinkStyle("/deliverables")}>Project Overview</Link>
-        <Link to="/datasets" style={getLinkStyle("/datasets")}>Datasets</Link>
-        <Link to="/team" style={getLinkStyle("/team")}>Team</Link>
+      <div style={logoContainerStyle}>
+        <img src="/icon.jpeg" alt="IIT Gandhinagar Logo" style={{...logoImageStyle, height: "55px"}} />
       </div>
     </nav>
   );

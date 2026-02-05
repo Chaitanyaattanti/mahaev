@@ -1,134 +1,677 @@
+import { 
+  FaBatteryFull, 
+  FaChartLine, 
+  FaShieldAlt, 
+  FaDatabase,
+  FaThermometerHalf,
+  FaBolt,
+  FaMicrochip,
+  FaPlug,
+  FaEye,
+  FaClipboardList,
+  FaChartArea,
+  FaCar,
+  FaCloud
+} from 'react-icons/fa';
+
 function Home() {
   const containerStyle = {
-    padding: "3rem 2rem",
+    minHeight: "100vh",
+    background: "linear-gradient(to bottom, #f8fafc 0%, #ffffff 100%)",
+  };
+
+  const heroSectionStyle = {
+    background: "linear-gradient(135deg, #e0e7ff 0%, #f1f5f9 50%, #e0f2fe 100%)",
+    padding: "5rem 4rem",
+    position: "relative",
+    overflow: "hidden",
+    minHeight: "550px",
+    borderBottom: "1px solid #e2e8f0",
+  };
+
+  const heroContentStyle = {
+    maxWidth: "650px",
+    position: "relative",
+    zIndex: 2,
+  };
+
+  const mainTitleStyle = {
+    fontSize: "3.5rem",
+    fontWeight: "800",
+    color: "#1e293b",
+    margin: "0 0 1.5rem 0",
+    lineHeight: "1.1",
+    letterSpacing: "-0.02em",
+  };
+
+  const descriptionStyle = {
+    fontSize: "1.15rem",
+    color: "#475569",
+    lineHeight: "1.7",
+    marginBottom: "2.5rem",
+    maxWidth: "580px",
+  };
+
+  const datasetCountStyle = {
+    fontSize: "1.4rem",
+    color: "#1e293b",
+    marginBottom: "2rem",
+    fontWeight: "700",
+    letterSpacing: "0.02em",
+  };
+
+  const countNumberStyle = {
+    color: "#3b82f6",
+    fontWeight: "800",
+    fontSize: "1.5rem",
+  };
+
+  const searchBarContainerStyle = {
+    display: "flex",
+    maxWidth: "600px",
+    marginBottom: "1rem",
+    boxShadow: "0 10px 25px rgba(0,0,0,0.08)",
+    borderRadius: "8px",
+    overflow: "hidden",
+    border: "1px solid #e2e8f0",
+  };
+
+  const searchInputStyle = {
+    flex: 1,
+    padding: "1rem 1.5rem",
+    border: "none",
+    fontSize: "1rem",
+    outline: "none",
+    background: "white",
+    color: "#334155",
+  };
+
+  const searchButtonStyle = {
+    background: "linear-gradient(135deg, #1e293b 0%, #334155 100%)",
+    color: "white",
+    border: "none",
+    padding: "1rem 3rem",
+    fontSize: "1rem",
+    fontWeight: "700",
+    cursor: "pointer",
+    transition: "all 0.3s",
+    letterSpacing: "0.05em",
+  };
+
+  const decorativeCirclesStyle = {
+    position: "absolute",
+    right: "3%",
+    top: "50%",
+    transform: "translateY(-50%)",
+    width: "600px",
+    height: "500px",
+    pointerEvents: "none",
+    zIndex: 1,
+  };
+
+  const circleStyle = (size, color, top, left, iconSize) => ({
+    position: "absolute",
+    width: size,
+    height: size,
+    borderRadius: "50%",
+    background: color,
+    top: top,
+    left: left,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    color: "white",
+    boxShadow: "0 10px 30px rgba(0,0,0,0.15)",
+    transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
+    cursor: "pointer",
+    border: "3px solid rgba(255,255,255,0.3)",
+    zIndex: 2,
+  });
+
+  const categorySectionStyle = {
+    padding: "4rem 3rem",
+    maxWidth: "1400px",
+    margin: "0 auto",
+  };
+
+  const sectionTitleStyle = {
+    fontSize: "2rem",
+    fontWeight: "700",
+    color: "#1e293b",
+    marginBottom: "1rem",
+    textAlign: "center",
+  };
+
+  const sectionSubtitleStyle = {
+    fontSize: "1.1rem",
+    color: "#64748b",
+    marginBottom: "3rem",
+    textAlign: "center",
+  };
+
+  const projectOverviewStyle = {
+    padding: "4rem 3rem",
     maxWidth: "1200px",
     margin: "0 auto",
     background: "white",
   };
 
-  const headerStyle = {
-    textAlign: "center",
-    marginBottom: "3rem",
-    padding: "2rem",
-    background: "#f9f9f9",
-    borderRadius: "8px",
-    border: "1px solid #ddd",
+  const projectCardStyle = {
+    background: "linear-gradient(135deg, #f8fafc 0%, #ffffff 100%)",
+    border: "2px solid #e2e8f0",
+    borderRadius: "12px",
+    padding: "3rem",
+    boxShadow: "0 4px 6px rgba(0,0,0,0.05)",
   };
 
-  const descriptionStyle = {
-    fontSize: "1.1rem",
-    color: "#555",
-    maxWidth: "900px",
-    margin: "0",
+  const projectTitleStyle = {
+    fontSize: "1.8rem",
+    fontWeight: "700",
+    color: "#1e293b",
+    marginBottom: "1.5rem",
+    textAlign: "left",
+  };
+
+  const projectTextStyle = {
+    fontSize: "1.05rem",
+    color: "#475569",
     lineHeight: "1.8",
     textAlign: "left",
   };
 
-  const sectionStyle = {
-    marginTop: "2rem",
-    padding: "2rem",
-    background: "white",
-    borderRadius: "8px",
-    border: "1px solid #ddd",
+  const keyFocusSectionStyle = {
+    padding: "4rem 3rem",
+    maxWidth: "1400px",
+    margin: "0 auto",
+    background: "#f8fafc",
   };
 
-  const techStackStyle = {
-    display: "flex",
-    gap: "1rem",
-    flexWrap: "wrap",
-    marginTop: "1.5rem",
-  };
-
-  const badgeStyle = {
-    background: "#5a9f7e",
-    color: "white",
-    padding: "0.5rem 1.2rem",
-    borderRadius: "5px",
-    fontSize: "0.9rem",
-  };
-
-  const logoContainerStyle = {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
+  const focusGridStyle = {
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
     gap: "2rem",
-    marginBottom: "2rem",
+    marginTop: "2rem",
+  };
+
+  const focusItemStyle = {
+    background: "white",
     padding: "2rem",
+    borderRadius: "8px",
+    border: "2px solid #e2e8f0",
+    boxShadow: "0 2px 4px rgba(0,0,0,0.05)",
+    transition: "all 0.3s ease",
   };
 
-  const logoStyle = {
-    height: "100px",
-    width: "auto",
-    objectFit: "contain",
-    flex: "0 0 auto",
+  const focusIconStyle = {
+    fontSize: "2rem",
+    marginBottom: "1rem",
   };
 
-  const iitgnLogoStyle = {
-    ...logoStyle,
-    mixBlendMode: "multiply",
-  };
-
-  const centerContentStyle = {
-    flex: "1",
-    textAlign: "center",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-  };
-
-  const titleStyle = {
-    fontSize: "2.5rem",
-    fontWeight: "bold",
-    color: "#5a9f7e",
-    margin: "0",
+  const focusTitleStyle = {
+    fontSize: "1.1rem",
+    fontWeight: "600",
+    color: "#1e293b",
     marginBottom: "0.5rem",
   };
 
-  const subtitleStyle = {
+  const categoryGridStyle = {
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+    gap: "2rem",
+    marginTop: "3rem",
+  };
+
+  const categoryCardStyle = {
+    background: "white",
+    border: "2px solid #e2e8f0",
+    borderRadius: "12px",
+    padding: "2.5rem 2rem",
+    textAlign: "center",
+    cursor: "pointer",
+    transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+    textDecoration: "none",
+    color: "inherit",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    boxShadow: "0 4px 6px rgba(0,0,0,0.04)",
+    position: "relative",
+    overflow: "hidden",
+  };
+
+  const iconWrapperStyle = {
+    width: "80px",
+    height: "80px",
+    borderRadius: "50%",
+    background: "linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%)",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: "1.5rem",
+    boxShadow: "0 8px 16px rgba(59, 130, 246, 0.3)",
+    transition: "all 0.3s ease",
+  };
+
+  const categoryTitleStyle = {
     fontSize: "1.2rem",
-    color: "#333",
-    margin: "0",
+    color: "#1e293b",
+    fontWeight: "700",
+    textDecoration: "none",
+    margin: "0 0 0.5rem 0",
+  };
+
+  const categoryDescStyle = {
+    fontSize: "0.95rem",
+    color: "#64748b",
+    lineHeight: "1.5",
+    margin: 0,
+  };
+
+  const handleSearch = () => {
+    window.location.href = '/datasets';
   };
 
   return (
     <div style={containerStyle}>
-      <div style={logoContainerStyle}>
-        <img src="/spel-logo.png" alt="SPEL Lab Logo" style={logoStyle} />
-        
-        <div style={centerContentStyle}>
-          <h1 style={titleStyle}>MAHA-EV DASHBOARD</h1>
+      {/* Hero Section */}
+      <div style={heroSectionStyle}>
+        <div style={heroContentStyle}>
+          <h1 style={mainTitleStyle}>
+            Home of MAHA-EV<br />
+            Battery Safety Data
+          </h1>
+          <p style={descriptionStyle}>
+            Comprehensive data platform for battery safety research, thermal runaway detection, 
+            and multi-modal sensor analytics. Access cutting-edge datasets for EV battery monitoring 
+            and safety diagnostics.
+          </p>
+          <div style={datasetCountStyle}>
+            DATASETS AVAILABLE
+          </div>
+          <div style={searchBarContainerStyle}>
+            <input 
+              type="text" 
+              placeholder="Search datasets......" 
+              style={searchInputStyle}
+            />
+            <button 
+              style={searchButtonStyle}
+              onClick={handleSearch}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = "linear-gradient(135deg, #334155 0%, #475569 100%)";
+                e.currentTarget.style.transform = "scale(1.02)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = "linear-gradient(135deg, #1e293b 0%, #334155 100%)";
+                e.currentTarget.style.transform = "scale(1)";
+              }}
+            >
+              Search
+            </button>
+          </div>
         </div>
-        
-        <img src="/icon.jpeg" alt="IIT Gandhinagar Logo" style={logoStyle} />
-      </div>
-      
-      <div style={headerStyle}>
-        <h2 style={{fontSize: "1.5rem", color: "#5a9f7e", marginTop: "1rem"}}>Smart Battery Safety Diagnostic System</h2>
+
+        {/* Decorative Circles with Network Lines */}
+        <div style={decorativeCirclesStyle}>
+          {/* SVG for connection lines - matching Data.gov style */}
+          <svg 
+            style={{
+              position: "absolute",
+              width: "100%",
+              height: "100%",
+              top: 0,
+              left: 0,
+              zIndex: 1,
+            }}
+          >
+            {/* Lines from center (orange database) to other circles */}
+            <line x1="52%" y1="38%" x2="34%" y2="14%" stroke="#cbd5e1" strokeWidth="1.5" opacity="0.4"/>
+            <line x1="52%" y1="38%" x2="12%" y2="42%" stroke="#cbd5e1" strokeWidth="1.5" opacity="0.4"/>
+            <line x1="52%" y1="38%" x2="40%" y2="78%" stroke="#cbd5e1" strokeWidth="1.5" opacity="0.4"/>
+            <line x1="52%" y1="38%" x2="70%" y2="72%" stroke="#cbd5e1" strokeWidth="1.5" opacity="0.4"/>
+            <line x1="52%" y1="38%" x2="85%" y2="38%" stroke="#cbd5e1" strokeWidth="1.5" opacity="0.4"/>
+            <line x1="52%" y1="38%" x2="74%" y2="14%" stroke="#cbd5e1" strokeWidth="1.5" opacity="0.4"/>
+            <line x1="52%" y1="38%" x2="52%" y2="8%" stroke="#cbd5e1" strokeWidth="1.5" opacity="0.4"/>
+            <line x1="52%" y1="38%" x2="22%" y2="62%" stroke="#cbd5e1" strokeWidth="1.5" opacity="0.4"/>
+
+            {/* Additional connecting lines between outer circles */}
+            <line x1="34%" y1="14%" x2="52%" y2="8%" stroke="#cbd5e1" strokeWidth="1.5" opacity="0.3"/>
+            <line x1="52%" y1="8%" x2="74%" y2="14%" stroke="#cbd5e1" strokeWidth="1.5" opacity="0.3"/>
+            <line x1="74%" y1="14%" x2="85%" y2="38%" stroke="#cbd5e1" strokeWidth="1.5" opacity="0.3"/>
+            <line x1="85%" y1="38%" x2="70%" y2="72%" stroke="#cbd5e1" strokeWidth="1.5" opacity="0.3"/>
+            <line x1="70%" y1="72%" x2="40%" y2="78%" stroke="#cbd5e1" strokeWidth="1.5" opacity="0.3"/>
+            <line x1="40%" y1="78%" x2="22%" y2="62%" stroke="#cbd5e1" strokeWidth="1.5" opacity="0.3"/>
+            <line x1="22%" y1="62%" x2="12%" y2="42%" stroke="#cbd5e1" strokeWidth="1.5" opacity="0.3"/>
+            <line x1="12%" y1="42%" x2="34%" y2="14%" stroke="#cbd5e1" strokeWidth="1.5" opacity="0.3"/>
+
+            {/* Small dots at connection points */}
+            <circle cx="52%" cy="38%" r="4" fill="#3b82f6" opacity="0.6"/>
+            <circle cx="34%" cy="14%" r="3" fill="#3b82f6" opacity="0.4"/>
+            <circle cx="52%" cy="8%" r="3" fill="#3b82f6" opacity="0.4"/>
+            <circle cx="74%" cy="14%" r="3" fill="#3b82f6" opacity="0.4"/>
+            <circle cx="85%" cy="38%" r="3" fill="#3b82f6" opacity="0.4"/>
+            <circle cx="70%" cy="72%" r="3" fill="#3b82f6" opacity="0.4"/>
+            <circle cx="40%" cy="78%" r="3" fill="#3b82f6" opacity="0.4"/>
+            <circle cx="22%" cy="62%" r="3" fill="#3b82f6" opacity="0.4"/>
+            <circle cx="12%" cy="42%" r="3" fill="#3b82f6" opacity="0.4"/>
+          </svg>
+
+          {/* Icon Circles */}
+          <div 
+            style={circleStyle("125px", "#3b82f6", "10%", "30%", 55)}
+            onMouseEnter={(e) => e.currentTarget.style.transform = "scale(1.1)"}
+            onMouseLeave={(e) => e.currentTarget.style.transform = "scale(1)"}
+          >
+            <FaBatteryFull size={55} />
+          </div>
+          
+          <div 
+            style={circleStyle("100px", "#60a5fa", "38%", "8%", 42)}
+            onMouseEnter={(e) => e.currentTarget.style.transform = "scale(1.1)"}
+            onMouseLeave={(e) => e.currentTarget.style.transform = "scale(1)"}
+          >
+            <FaChartLine size={42} />
+          </div>
+          
+          {/* Center Orange Database Circle */}
+          <div 
+            style={circleStyle("160px", "#f97316", "33%", "48%", 70)}
+            onMouseEnter={(e) => e.currentTarget.style.transform = "scale(1.1)"}
+            onMouseLeave={(e) => e.currentTarget.style.transform = "scale(1)"}
+          >
+            <FaDatabase size={70} />
+          </div>
+          
+          <div 
+            style={circleStyle("95px", "#3b82f6", "70%", "68%", 42)}
+            onMouseEnter={(e) => e.currentTarget.style.transform = "scale(1.1)"}
+            onMouseLeave={(e) => e.currentTarget.style.transform = "scale(1)"}
+          >
+            <FaBolt size={42} />
+          </div>
+          
+          <div 
+            style={circleStyle("88px", "#60a5fa", "4%", "70%", 40)}
+            onMouseEnter={(e) => e.currentTarget.style.transform = "scale(1.1)"}
+            onMouseLeave={(e) => e.currentTarget.style.transform = "scale(1)"}
+          >
+            <FaPlug size={40} />
+          </div>
+          
+          <div 
+            style={circleStyle("78px", "#93c5fd", "58%", "18%", 36)}
+            onMouseEnter={(e) => e.currentTarget.style.transform = "scale(1.1)"}
+            onMouseLeave={(e) => e.currentTarget.style.transform = "scale(1)"}
+          >
+            <FaCar size={36} />
+          </div>
+          
+          <div 
+            style={circleStyle("92px", "#3b82f6", "4%", "48%", 44)}
+            onMouseEnter={(e) => e.currentTarget.style.transform = "scale(1.1)"}
+            onMouseLeave={(e) => e.currentTarget.style.transform = "scale(1)"}
+          >
+            <FaThermometerHalf size={44} />
+          </div>
+          
+          <div 
+            style={circleStyle("110px", "#60a5fa", "75%", "36%", 48)}
+            onMouseEnter={(e) => e.currentTarget.style.transform = "scale(1.1)"}
+            onMouseLeave={(e) => e.currentTarget.style.transform = "scale(1)"}
+          >
+            <FaMicrochip size={48} />
+          </div>
+          
+          <div 
+            style={circleStyle("85px", "#3b82f6", "34%", "81%", 38)}
+            onMouseEnter={(e) => e.currentTarget.style.transform = "scale(1.1)"}
+            onMouseLeave={(e) => e.currentTarget.style.transform = "scale(1)"}
+          >
+            <FaCloud size={38} />
+          </div>
+
+          {/* Small decorative circles (like in Data.gov) */}
+          <div style={{
+            position: "absolute",
+            width: "18px",
+            height: "18px",
+            borderRadius: "50%",
+            background: "#3b82f6",
+            top: "25%",
+            left: "15%",
+            zIndex: 2,
+          }}></div>
+          
+          <div style={{
+            position: "absolute",
+            width: "22px",
+            height: "22px",
+            borderRadius: "50%",
+            background: "#60a5fa",
+            top: "85%",
+            left: "55%",
+            zIndex: 2,
+          }}></div>
+          
+          <div style={{
+            position: "absolute",
+            width: "16px",
+            height: "16px",
+            borderRadius: "50%",
+            background: "#3b82f6",
+            top: "18%",
+            left: "90%",
+            zIndex: 2,
+          }}></div>
+        </div>
       </div>
 
-      <div style={sectionStyle}>
-        <h2>About the Project</h2>
-        <p style={descriptionStyle}>
-          IIT Gandhinagar is leading AI Center of Excellence on Sustainability for Green Energy Transition: MAHA-EV-DASHBOARD. 
-          This project focuses on developing a scalable smart battery safety diagnostic system with multi-modal sensing 
-          of Li-ion battery pack's parameters, namely gas emission, temperature, pressure, and voltage, with subsequent 
-          physics-guided ML-powered signature analysis for early detection of Thermal Runaway (TR).
+      {/* Project Overview Section */}
+      <div style={projectOverviewStyle}>
+        <div style={projectCardStyle}>
+          <h2 style={projectTitleStyle}>About the Project</h2>
+          <p style={projectTextStyle}>
+            IIT Gandhinagar is leading the <strong>AI Center of Excellence on Sustainability for Green Energy Transition: MAHA-EV-DASHBOARD</strong>. 
+            This project focuses on developing a scalable smart battery safety diagnostic system with multi-modal sensing of Li-ion 
+            battery pack's parameters, namely gas emission, temperature, pressure, and voltage, with subsequent physics-guided 
+            ML-powered signature analysis for early detection of Thermal Runaway (TR).
+          </p>
+        </div>
+      </div>
+
+      {/* Category Section */}
+      <div style={categorySectionStyle}>
+        <h2 style={sectionTitleStyle}>Explore Our Platform</h2>
+        <p style={sectionSubtitleStyle}>
+          Access comprehensive datasets, analytics tools, and research resources
         </p>
+        
+        <div style={categoryGridStyle}>
+          <a 
+            href="/datasets" 
+            style={categoryCardStyle}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.boxShadow = "0 20px 40px rgba(59, 130, 246, 0.2)";
+              e.currentTarget.style.transform = "translateY(-8px)";
+              e.currentTarget.style.borderColor = "#3b82f6";
+              e.currentTarget.querySelector('.icon-wrapper').style.transform = "scale(1.1) rotate(5deg)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.boxShadow = "0 4px 6px rgba(0,0,0,0.04)";
+              e.currentTarget.style.transform = "translateY(0)";
+              e.currentTarget.style.borderColor = "#e2e8f0";
+              e.currentTarget.querySelector('.icon-wrapper').style.transform = "scale(1) rotate(0deg)";
+            }}
+          >
+            <div style={iconWrapperStyle} className="icon-wrapper">
+              <FaEye size={36} color="white" />
+            </div>
+            <h3 style={categoryTitleStyle}>Most Viewed Datasets</h3>
+            <p style={categoryDescStyle}>Explore our most popular battery safety datasets</p>
+          </a>
+
+          <a 
+            href="/datasets" 
+            style={categoryCardStyle}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.boxShadow = "0 20px 40px rgba(59, 130, 246, 0.2)";
+              e.currentTarget.style.transform = "translateY(-8px)";
+              e.currentTarget.style.borderColor = "#3b82f6";
+              e.currentTarget.querySelector('.icon-wrapper').style.transform = "scale(1.1) rotate(5deg)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.boxShadow = "0 4px 6px rgba(0,0,0,0.04)";
+              e.currentTarget.style.transform = "translateY(0)";
+              e.currentTarget.style.borderColor = "#e2e8f0";
+              e.currentTarget.querySelector('.icon-wrapper').style.transform = "scale(1) rotate(0deg)";
+            }}
+          >
+            <div style={iconWrapperStyle} className="icon-wrapper">
+              <FaClipboardList size={36} color="white" />
+            </div>
+            <h3 style={categoryTitleStyle}>Recently Added</h3>
+            <p style={categoryDescStyle}>Check out the latest thermal runaway data</p>
+          </a>
+
+          <a 
+            href="/analytics" 
+            style={categoryCardStyle}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.boxShadow = "0 20px 40px rgba(59, 130, 246, 0.2)";
+              e.currentTarget.style.transform = "translateY(-8px)";
+              e.currentTarget.style.borderColor = "#3b82f6";
+              e.currentTarget.querySelector('.icon-wrapper').style.transform = "scale(1.1) rotate(5deg)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.boxShadow = "0 4px 6px rgba(0,0,0,0.04)";
+              e.currentTarget.style.transform = "translateY(0)";
+              e.currentTarget.style.borderColor = "#e2e8f0";
+              e.currentTarget.querySelector('.icon-wrapper').style.transform = "scale(1) rotate(0deg)";
+            }}
+          >
+            <div style={iconWrapperStyle} className="icon-wrapper">
+              <FaChartArea size={36} color="white" />
+            </div>
+            <h3 style={categoryTitleStyle}>Analytics Dashboard</h3>
+            <p style={categoryDescStyle}>Visualize battery performance and safety metrics</p>
+          </a>
+
+          <a 
+            href="/datasets" 
+            style={categoryCardStyle}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.boxShadow = "0 20px 40px rgba(59, 130, 246, 0.2)";
+              e.currentTarget.style.transform = "translateY(-8px)";
+              e.currentTarget.style.borderColor = "#3b82f6";
+              e.currentTarget.querySelector('.icon-wrapper').style.transform = "scale(1.1) rotate(5deg)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.boxShadow = "0 4px 6px rgba(0,0,0,0.04)";
+              e.currentTarget.style.transform = "translateY(0)";
+              e.currentTarget.style.borderColor = "#e2e8f0";
+              e.currentTarget.querySelector('.icon-wrapper').style.transform = "scale(1) rotate(0deg)";
+            }}
+          >
+            <div style={iconWrapperStyle} className="icon-wrapper">
+              <FaBatteryFull size={36} color="white" />
+            </div>
+            <h3 style={categoryTitleStyle}>Battery Safety Data</h3>
+            <p style={categoryDescStyle}>Multi-modal sensor data for safety diagnostics</p>
+          </a>
+        </div>
       </div>
 
-      <div style={sectionStyle}>
-        <h2>Key Focus Areas</h2>
-        <ul style={{marginTop: "1rem", lineHeight: "2", color: "#555"}}>
-          <li> Li-ion Battery Safety & Thermal Runaway Detection</li>
-          <li> Multi-modal Sensing (Temperature, Pressure, Gas, Voltage)</li>
-          <li> Physics-Guided Machine Learning Models</li>
-          <li> IoT-MCU Integration for Real-time Monitoring</li>
-          <li> Field-Deployable Smart Diagnostic System</li>
-        </ul>
+      {/* Key Focus Areas Section */}
+      <div style={keyFocusSectionStyle}>
+        <h2 style={sectionTitleStyle}>Key Focus Areas</h2>
+        <p style={sectionSubtitleStyle}>Core research and development priorities</p>
+        <div style={focusGridStyle}>
+          <div 
+            style={focusItemStyle}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = "translateY(-4px)";
+              e.currentTarget.style.boxShadow = "0 8px 16px rgba(0,0,0,0.1)";
+              e.currentTarget.style.borderColor = "#3b82f6";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = "translateY(0)";
+              e.currentTarget.style.boxShadow = "0 2px 4px rgba(0,0,0,0.05)";
+              e.currentTarget.style.borderColor = "#e2e8f0";
+            }}
+          >
+            <div style={focusIconStyle}>🔋</div>
+            <h3 style={focusTitleStyle}>Li-ion Battery Safety & Thermal Runaway Detection</h3>
+          </div>
+
+          <div 
+            style={focusItemStyle}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = "translateY(-4px)";
+              e.currentTarget.style.boxShadow = "0 8px 16px rgba(0,0,0,0.1)";
+              e.currentTarget.style.borderColor = "#3b82f6";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = "translateY(0)";
+              e.currentTarget.style.boxShadow = "0 2px 4px rgba(0,0,0,0.05)";
+              e.currentTarget.style.borderColor = "#e2e8f0";
+            }}
+          >
+            <div style={focusIconStyle}>📡</div>
+            <h3 style={focusTitleStyle}>Multi-modal Sensing (Temperature, Pressure, Gas, Voltage)</h3>
+          </div>
+
+          <div 
+            style={focusItemStyle}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = "translateY(-4px)";
+              e.currentTarget.style.boxShadow = "0 8px 16px rgba(0,0,0,0.1)";
+              e.currentTarget.style.borderColor = "#3b82f6";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = "translateY(0)";
+              e.currentTarget.style.boxShadow = "0 2px 4px rgba(0,0,0,0.05)";
+              e.currentTarget.style.borderColor = "#e2e8f0";
+            }}
+          >
+            <div style={focusIconStyle}>🤖</div>
+            <h3 style={focusTitleStyle}>Physics-Guided Machine Learning Models</h3>
+          </div>
+
+          <div 
+            style={focusItemStyle}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = "translateY(-4px)";
+              e.currentTarget.style.boxShadow = "0 8px 16px rgba(0,0,0,0.1)";
+              e.currentTarget.style.borderColor = "#3b82f6";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = "translateY(0)";
+              e.currentTarget.style.boxShadow = "0 2px 4px rgba(0,0,0,0.05)";
+              e.currentTarget.style.borderColor = "#e2e8f0";
+            }}
+          >
+            <div style={focusIconStyle}>🌐</div>
+            <h3 style={focusTitleStyle}>IoT-MCU Integration for Real-time Monitoring</h3>
+          </div>
+
+          <div 
+            style={focusItemStyle}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = "translateY(-4px)";
+              e.currentTarget.style.boxShadow = "0 8px 16px rgba(0,0,0,0.1)";
+              e.currentTarget.style.borderColor = "#3b82f6";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = "translateY(0)";
+              e.currentTarget.style.boxShadow = "0 2px 4px rgba(0,0,0,0.05)";
+              e.currentTarget.style.borderColor = "#e2e8f0";
+            }}
+          >
+            <div style={focusIconStyle}>⚙️</div>
+            <h3 style={focusTitleStyle}>Field-Deployable Smart Diagnostic System</h3>
+          </div>
+        </div>
       </div>
-
-
     </div>
   );
 }

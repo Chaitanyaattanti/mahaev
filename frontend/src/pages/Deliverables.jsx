@@ -27,7 +27,7 @@ function Deliverables() {
   };
 
   const labelStyle = {
-    background: "#5a9f7e",
+    background: "#1e293b",
     color: "white",
     padding: "0.5rem 1rem",
     borderRadius: "5px",
@@ -91,7 +91,7 @@ function Deliverables() {
       </div>
     
       <div style={{marginBottom: "2rem", padding: "1.5rem", background: "#f9f9f9", borderRadius: "8px", border: "1px solid #ddd"}}>
-        <h3 style={{color: "#5a9f7e", marginBottom: "1rem"}}>Project Overview</h3>
+        <h3 style={{color: "#1e293b", marginBottom: "1rem"}}>Project Overview</h3>
         <p style={{color: "#555", lineHeight: "1.8"}}>
           We propose a scalable smart battery safety diagnostic system with multi-modal sensing of Li-ion 
           battery pack's parameters, namely gas emission, temperature, pressure, and voltage, with subsequent 
