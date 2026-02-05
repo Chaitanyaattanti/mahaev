@@ -1,0 +1,3 @@
+UPDATE datasets SET dataset_url = 'https://iitgnacin-my.sharepoint.com/:u:/g/personal/23110052_iitgn_ac_in/IQCbLn73osAxTa6EEObs0vZZAZEyqG5wS7hWUHYot4FTBFs?e=AvoJbM' WHERE dataset_url = 'dataset1.zip';
+UPDATE datasets SET dataset_url = 'https://iitgnacin-my.sharepoint.com/:u:/g/personal/23110052_iitgn_ac_in/IQDYgt8MArzSSY2rACKpK9iiAdHRgEu1NSN0AthSKGtm5Po?e=63d8Gk' WHERE dataset_url = 'dataset2.zip';
+UPDATE datasets SET dataset_url = 'https://iitgnacin-my.sharepoint.com/:u:/g/personal/23110052_iitgn_ac_in/IQCuwiOmg5aeSrNIe8QtB0AtAdFcaNu5WgH99RuorGLMm8Y?e=1ATFId' WHERE dataset_url = 'dataset3.zip';
