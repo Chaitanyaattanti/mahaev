@@ -1,122 +1,744 @@
-function Deliverables() {
+import { FaCalendarAlt, FaRocket, FaUniversity, FaTrophy } from 'react-icons/fa';
+import { useState } from 'react';
+
+function ProjectOverview() {
+  const [activePage, setActivePage] = useState('main');
+
   const containerStyle = {
+    minHeight: "100vh",
+    background: "linear-gradient(to bottom, #f8fafc 0%, #ffffff 100%)",
     padding: "3rem 2rem",
-    maxWidth: "1200px",
-    margin: "0 auto",
-    background: "white",
   };
 
   const headerStyle = {
     textAlign: "center",
-    marginBottom: "3rem",
-  };
-
-  const subtitleStyle = {
-    color: "#555",
-    fontSize: "1.1rem",
-    marginTop: "0.5rem",
-  };
-
-  const deliverableStyle = {
-    background: "white",
-    borderRadius: "8px",
-    padding: "2rem",
-    marginBottom: "1.5rem",
-    border: "1px solid #ddd",
-    boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-  };
-
-  const labelStyle = {
-    background: "#1e293b",
-    color: "white",
-    padding: "0.5rem 1rem",
-    borderRadius: "5px",
-    display: "inline-block",
-    fontSize: "0.9rem",
-    fontWeight: "bold",
-    marginBottom: "1rem",
+    marginBottom: "4rem",
   };
 
   const titleStyle = {
-    fontSize: "1.3rem",
-    color: "#333",
+    fontSize: "3rem",
+    fontWeight: "800",
+    color: "#1e293b",
     marginBottom: "1rem",
   };
 
-  const descriptionStyle = {
-    color: "#555",
-    lineHeight: "1.8",
+  const subtitleStyle = {
+    color: "#64748b",
+    fontSize: "1.2rem",
   };
 
-  const deliverables = [
+  const gridStyle = {
+    display: "grid",
+    gridTemplateColumns: "repeat(2, 1fr)",
+    gap: "2rem",
+    maxWidth: "1200px",
+    margin: "0 auto",
+  };
+
+  const cardStyle = {
+    background: "white",
+    borderRadius: "16px",
+    padding: "3rem 2rem",
+    textAlign: "center",
+    cursor: "pointer",
+    transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
+    border: "2px solid #e2e8f0",
+    boxShadow: "0 4px 6px rgba(0,0,0,0.05)",
+    position: "relative",
+    overflow: "hidden",
+  };
+
+  const iconWrapperStyle = (gradient) => ({
+    width: "100px",
+    height: "100px",
+    borderRadius: "50%",
+    background: gradient,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    margin: "0 auto 1.5rem",
+    boxShadow: "0 8px 16px rgba(0,0,0,0.1)",
+  });
+
+  const cardTitleStyle = {
+    fontSize: "1.8rem",
+    fontWeight: "700",
+    color: "#1e293b",
+    marginBottom: "1rem",
+  };
+
+  const cardDescStyle = {
+    fontSize: "1rem",
+    color: "#64748b",
+    lineHeight: "1.6",
+  };
+
+  const sections = [
     {
-      label: "A",
-      title: "Experimental Data Collection and Industry Technology Review",
-      description: "Experimental multiparameter dataset generation for different capacity/manufacturer Li-ion battery packs under various stress conditions to train the proposed ML battery model."
+      id: 'timeline',
+      icon: FaCalendarAlt,
+      title: 'Timeline & Deliverables',
+      description: 'Explore project phases and key milestones',
+      gradient: 'linear-gradient(135deg, #334155 0%, #475569 100%)',
+      color: '#334155'
     },
     {
-      label: "B",
-      title: "Development of Battery Digital Twin (BDT)",
-      description: "Physics-guided electro-thermal-aging LIB ML model leveraging electrochemical insights to understand voltage, pressure and thermal runaway onset signatures based on extensive literature review and advanced ML."
+      id: 'status',
+      icon: FaRocket,
+      title: 'Current Status',
+      description: 'View ongoing activities and progress',
+      gradient: 'linear-gradient(135deg, #4b5563 0%, #6b7280 100%)',
+      color: '#4b5563'
     },
     {
-      label: "C",
-      title: "Development of Multi-modal IoT Interface",
-      description: "Temperature, pressure, gas, moisture, voltage detection using optimally distributed cost-effective sensors throughout the battery pack."
+      id: 'funding',
+      icon: FaUniversity,
+      title: 'Funding Agencies',
+      description: 'Meet our project sponsors and partners',
+      gradient: 'linear-gradient(135deg, #374151 0%, #4b5563 100%)',
+      color: '#374151'
     },
     {
-      label: "D",
-      title: "BDT to IoT Integration",
-      description: "Porting of the ML model to IoT MCU and sensor-integration for lab-based testing."
-    },
-    {
-      label: "E",
-      title: "Deployment and Testing of Smart Battery Safety Diagnostics System",
-      description: "Field-deployable smart battery safety diagnostics system deployment integrating all subsystems achieving self-powered operation, TR alert, and mitigation. This leads to iterative upgrades."
-    },
-    {
-      label: "F",
-      title: "Field Performance & Impact Assessment",
-      description: "Field-Testing with Industrial Partner for impact assessment."
+      id: 'outputs',
+      icon: FaTrophy,
+      title: 'Outputs & Publications',
+      description: 'Research papers, patents, and achievements',
+      gradient: 'linear-gradient(135deg, #52525b 0%, #71717a 100%)',
+      color: '#52525b'
     }
   ];
+
+  if (activePage === 'timeline') return <TimelineDeliverables onBack={() => setActivePage('main')} />;
+  if (activePage === 'status') return <CurrentStatus onBack={() => setActivePage('main')} />;
+  if (activePage === 'funding') return <FundingAgencies onBack={() => setActivePage('main')} />;
+  if (activePage === 'outputs') return <Outputs onBack={() => setActivePage('main')} />;
 
   return (
     <div style={containerStyle}>
       <div style={headerStyle}>
-        <h1>Timeline and Deliverables </h1>
+        <h1 style={titleStyle}>Project Overview</h1>
         <p style={subtitleStyle}>
-          Three-year timeline for Smart Battery Safety Diagnostic System development
-        </p>
-      </div>
-    
-      <div style={{marginBottom: "2rem", padding: "1.5rem", background: "#f9f9f9", borderRadius: "8px", border: "1px solid #ddd"}}>
-        <h3 style={{color: "#1e293b", marginBottom: "1rem"}}>Project Overview</h3>
-        <p style={{color: "#555", lineHeight: "1.8"}}>
-          We propose a scalable smart battery safety diagnostic system with multi-modal sensing of Li-ion 
-          battery pack's parameters, namely gas emission, temperature, pressure, and voltage, with subsequent 
-          physics-guided ML-powered signature analysis for early detection of Thermal Runaway (TR).
+          Smart Battery Safety Diagnostic System - MAHA-EV Dashboard
         </p>
       </div>
 
-      {deliverables.map((item, index) => (
-        <div key={index} style={deliverableStyle}>
-          <span style={labelStyle}>Phase {item.label}</span>
-          <h3 style={titleStyle}>{item.title}</h3>
-          <p style={descriptionStyle}>{item.description}</p>
+      <div style={gridStyle}>
+        {sections.map((section) => {
+          const Icon = section.icon;
+          return (
+            <div
+              key={section.id}
+              style={cardStyle}
+              onClick={() => setActivePage(section.id)}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = "translateY(-8px) scale(1.02)";
+                e.currentTarget.style.boxShadow = `0 20px 40px ${section.color}30`;
+                e.currentTarget.style.borderColor = section.color;
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = "translateY(0) scale(1)";
+                e.currentTarget.style.boxShadow = "0 4px 6px rgba(0,0,0,0.05)";
+                e.currentTarget.style.borderColor = "#e2e8f0";
+              }}
+            >
+              <div style={iconWrapperStyle(section.gradient)}>
+                <Icon size={45} color="white" />
+              </div>
+              <h3 style={cardTitleStyle}>{section.title}</h3>
+              <p style={cardDescStyle}>{section.description}</p>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+// Timeline & Deliverables Component
+function TimelineDeliverables({ onBack }) {
+  const containerStyle = {
+    padding: "3rem 2rem",
+    maxWidth: "1400px",
+    margin: "0 auto",
+    background: "linear-gradient(to bottom, #f8fafc 0%, #ffffff 100%)",
+    minHeight: "100vh",
+  };
+
+  const backButtonStyle = {
+    background: "#1e293b",
+    color: "white",
+    border: "none",
+    padding: "0.8rem 2rem",
+    borderRadius: "8px",
+    cursor: "pointer",
+    fontSize: "1rem",
+    fontWeight: "600",
+    marginBottom: "2rem",
+    transition: "all 0.3s",
+  };
+
+  const headerStyle = {
+    textAlign: "center",
+    marginBottom: "4rem",
+  };
+
+  const timelineContainerStyle = {
+    position: "relative",
+    padding: "2rem 0",
+  };
+
+  const timelineLineStyle = {
+    position: "absolute",
+    left: "50%",
+    top: "0",
+    bottom: "0",
+    width: "4px",
+    background: "linear-gradient(to bottom, #4b5563, #374151)",
+    transform: "translateX(-50%)",
+    zIndex: 0,
+  };
+
+  const phaseStyle = (isLeft) => ({
+    display: "flex",
+    justifyContent: isLeft ? "flex-end" : "flex-start",
+    marginBottom: "3rem",
+    position: "relative",
+  });
+
+  const phaseCardStyle = {
+    width: "45%",
+    background: "white",
+    borderRadius: "12px",
+    padding: "2rem",
+    boxShadow: "0 8px 16px rgba(0,0,0,0.1)",
+    border: "2px solid #e2e8f0",
+    position: "relative",
+  };
+
+  const phaseDotStyle = {
+    position: "absolute",
+    left: "50%",
+    top: "50%",
+    transform: "translate(-50%, -50%)",
+    width: "24px",
+    height: "24px",
+    borderRadius: "50%",
+    background: "white",
+    border: "4px solid #4b5563",
+    zIndex: 2,
+  };
+
+  const phases = [
+    { label: "A", title: "Experimental Data Collection + BDT Development", duration: "Months 1-12", description: "Analyse influence of battery temperature and charging current rate on LIB degradation. Design ETA test rig with integrated on-board controller, heater bench, and communication line." },
+    { label: "B", title: "Multimodal Sensing Suite with IoT + BDT Integration", duration: "Months 13-24", description: "Develop multi-modal sensing suite for temperature, voltage, pressure, and gas detection with ETA rig. Integrate BDT with sensing setup to forecast TR events and prevent abuse conditions. Real-time implementation of AI-based fault detection algorithm." },
+    { label: "C", title: "Deployment of Smart Battery Safety Diagnostic System", duration: "Months 25-36", description: "Develop real-time anomaly detection algorithm coupled with IoT hardware board. Deployment and testing of smart battery safety diagnostics system. Implement model to optimize battery pack charging and discharging cycles to improve lifespan." },
+  ];
+
+  return (
+    <div style={containerStyle}>
+      <button 
+        style={backButtonStyle}
+        onClick={onBack}
+        onMouseEnter={(e) => e.currentTarget.style.background = "#334155"}
+        onMouseLeave={(e) => e.currentTarget.style.background = "#1e293b"}
+      >
+        ← Back to Overview
+      </button>
+
+      <div style={headerStyle}>
+        <h1 style={{ fontSize: "3rem", fontWeight: "800", color: "#1e293b", marginBottom: "1rem" }}>
+          Timeline & Deliverables
+        </h1>
+        <p style={{ color: "#64748b", fontSize: "1.2rem" }}>
+          Three-year roadmap for Smart Battery Safety Diagnostic System
+        </p>
+      </div>
+
+      <div style={timelineContainerStyle}>
+        <div style={timelineLineStyle}></div>
+        
+        {phases.map((phase, index) => (
+          <div key={index} style={phaseStyle(index % 2 === 0)}>
+            <div style={phaseCardStyle}>
+              <div style={{
+                background: "linear-gradient(135deg, #4b5563 0%, #6b7280 100%)",
+                color: "white",
+                padding: "0.5rem 1rem",
+                borderRadius: "8px",
+                display: "inline-block",
+                fontSize: "0.9rem",
+                fontWeight: "700",
+                marginBottom: "1rem",
+              }}>
+                Phase {phase.label} • {phase.duration}
+              </div>
+              <h3 style={{ fontSize: "1.5rem", color: "#1e293b", fontWeight: "700", marginBottom: "1rem" }}>
+                {phase.title}
+              </h3>
+              <p style={{ color: "#64748b", lineHeight: "1.8" }}>
+                {phase.description}
+              </p>
+            </div>
+            <div style={phaseDotStyle}></div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// Current Status Component
+function CurrentStatus({ onBack }) {
+  const containerStyle = {
+    padding: "3rem 2rem",
+    maxWidth: "1400px",
+    margin: "0 auto",
+    background: "linear-gradient(to bottom, #f8fafc 0%, #ffffff 100%)",
+    minHeight: "100vh",
+  };
+
+  const backButtonStyle = {
+    background: "#1e293b",
+    color: "white",
+    border: "none",
+    padding: "0.8rem 2rem",
+    borderRadius: "8px",
+    cursor: "pointer",
+    fontSize: "1rem",
+    fontWeight: "600",
+    marginBottom: "2rem",
+    transition: "all 0.3s",
+  };
+
+  const statusCardStyle = {
+    background: "white",
+    borderRadius: "12px",
+    padding: "2.5rem",
+    marginBottom: "2rem",
+    boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
+    border: "2px solid #e2e8f0",
+  };
+
+  const imageGridStyle = {
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fit, minmax(350px, 1fr))",
+    gap: "2rem",
+    marginTop: "2rem",
+  };
+
+  const imageCardStyle = {
+    background: "white",
+    borderRadius: "12px",
+    overflow: "hidden",
+    border: "2px solid #e2e8f0",
+    boxShadow: "0 4px 8px rgba(0,0,0,0.08)",
+    transition: "all 0.3s ease",
+  };
+
+  const imageContainerStyle = {
+    width: "100%",
+    height: "250px",
+    overflow: "hidden",
+    background: "#f8fafc",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  };
+
+  const imageStyle = {
+    width: "100%",
+    height: "100%",
+    objectFit: "cover",
+  };
+
+  const imageCaptionStyle = {
+    padding: "1.5rem",
+  };
+
+  const bulletStyle = {
+    display: "flex",
+    alignItems: "flex-start",
+    marginBottom: "0.8rem",
+    paddingLeft: "0.5rem",
+  };
+
+  const bulletPointStyle = {
+    color: "#4b5563",
+    marginRight: "0.75rem",
+    fontSize: "1.1rem",
+    fontWeight: "bold",
+    flexShrink: 0,
+    marginTop: "0.2rem",
+  };
+
+  const bulletTextStyle = {
+    color: "#475569",
+    fontSize: "1rem",
+    lineHeight: "1.6",
+  };
+
+  const sectionTitleStyle = {
+    fontSize: "1.8rem",
+    fontWeight: "700",
+    color: "#1e293b",
+    marginBottom: "1.5rem",
+  };
+
+  return (
+    <div style={containerStyle}>
+      <button 
+        style={backButtonStyle}
+        onClick={onBack}
+        onMouseEnter={(e) => e.currentTarget.style.background = "#334155"}
+        onMouseLeave={(e) => e.currentTarget.style.background = "#1e293b"}
+      >
+        ← Back to Overview
+      </button>
+
+      <div style={{ textAlign: "center", marginBottom: "3rem" }}>
+        <h1 style={{ fontSize: "3rem", fontWeight: "800", color: "#1e293b", marginBottom: "1rem" }}>
+          Current Status
+        </h1>
+        <p style={{ color: "#64748b", fontSize: "1.2rem" }}>
+          Ongoing research activities and recent developments
+        </p>
+      </div>
+
+      {/* Project Status Indicator */}
+      <div style={{
+        background: "linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%)",
+        border: "3px solid #4b5563",
+        borderRadius: "16px",
+        padding: "2rem",
+        marginBottom: "3rem",
+        textAlign: "center",
+        boxShadow: "0 8px 16px rgba(59,130,246,0.2)"
+      }}>
+        <div style={{
+          display: "inline-flex",
+          alignItems: "center",
+          gap: "1rem",
+          background: "white",
+          padding: "1rem 2.5rem",
+          borderRadius: "50px",
+          border: "2px solid #4b5563",
+          boxShadow: "0 4px 8px rgba(0,0,0,0.1)"
+        }}>
+          <div style={{
+            width: "20px",
+            height: "20px",
+            borderRadius: "50%",
+            background: "#4b5563",
+            animation: "pulse 2s infinite",
+            boxShadow: "0 0 0 0 rgba(59,130,246,0.7)"
+          }}></div>
+          <span style={{
+            fontSize: "1.5rem",
+            fontWeight: "800",
+            color: "#1e293b",
+            letterSpacing: "0.02em"
+          }}>
+            IN DEVELOPMENT
+          </span>
         </div>
-      ))}
-
-      <div style={{marginTop: "3rem", padding: "1.5rem", background: "#e8f5e9", borderRadius: "8px", textAlign: "center"}}>
-        <p style={{color: "#5a9f7e", fontSize: "1.1rem", fontWeight: "600"}}>
-          📌 Current Status: Baseline Development Phase
+        <p style={{
+          marginTop: "1.5rem",
+          fontSize: "1.1rem",
+          color: "#1e40af",
+          fontWeight: "600"
+        }}>
+          Active research phase - Multiple work streams in progress
         </p>
-        <p style={{color: "#555", marginTop: "0.5rem"}}>
-          This dashboard represents the initial baseline for the MAHA-EV-DASHBOARD project
+      </div>
+
+      {/* Current Research Activities */}
+      <div style={statusCardStyle}>
+        <h3 style={sectionTitleStyle}>Current Research Activities</h3>
+        <div style={imageGridStyle}>
+          <div 
+            style={imageCardStyle}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = "translateY(-4px)";
+              e.currentTarget.style.boxShadow = "0 8px 16px rgba(0,0,0,0.12)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = "translateY(0)";
+              e.currentTarget.style.boxShadow = "0 4px 8px rgba(0,0,0,0.08)";
+            }}
+          >
+            <div style={imageContainerStyle}>
+              <img src="/current_image_1.png" alt="Research Activity 1" style={imageStyle} />
+            </div>
+            <div style={imageCaptionStyle}>
+              <h4 style={{ fontSize: "1.2rem", fontWeight: "700", color: "#1e293b", marginBottom: "1rem" }}>
+                Development Activities
+              </h4>
+              <div style={bulletStyle}>
+                <span style={bulletPointStyle}>•</span>
+                <span style={bulletTextStyle}>Electrothermal abuse (ETA) test setup under development for battery-abuse data collection</span>
+              </div>
+              <div style={bulletStyle}>
+                <span style={bulletPointStyle}>•</span>
+                <span style={bulletTextStyle}>Battery Digital Twin based Adaptive RL</span>
+              </div>
+              <div style={bulletStyle}>
+                <span style={bulletPointStyle}>•</span>
+                <span style={bulletTextStyle}>Anomaly Detection using Deep Learning</span>
+              </div>
+            </div>
+          </div>
+
+          <div 
+            style={imageCardStyle}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = "translateY(-4px)";
+              e.currentTarget.style.boxShadow = "0 8px 16px rgba(0,0,0,0.12)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = "translateY(0)";
+              e.currentTarget.style.boxShadow = "0 4px 8px rgba(0,0,0,0.08)";
+            }}
+          >
+            <div style={imageContainerStyle}>
+              <img src="/current_image_2.png" alt="Research Activity 2" style={imageStyle} />
+            </div>
+            <div style={imageCaptionStyle}>
+              <h4 style={{ fontSize: "1.2rem", fontWeight: "700", color: "#1e293b", marginBottom: "1rem" }}>
+                IoT-Enabled EV Battery Anomaly Detection System on Jetson Orin Nano
+              </h4>
+              <div style={bulletStyle}>
+                <span style={bulletPointStyle}>•</span>
+                <span style={bulletTextStyle}>Zone 1: Physical Input</span>
+              </div>
+              <div style={bulletStyle}>
+                <span style={bulletPointStyle}>•</span>
+                <span style={bulletTextStyle}>Zone 2: Edge AI Processing</span>
+              </div>
+              <div style={bulletStyle}>
+                <span style={bulletPointStyle}>•</span>
+                <span style={bulletTextStyle}>Zone 3: IoT Output</span>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Funding Agencies Component
+function FundingAgencies({ onBack }) {
+  const containerStyle = {
+    padding: "3rem 2rem",
+    maxWidth: "1200px",
+    margin: "0 auto",
+    background: "linear-gradient(to bottom, #f8fafc 0%, #ffffff 100%)",
+    minHeight: "100vh",
+  };
+
+  const backButtonStyle = {
+    background: "#1e293b",
+    color: "white",
+    border: "none",
+    padding: "0.8rem 2rem",
+    borderRadius: "8px",
+    cursor: "pointer",
+    fontSize: "1rem",
+    fontWeight: "600",
+    marginBottom: "2rem",
+    transition: "all 0.3s",
+  };
+
+  const fundingCardStyle = (isPrimary) => ({
+    background: "white",
+    borderRadius: "16px",
+    padding: "3rem 2rem",
+    marginBottom: "2rem",
+    boxShadow: isPrimary ? "0 12px 24px rgba(249, 158, 11, 0.2)" : "0 4px 8px rgba(0,0,0,0.1)",
+    border: isPrimary ? "3px solid #52525b" : "2px solid #e2e8f0",
+    textAlign: "center",
+  });
+
+  const logoImageStyle = (height) => ({
+    height: height,
+    width: "auto",
+    maxWidth: "100%",
+    margin: "0 auto 1.5rem",
+    display: "block",
+    objectFit: "contain",
+  });
+
+  return (
+    <div style={containerStyle}>
+      <button 
+        style={backButtonStyle}
+        onClick={onBack}
+        onMouseEnter={(e) => e.currentTarget.style.background = "#334155"}
+        onMouseLeave={(e) => e.currentTarget.style.background = "#1e293b"}
+      >
+        ← Back to Overview
+      </button>
+
+      <div style={{ textAlign: "center", marginBottom: "4rem" }}>
+        <h1 style={{ fontSize: "3rem", fontWeight: "800", color: "#1e293b", marginBottom: "1rem" }}>
+          Funding Agencies
+        </h1>
+        <p style={{ color: "#64748b", fontSize: "1.2rem" }}>
+          Supporting the future of battery safety research
+        </p>
+      </div>
+
+      <div style={fundingCardStyle(true)}>
+        <div style={{ display: "inline-block", background: "linear-gradient(135deg, #52525b 0%, #71717a 100%)", color: "white", padding: "0.5rem 1.5rem", borderRadius: "20px", fontSize: "0.9rem", fontWeight: "700", marginBottom: "1.5rem" }}>
+          PRIMARY FUNDING
+        </div>
+        <img src="/ANRF.png" alt="ANRF Logo" style={logoImageStyle("180px")} />
+        <h3 style={{ fontSize: "2rem", color: "#1e293b", fontWeight: "800", marginBottom: "1rem" }}>
+          Anusandhan National Research Foundation
+        </h3>
+        <p style={{ color: "#64748b", fontSize: "1.1rem", lineHeight: "1.8", maxWidth: "800px", margin: "0 auto" }}>
+          ANRF (Anusandhan National Research Foundation) is the primary funding agency supporting the MAHA-EV Dashboard project. 
+          As India's apex research funding body, ANRF enables comprehensive research in battery safety diagnostics, thermal runaway detection, 
+          and development of advanced sensing technologies for electric vehicle applications under Indian operating conditions.
+        </p>
+      </div>
+
+      <div style={fundingCardStyle(false)}>
+        <div style={{ display: "inline-block", background: "#64748b", color: "white", padding: "0.5rem 1.5rem", borderRadius: "20px", fontSize: "0.9rem", fontWeight: "700", marginBottom: "1.5rem" }}>
+          INDUSTRY PARTNER
+        </div>
+        <img src="/enphase.png" alt="Enphase Energy Logo" style={logoImageStyle("140px")} />
+        <h3 style={{ fontSize: "1.8rem", color: "#1e293b", fontWeight: "700", marginBottom: "1rem" }}>
+          Enphase Energy
+        </h3>
+        <p style={{ color: "#64748b", fontSize: "1.1rem", lineHeight: "1.8", maxWidth: "800px", margin: "0 auto" }}>
+          Enphase Energy is a global leader in microinverter-based solar and battery systems. 
+          They provide crucial industry partnership and co-funding support, contributing their extensive expertise in energy storage systems, 
+          battery management technologies, and field deployment capabilities. Their real-world insights help bridge the gap between 
+          research innovation and practical industry applications.
         </p>
       </div>
     </div>
   );
 }
 
-export default Deliverables;
+// Outputs Component
+function Outputs({ onBack }) {
+  const containerStyle = {
+    padding: "3rem 2rem",
+    maxWidth: "1200px",
+    margin: "0 auto",
+    background: "linear-gradient(to bottom, #f8fafc 0%, #ffffff 100%)",
+    minHeight: "100vh",
+  };
+
+  const backButtonStyle = {
+    background: "#1e293b",
+    color: "white",
+    border: "none",
+    padding: "0.8rem 2rem",
+    borderRadius: "8px",
+    cursor: "pointer",
+    fontSize: "1rem",
+    fontWeight: "600",
+    marginBottom: "2rem",
+    transition: "all 0.3s",
+  };
+
+  const categoryStyle = {
+    background: "white",
+    borderRadius: "12px",
+    padding: "2rem",
+    marginBottom: "2rem",
+    boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
+    border: "2px solid #e2e8f0",
+  };
+
+  const comingSoonStyle = {
+    background: "linear-gradient(135deg, #fef3c7 0%, #fde68a 100%)",
+    border: "2px dashed #52525b",
+    borderRadius: "8px",
+    padding: "1.5rem",
+    textAlign: "center",
+    marginTop: "1rem",
+  };
+
+  return (
+    <div style={containerStyle}>
+      <button 
+        style={backButtonStyle}
+        onClick={onBack}
+        onMouseEnter={(e) => e.currentTarget.style.background = "#334155"}
+        onMouseLeave={(e) => e.currentTarget.style.background = "#1e293b"}
+      >
+        ← Back to Overview
+      </button>
+
+      <div style={{ textAlign: "center", marginBottom: "4rem" }}>
+        <h1 style={{ fontSize: "3rem", fontWeight: "800", color: "#1e293b", marginBottom: "1rem" }}>
+          Outputs & Publications
+        </h1>
+        <p style={{ color: "#64748b", fontSize: "1.2rem" }}>
+          Research contributions and achievements
+        </p>
+      </div>
+
+      <div style={categoryStyle}>
+        <h3 style={{ fontSize: "1.8rem", color: "#1e293b", marginBottom: "1.5rem", display: "flex", alignItems: "center", gap: "0.5rem" }}>
+          Conference Proceedings
+        </h3>
+        <div style={comingSoonStyle}>
+          <p style={{ fontSize: "1.2rem", color: "#92400e", fontWeight: "700", margin: 0 }}>
+            Coming Soon
+          </p>
+          <p style={{ color: "#78350f", marginTop: "0.5rem" }}>
+            Conference papers under preparation
+          </p>
+        </div>
+      </div>
+
+      <div style={categoryStyle}>
+        <h3 style={{ fontSize: "1.8rem", color: "#1e293b", marginBottom: "1.5rem", display: "flex", alignItems: "center", gap: "0.5rem" }}>
+          Journal Publications
+        </h3>
+        <div style={comingSoonStyle}>
+          <p style={{ fontSize: "1.2rem", color: "#92400e", fontWeight: "700", margin: 0 }}>
+            Coming Soon
+          </p>
+          <p style={{ color: "#78350f", marginTop: "0.5rem" }}>
+            Journal manuscripts in progress
+          </p>
+        </div>
+      </div>
+
+      <div style={categoryStyle}>
+        <h3 style={{ fontSize: "1.8rem", color: "#1e293b", marginBottom: "1.5rem", display: "flex", alignItems: "center", gap: "0.5rem" }}>
+          Patent Applications
+        </h3>
+        <div style={comingSoonStyle}>
+          <p style={{ fontSize: "1.2rem", color: "#92400e", fontWeight: "700", margin: 0 }}>
+            Coming Soon
+          </p>
+          <p style={{ color: "#78350f", marginTop: "0.5rem" }}>
+            Patent filings under development
+          </p>
+        </div>
+      </div>
+
+      <div style={{ background: "linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%)", borderRadius: "12px", padding: "2rem", marginTop: "2rem", border: "2px solid #374151" }}>
+        <h3 style={{ fontSize: "1.5rem", color: "#5b21b6", marginBottom: "1rem" }}>
+          Datasets Published
+        </h3>
+        <p style={{ color: "#6b21a8", fontSize: "1.1rem", lineHeight: "1.8" }}>
+          Multiple battery safety datasets are available on our Datasets page. 
+          Each dataset includes comprehensive thermal, electrical, and safety parameters 
+          collected under various operating conditions.
+        </p>
+      </div>
+    </div>
+  );
+}
+
+export default ProjectOverview;

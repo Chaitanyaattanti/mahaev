@@ -17,6 +17,8 @@ function Navbar() {
     display: "flex",
     alignItems: "center",
     gap: "1rem",
+    cursor: "pointer",
+    transition: "opacity 0.3s ease",
   };
 
   const leftSectionStyle = {
@@ -54,15 +56,29 @@ function Navbar() {
   return (
     <nav style={navStyle}>
       <div style={leftSectionStyle}>
-        <div style={logoContainerStyle}>
-          <img src="/spel-logo.png" alt="SPEL Logo" style={logoImageStyle} />
-          <div style={logoTextStyle}>MAHA-EV-DASHBOARD</div>
-        </div>
+        <a 
+          href="https://labs.iitgn.ac.in/spel/home.html" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          style={{textDecoration: "none"}}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.opacity = "0.7";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.opacity = "1";
+          }}
+        >
+          <div style={logoContainerStyle}>
+            <img src="/spel-logo.png" alt="SPEL Logo" style={logoImageStyle} />
+            <div style={logoTextStyle}>MAHA-EV-DASHBOARD</div>
+          </div>
+        </a>
         <div style={navLinksStyle}>
           <Link to="/" style={getLinkStyle("/")}>Home</Link>
           <Link to="/deliverables" style={getLinkStyle("/deliverables")}>Project Overview</Link>
           <Link to="/datasets" style={getLinkStyle("/datasets")}>Datasets</Link>
           <Link to="/team" style={getLinkStyle("/team")}>Team</Link>
+          <Link to="/contact" style={getLinkStyle("/contact")}>Contact Us</Link>
         </div>
       </div>
       <div style={logoContainerStyle}>

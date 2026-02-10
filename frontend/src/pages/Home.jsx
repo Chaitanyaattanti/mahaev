@@ -21,7 +21,7 @@ function Home() {
   };
 
   const heroSectionStyle = {
-    background: "linear-gradient(135deg, #e0e7ff 0%, #f1f5f9 50%, #e0f2fe 100%)",
+    background: "linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 50%, #f9fafb 100%)",
     padding: "5rem 4rem",
     position: "relative",
     overflow: "hidden",
@@ -194,24 +194,58 @@ function Home() {
   };
 
   const focusItemStyle = {
-    background: "white",
-    padding: "2rem",
-    borderRadius: "8px",
+    background: "linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)",
+    padding: "2.5rem",
+    borderRadius: "12px",
     border: "2px solid #e2e8f0",
-    boxShadow: "0 2px 4px rgba(0,0,0,0.05)",
+    boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
     transition: "all 0.3s ease",
+    position: "relative",
+    overflow: "hidden",
   };
 
-  const focusIconStyle = {
-    fontSize: "2rem",
-    marginBottom: "1rem",
+  const focusAccentStyle = {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    width: "4px",
+    height: "100%",
+    background: "linear-gradient(180deg, #3b82f6 0%, #2563eb 100%)",
   };
 
   const focusTitleStyle = {
-    fontSize: "1.1rem",
-    fontWeight: "600",
+    fontSize: "1.3rem",
+    fontWeight: "700",
     color: "#1e293b",
-    marginBottom: "0.5rem",
+    marginBottom: "1rem",
+    lineHeight: "1.4",
+  };
+
+  const focusDescStyle = {
+    fontSize: "0.95rem",
+    color: "#64748b",
+    lineHeight: "1.7",
+    marginTop: "0.75rem",
+  };
+
+  const bulletStyle = {
+    display: "flex",
+    alignItems: "flex-start",
+    marginBottom: "0.6rem",
+  };
+
+  const bulletPointStyle = {
+    color: "#3b82f6",
+    marginRight: "0.75rem",
+    fontSize: "1.1rem",
+    fontWeight: "bold",
+    flexShrink: 0,
+  };
+
+  const bulletTextStyle = {
+    color: "#475569",
+    fontSize: "0.95rem",
+    lineHeight: "1.6",
   };
 
   const categoryGridStyle = {
@@ -277,13 +311,12 @@ function Home() {
       <div style={heroSectionStyle}>
         <div style={heroContentStyle}>
           <h1 style={mainTitleStyle}>
-            Home of MAHA-EV<br />
-            Battery Safety Data
+            Smart Battery Safety<br />
+            Diagnostic System
           </h1>
           <p style={descriptionStyle}>
-            Comprehensive data platform for battery safety research, thermal runaway detection, 
-            and multi-modal sensor analytics. Access cutting-edge datasets for EV battery monitoring 
-            and safety diagnostics.
+            A platform to showcase ongoing research - battery safety improvement under 
+            Indian conditions at Smart Power Electronics Laboratory (SPEL), IIT Gandhinagar
           </p>
           <div style={datasetCountStyle}>
             DATASETS AVAILABLE
@@ -373,13 +406,13 @@ function Home() {
             <FaChartLine size={42} />
           </div>
           
-          {/* Center Orange Database Circle */}
+          {/* Center Orange Car Circle */}
           <div 
             style={circleStyle("160px", "#f97316", "33%", "48%", 70)}
             onMouseEnter={(e) => e.currentTarget.style.transform = "scale(1.1)"}
             onMouseLeave={(e) => e.currentTarget.style.transform = "scale(1)"}
           >
-            <FaDatabase size={70} />
+            <FaCar size={70} />
           </div>
           
           <div 
@@ -403,7 +436,7 @@ function Home() {
             onMouseEnter={(e) => e.currentTarget.style.transform = "scale(1.1)"}
             onMouseLeave={(e) => e.currentTarget.style.transform = "scale(1)"}
           >
-            <FaCar size={36} />
+            <FaDatabase size={36} />
           </div>
           
           <div 
@@ -471,7 +504,7 @@ function Home() {
         <div style={projectCardStyle}>
           <h2 style={projectTitleStyle}>About the Project</h2>
           <p style={projectTextStyle}>
-            IIT Gandhinagar is leading the <strong>AI Center of Excellence on Sustainability for Green Energy Transition: MAHA-EV-DASHBOARD</strong>. 
+             
             This project focuses on developing a scalable smart battery safety diagnostic system with multi-modal sensing of Li-ion 
             battery pack's parameters, namely gas emission, temperature, pressure, and voltage, with subsequent physics-guided 
             ML-powered signature analysis for early detection of Thermal Runaway (TR).
@@ -589,86 +622,88 @@ function Home() {
           <div 
             style={focusItemStyle}
             onMouseEnter={(e) => {
-              e.currentTarget.style.transform = "translateY(-4px)";
-              e.currentTarget.style.boxShadow = "0 8px 16px rgba(0,0,0,0.1)";
+              e.currentTarget.style.transform = "translateY(-6px)";
+              e.currentTarget.style.boxShadow = "0 12px 24px rgba(59,130,246,0.15)";
               e.currentTarget.style.borderColor = "#3b82f6";
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.transform = "translateY(0)";
-              e.currentTarget.style.boxShadow = "0 2px 4px rgba(0,0,0,0.05)";
+              e.currentTarget.style.boxShadow = "0 4px 12px rgba(0,0,0,0.08)";
               e.currentTarget.style.borderColor = "#e2e8f0";
             }}
           >
-            <div style={focusIconStyle}>🔋</div>
-            <h3 style={focusTitleStyle}>Li-ion Battery Safety & Thermal Runaway Detection</h3>
+            <div style={focusAccentStyle}></div>
+            <h3 style={focusTitleStyle}>↳ Battery Life Extension</h3>
+            <div style={bulletStyle}>
+              <span style={bulletPointStyle}>•</span>
+              <span style={bulletTextStyle}>Predictive diagnostics for early fault detection</span>
+            </div>
+            <div style={bulletStyle}>
+              <span style={bulletPointStyle}>•</span>
+              <span style={bulletTextStyle}>Adaptive charging strategies for optimal health</span>
+            </div>
+            <div style={bulletStyle}>
+              <span style={bulletPointStyle}>•</span>
+              <span style={bulletTextStyle}>Thermal management optimization</span>
+            </div>
           </div>
 
           <div 
             style={focusItemStyle}
             onMouseEnter={(e) => {
-              e.currentTarget.style.transform = "translateY(-4px)";
-              e.currentTarget.style.boxShadow = "0 8px 16px rgba(0,0,0,0.1)";
+              e.currentTarget.style.transform = "translateY(-6px)";
+              e.currentTarget.style.boxShadow = "0 12px 24px rgba(59,130,246,0.15)";
               e.currentTarget.style.borderColor = "#3b82f6";
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.transform = "translateY(0)";
-              e.currentTarget.style.boxShadow = "0 2px 4px rgba(0,0,0,0.05)";
+              e.currentTarget.style.boxShadow = "0 4px 12px rgba(0,0,0,0.08)";
               e.currentTarget.style.borderColor = "#e2e8f0";
             }}
           >
-            <div style={focusIconStyle}>📡</div>
-            <h3 style={focusTitleStyle}>Multi-modal Sensing (Temperature, Pressure, Gas, Voltage)</h3>
+            <div style={focusAccentStyle}></div>
+            <h3 style={focusTitleStyle}>↳ Integrated Sensing Suite</h3>
+            <div style={bulletStyle}>
+              <span style={bulletPointStyle}>•</span>
+              <span style={bulletTextStyle}>Multi-modal sensor integration (temperature, voltage, pressure)</span>
+            </div>
+            <div style={bulletStyle}>
+              <span style={bulletPointStyle}>•</span>
+              <span style={bulletTextStyle}>Real-time data acquisition and processing</span>
+            </div>
+            <div style={bulletStyle}>
+              <span style={bulletPointStyle}>•</span>
+              <span style={bulletTextStyle}>IoT-enabled wireless monitoring</span>
+            </div>
           </div>
 
           <div 
             style={focusItemStyle}
             onMouseEnter={(e) => {
-              e.currentTarget.style.transform = "translateY(-4px)";
-              e.currentTarget.style.boxShadow = "0 8px 16px rgba(0,0,0,0.1)";
+              e.currentTarget.style.transform = "translateY(-6px)";
+              e.currentTarget.style.boxShadow = "0 12px 24px rgba(59,130,246,0.15)";
               e.currentTarget.style.borderColor = "#3b82f6";
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.transform = "translateY(0)";
-              e.currentTarget.style.boxShadow = "0 2px 4px rgba(0,0,0,0.05)";
+              e.currentTarget.style.boxShadow = "0 4px 12px rgba(0,0,0,0.08)";
               e.currentTarget.style.borderColor = "#e2e8f0";
             }}
           >
-            <div style={focusIconStyle}>🤖</div>
-            <h3 style={focusTitleStyle}>Physics-Guided Machine Learning Models</h3>
-          </div>
-
-          <div 
-            style={focusItemStyle}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = "translateY(-4px)";
-              e.currentTarget.style.boxShadow = "0 8px 16px rgba(0,0,0,0.1)";
-              e.currentTarget.style.borderColor = "#3b82f6";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = "translateY(0)";
-              e.currentTarget.style.boxShadow = "0 2px 4px rgba(0,0,0,0.05)";
-              e.currentTarget.style.borderColor = "#e2e8f0";
-            }}
-          >
-            <div style={focusIconStyle}>🌐</div>
-            <h3 style={focusTitleStyle}>IoT-MCU Integration for Real-time Monitoring</h3>
-          </div>
-
-          <div 
-            style={focusItemStyle}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = "translateY(-4px)";
-              e.currentTarget.style.boxShadow = "0 8px 16px rgba(0,0,0,0.1)";
-              e.currentTarget.style.borderColor = "#3b82f6";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = "translateY(0)";
-              e.currentTarget.style.boxShadow = "0 2px 4px rgba(0,0,0,0.05)";
-              e.currentTarget.style.borderColor = "#e2e8f0";
-            }}
-          >
-            <div style={focusIconStyle}>⚙️</div>
-            <h3 style={focusTitleStyle}>Field-Deployable Smart Diagnostic System</h3>
+            <div style={focusAccentStyle}></div>
+            <h3 style={focusTitleStyle}>↳ Physics-Inspired ML</h3>
+            <div style={bulletStyle}>
+              <span style={bulletPointStyle}>•</span>
+              <span style={bulletTextStyle}>Physics-guided machine learning models</span>
+            </div>
+            <div style={bulletStyle}>
+              <span style={bulletPointStyle}>•</span>
+              <span style={bulletTextStyle}>Anomaly detection algorithms</span>
+            </div>
+            <div style={bulletStyle}>
+              <span style={bulletPointStyle}>•</span>
+              <span style={bulletTextStyle}>Thermal runaway prediction and prevention</span>
+            </div>
           </div>
         </div>
       </div>

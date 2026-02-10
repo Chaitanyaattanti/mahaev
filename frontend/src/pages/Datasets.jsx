@@ -53,11 +53,17 @@ function Datasets() {
     marginTop: "0.5rem",
   };
 
+  const gridContainerStyle = {
+    display: "grid",
+    gridTemplateColumns: "repeat(2, 1fr)",
+    gap: "1.5rem",
+    marginTop: "2rem",
+  };
+
   const cardStyle = {
     background: "white",
     borderRadius: "8px",
     padding: "2rem",
-    marginBottom: "1.5rem",
     border: "1px solid #ddd",
     boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
   };
@@ -110,11 +116,12 @@ function Datasets() {
           <p>No datasets available. Please add datasets to the database.</p>
         </div>
       ) : (
-        datasets.map((d, i) => (
-          <div 
-            key={i} 
-            style={cardStyle}
-          >
+        <div style={gridContainerStyle}>
+          {datasets.map((d, i) => (
+            <div 
+              key={i} 
+              style={cardStyle}
+            >
             <h3>{d.dataset_name}</h3>
             <p style={{color: "#555", marginTop: "1rem", lineHeight: "1.8"}}>
               {d.dataset_description}
@@ -140,8 +147,9 @@ function Datasets() {
             >
               Download Dataset
             </a>
-          </div>
-        ))
+            </div>
+          ))}
+        </div>
       )}
     </div>
   );

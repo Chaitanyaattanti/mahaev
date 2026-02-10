@@ -166,13 +166,12 @@ function Team() {
           <div style={photoContainerStyle}>
             <img src="/teams/Screenshot 2026-02-06 000034.png" alt="Prof. Pallavi Bharadwaj" style={photoStyle} />
           </div>
-          <h2 style={piNameStyle}>Prof. Pallavi Bharadwaj</h2>
+          <h2 style={piNameStyle}>Dr. Pallavi Bharadwaj</h2>
           <p style={piRoleStyle}>Principal Investigator</p>
         </div>
       </div>
 
       {/* Project Manager & Scientists */}
-      <h2 style={sectionHeaderStyle}>Leadership & Research Team</h2>
       <div style={teamGridStyle}>
         <div 
           style={memberCardStyle}
@@ -248,7 +247,7 @@ function Team() {
           }}
         >
           <div style={memberPhotoStyle}>
-            <img src="/teams/Screenshot 2026-02-06 000200.png" alt="Samsaptak Ghosh" style={photoStyle} />
+            <img src="/teams/Screenshot 2026-02-06 000200.png" alt="Dr. Samsaptak Ghosh" style={photoStyle} />
           </div>
           <h3 style={memberNameStyle}>Samsaptak Ghosh</h3>
           <p style={memberRoleStyle}>Project Scientist-I</p>
@@ -256,7 +255,6 @@ function Team() {
       </div>
 
       {/* PhD Students */}
-      <h2 style={sectionHeaderStyle}>Doctoral Researchers</h2>
       <div style={teamGridStyle}>
         <div 
           style={memberCardStyle}
@@ -340,7 +338,6 @@ function Team() {
       </div>
 
       {/* MTech Student */}
-      <h2 style={sectionHeaderStyle}>Master's Student</h2>
       <div style={{...teamGridStyle, justifyContent: "center"}}>
         <div 
           style={{...memberCardStyle, maxWidth: "320px"}}
