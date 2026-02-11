@@ -74,6 +74,25 @@ function Datasets() {
     fontSize: "0.95rem",
   };
 
+  const citationStyle = {
+    background: "#f8f9fa",
+    padding: "1rem",
+    borderRadius: "5px",
+    marginTop: "1.5rem",
+    borderLeft: "4px solid #1e293b",
+    fontSize: "0.9rem",
+    color: "#333",
+    fontStyle: "italic",
+    lineHeight: "1.6",
+  };
+
+  const citationLabelStyle = {
+    fontWeight: "600",
+    fontStyle: "normal",
+    color: "#1e293b",
+    marginBottom: "0.5rem",
+  };
+
   const buttonStyle = {
     display: "inline-block",
     padding: "0.8rem 2rem",
@@ -126,9 +145,14 @@ function Datasets() {
             <p style={{color: "#555", marginTop: "1rem", lineHeight: "1.8"}}>
               {d.dataset_description}
             </p>
-            <p style={sourceStyle}>
-              <strong style={{color: "#1e293b"}}>Source:</strong> {d.dataset_source}
-            </p>
+            
+            {d.dataset_source && (
+              <div style={citationStyle}>
+                <div style={citationLabelStyle}>📚 Citation:</div>
+                {d.dataset_source}
+              </div>
+            )}
+            
             <a 
               href={
                 d.dataset_url.startsWith('http') 
