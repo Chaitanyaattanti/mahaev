@@ -69,7 +69,7 @@ function Navbar() {
           }}
         >
           <div style={logoContainerStyle}>
-            <img src="/spel-logo.png" alt="SPEL Logo" style={logoImageStyle} />
+            <img src={`${import.meta.env.BASE_URL}spel-logo.png`} alt="SPEL Logo" style={logoImageStyle} />
             <div style={logoTextStyle}>MAHA-EV-DASHBOARD</div>
           </div>
         </a>
@@ -82,7 +82,7 @@ function Navbar() {
         </div>
       </div>
       <div style={logoContainerStyle}>
-        <img src="/icon.jpeg" alt="IIT Gandhinagar Logo" style={{...logoImageStyle, height: "55px"}} />
+        <img src={`${import.meta.env.BASE_URL}icon.jpeg`} alt="IIT Gandhinagar Logo" style={{...logoImageStyle, height: "55px"}} />
       </div>
     </nav>
   );
