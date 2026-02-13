@@ -34,12 +34,7 @@ const datasets = [
     dataset_source: "Lin et al. (2023), Mendeley Data",
     dataset_url: "https://iitgnacin-my.sharepoint.com/:u:/g/personal/23110052_iitgn_ac_in/IQCuwiOmg5aeSrNIe8QtB0AtAdFcaNu5WgH99RuorGLMm8Y?e=1ATFId"
   },
-  {
-    dataset_name: "CALCE Battery Data",
-    dataset_description: "Extensive collection of battery testing datasets and research resources from the Center for Advanced Life Cycle Engineering (CALCE) at the University of Maryland. Includes aging studies, capacity fade analysis, impedance spectroscopy data, accelerated life testing results, thermal characterization, and battery prognostics research. Features multiple battery chemistries (Li-ion, LFP, NMC, etc.), various stress conditions, long-term cycling data, and comprehensive documentation. Essential resource for battery lifetime prediction, health monitoring algorithm development, and reliability engineering research.",
-    dataset_source: "CALCE, University of Maryland",
-    dataset_url: "https://calce.umd.edu/battery-data"
-  },
+
   {
     dataset_name: "SOC Estimation Using OCV Methods - INR 18650-20R",
     dataset_description: "Comprehensive study comparing Low-Current OCV and Incremental-Current OCV methods for State-of-Charge estimation in Battery Management Systems using cylindrical INR 18650-20R cells (2000 mAh, NMC chemistry). Dataset includes OCV tests at 0°C, 25°C, and 45°C, dynamic drive cycle evaluations (DST, FUDS, US06, BJDST) at multiple SOC levels (80%, 50%), tracking accuracy analysis, convergence time measurements, and robustness assessments under varying temperature and loading conditions. Key finding demonstrates Incremental-OCV provides superior SOC estimation reliability. Essential for BMS algorithm development and validation.",
