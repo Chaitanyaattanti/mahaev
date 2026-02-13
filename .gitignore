@@ -1,0 +1,14 @@
+node_modules/
+backend/node_modules/
+frontend/node_modules/
+.env
+.env.local
+.env.production
+*.log
+.DS_Store
+dist/
+backend/datasets/*.csv
+backend/datasets/*.xlsx
+backend/datasets/*.json
+!backend/datasets/.gitkeep
+

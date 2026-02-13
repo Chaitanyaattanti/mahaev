@@ -1,0 +1,8 @@
+node_modules/
+.env
+*.log
+.DS_Store
+datasets/*.csv
+datasets/*.xlsx
+datasets/*.json
+!datasets/.gitkeep
