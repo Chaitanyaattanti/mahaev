@@ -8,7 +8,7 @@ import Contact from "./pages/Contact";
 
 function App() {
   return (
-    <Router basename="/mahaev">
+    <Router>
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
