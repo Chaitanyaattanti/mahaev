@@ -164,7 +164,7 @@ function Team() {
       <div style={piSectionStyle}>
         <div style={piCardStyle}>
           <div style={photoContainerStyle}>
-            <img src="/teams/Screenshot 2026-02-06 000034.png" alt="Prof. Pallavi Bharadwaj" style={photoStyle} />
+            <img src={`${import.meta.env.BASE_URL}teams/Screenshot 2026-02-06 000034.png`} alt="Prof. Pallavi Bharadwaj" style={photoStyle} />
           </div>
           <h2 style={piNameStyle}>Dr. Pallavi Bharadwaj</h2>
           <p style={piRoleStyle}>Principal Investigator</p>
@@ -187,7 +187,7 @@ function Team() {
           }}
         >
           <div style={memberPhotoStyle}>
-            <img src="/teams/Screenshot 2026-02-06 000105.png" alt="Dr Sanjeev Patil" style={photoStyle} />
+            <img src={`${import.meta.env.BASE_URL}teams/Screenshot 2026-02-06 000105.png`} alt="Dr Sanjeev Patil" style={photoStyle} />
           </div>
           <h3 style={memberNameStyle}>Dr. Sanjeev Patil</h3>
           <p style={memberRoleStyle}>Project Manager</p>
@@ -207,7 +207,7 @@ function Team() {
           }}
         >
           <div style={memberPhotoStyle}>
-            <img src="/teams/Screenshot 2026-02-06 000126.png" alt="Dr Ashish Prajapati" style={photoStyle} />
+            <img src={`${import.meta.env.BASE_URL}teams/Screenshot 2026-02-06 000126.png`} alt="Dr Ashish Prajapati" style={photoStyle} />
           </div>
           <h3 style={memberNameStyle}>Dr. Ashish Prajapati</h3>
           <p style={memberRoleStyle}>Project Scientist-II</p>
@@ -227,7 +227,7 @@ function Team() {
           }}
         >
           <div style={memberPhotoStyle}>
-            <img src="/teams/Screenshot 2026-02-06 000141.png" alt="Dr. Sirsa Aditya" style={photoStyle} />
+            <img src={`${import.meta.env.BASE_URL}teams/Screenshot 2026-02-06 000141.png`} alt="Dr. Sirsa Aditya" style={photoStyle} />
           </div>
           <h3 style={memberNameStyle}>Dr. Sirsa Aditya</h3>
           <p style={memberRoleStyle}>Project Scientist-I</p>
@@ -247,7 +247,7 @@ function Team() {
           }}
         >
           <div style={memberPhotoStyle}>
-            <img src="/teams/Screenshot 2026-02-06 000200.png" alt="Dr. Samsaptak Ghosh" style={photoStyle} />
+            <img src={`${import.meta.env.BASE_URL}teams/Screenshot 2026-02-06 000200.png`} alt="Dr. Samsaptak Ghosh" style={photoStyle} />
           </div>
           <h3 style={memberNameStyle}>Samsaptak Ghosh</h3>
           <p style={memberRoleStyle}>Project Scientist-I</p>
@@ -270,7 +270,7 @@ function Team() {
           }}
         >
           <div style={memberPhotoStyle}>
-            <img src="/teams/Screenshot 2026-02-06 001336.png" alt="Harsh Kumar" style={photoStyle} />
+            <img src={`${import.meta.env.BASE_URL}teams/Screenshot 2026-02-06 001336.png`} alt="Harsh Kumar" style={photoStyle} />
           </div>
           <h3 style={memberNameStyle}>Harsh Kumar</h3>
           <p style={memberRoleStyle}>PhD Student</p>
@@ -290,7 +290,7 @@ function Team() {
           }}
         >
           <div style={memberPhotoStyle}>
-            <img src="/teams/Screenshot 2026-02-06 001352.png" alt="Arpita Sarcar" style={photoStyle} />
+            <img src={`${import.meta.env.BASE_URL}teams/Screenshot 2026-02-06 001352.png`} alt="Arpita Sarcar" style={photoStyle} />
           </div>
           <h3 style={memberNameStyle}>Arpita Sarcar</h3>
           <p style={memberRoleStyle}>PhD Student</p>
@@ -310,7 +310,7 @@ function Team() {
           }}
         >
           <div style={memberPhotoStyle}>
-            <img src="/teams/Screenshot 2026-02-06 001403.png" alt="Ambika Biswas Neela" style={photoStyle} />
+            <img src={`${import.meta.env.BASE_URL}teams/Screenshot 2026-02-06 001403.png`} alt="Ambika Biswas Neela" style={photoStyle} />
           </div>
           <h3 style={memberNameStyle}>Ambika Biswas Neela</h3>
           <p style={memberRoleStyle}>PhD Student</p>
@@ -330,7 +330,7 @@ function Team() {
           }}
         >
           <div style={memberPhotoStyle}>
-            <img src="/teams/Screenshot 2026-02-06 001414.png" alt="Shiv Shankar Sinha" style={photoStyle} />
+            <img src={`${import.meta.env.BASE_URL}teams/Screenshot 2026-02-06 001414.png`} alt="Shiv Shankar Sinha" style={photoStyle} />
           </div>
           <h3 style={memberNameStyle}>Shiv Shankar Sinha</h3>
           <p style={memberRoleStyle}>PhD Student</p>
@@ -353,7 +353,7 @@ function Team() {
           }}
         >
           <div style={memberPhotoStyle}>
-            <img src="/teams/Screenshot 2026-02-06 001447.png" alt="Yash Nileshkumar Desai" style={photoStyle} />
+            <img src={`${import.meta.env.BASE_URL}teams/Screenshot 2026-02-06 001447.png`} alt="Yash Nileshkumar Desai" style={photoStyle} />
           </div>
           <h3 style={memberNameStyle}>Yash Nileshkumar Desai</h3>
           <p style={memberRoleStyle}>MTech Student</p>
