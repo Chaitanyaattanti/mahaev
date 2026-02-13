@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: maha-ev-backend
+    env: node
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: npm start
+    plan: free
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: FRONTEND_URL
+        value: https://chaitanyaattanti.github.io/MAHA-EV-DASHBOARD
