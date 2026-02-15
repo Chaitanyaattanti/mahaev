@@ -229,8 +229,8 @@ function TimelineDeliverables({ onBack }) {
   };
 
   const phases = [
-    { label: "A", title: "Experimental Data Collection + BDT Development", duration: "Months 1-12", description: "Analyse influence of battery temperature and charging current rate on LIB degradation. Design ETA test rig with integrated on-board controller, heater bench, and communication line." },
-    { label: "B", title: "Multimodal Sensing Suite with IoT + BDT Integration", duration: "Months 13-24", description: "Develop multi-modal sensing suite for temperature, voltage, pressure, and gas detection with ETA rig. Integrate BDT with sensing setup to forecast TR events and prevent abuse conditions. Real-time implementation of AI-based fault detection algorithm." },
+    { label: "A", title: "Experimental Data Collection + Battery Digital Twin (BDT) Development", duration: "Months 1-12", description: "Analyse influence of battery temperature and charging current rate on Lithium-Ion Battery (LIB) degradation. Design Electrothermal Abuse (ETA) test rig with integrated on-board controller, heater bench, and communication line." },
+    { label: "B", title: "Multimodal Sensing Suite with Internet of Things (IoT) + BDT Integration", duration: "Months 13-24", description: "Develop multi-modal sensing suite for temperature, voltage, pressure, and gas detection with ETA rig. Integrate BDT with sensing setup to forecast Thermal Runaway (TR) events and prevent abuse conditions. Real-time implementation of Artificial Intelligence (AI)-based fault detection algorithm." },
     { label: "C", title: "Deployment of Smart Battery Safety Diagnostic System", duration: "Months 25-36", description: "Develop real-time anomaly detection algorithm coupled with IoT hardware board. Deployment and testing of smart battery safety diagnostics system. Implement model to optimize battery pack charging and discharging cycles to improve lifespan." },
   ];
 
@@ -467,40 +467,7 @@ function CurrentStatus({ onBack }) {
             }}
           >
             <div style={imageContainerStyle}>
-              <img src="/current_image_1.png" alt="Research Activity 1" style={imageStyle} />
-            </div>
-            <div style={imageCaptionStyle}>
-              <h4 style={{ fontSize: "1.2rem", fontWeight: "700", color: "#1e293b", marginBottom: "1rem" }}>
-                Development Activities
-              </h4>
-              <div style={bulletStyle}>
-                <span style={bulletPointStyle}>•</span>
-                <span style={bulletTextStyle}>Electrothermal abuse (ETA) test setup under development for battery-abuse data collection</span>
-              </div>
-              <div style={bulletStyle}>
-                <span style={bulletPointStyle}>•</span>
-                <span style={bulletTextStyle}>Battery Digital Twin based Adaptive RL</span>
-              </div>
-              <div style={bulletStyle}>
-                <span style={bulletPointStyle}>•</span>
-                <span style={bulletTextStyle}>Anomaly Detection using Deep Learning</span>
-              </div>
-            </div>
-          </div>
-
-          <div 
-            style={imageCardStyle}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = "translateY(-4px)";
-              e.currentTarget.style.boxShadow = "0 8px 16px rgba(0,0,0,0.12)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = "translateY(0)";
-              e.currentTarget.style.boxShadow = "0 4px 8px rgba(0,0,0,0.08)";
-            }}
-          >
-            <div style={imageContainerStyle}>
-              <img src="/current_image_2.png" alt="Research Activity 2" style={imageStyle} />
+              <img src="/mahaev/current_image_2.png" alt="Research Activity 2" style={imageStyle} />
             </div>
             <div style={imageCaptionStyle}>
               <h4 style={{ fontSize: "1.2rem", fontWeight: "700", color: "#1e293b", marginBottom: "1rem" }}>
@@ -520,8 +487,6 @@ function CurrentStatus({ onBack }) {
               </div>
             </div>
           </div>
-
-
         </div>
       </div>
     </div>
@@ -594,30 +559,25 @@ function FundingAgencies({ onBack }) {
         <div style={{ display: "inline-block", background: "linear-gradient(135deg, #52525b 0%, #71717a 100%)", color: "white", padding: "0.5rem 1.5rem", borderRadius: "20px", fontSize: "0.9rem", fontWeight: "700", marginBottom: "1.5rem" }}>
           PRIMARY FUNDING
         </div>
-        <img src="/ANRF.png" alt="ANRF Logo" style={logoImageStyle("180px")} />
+        <img src="/mahaev/ANRF.png" alt="ANRF Logo" style={logoImageStyle("180px")} />
         <h3 style={{ fontSize: "2rem", color: "#1e293b", fontWeight: "800", marginBottom: "1rem" }}>
           Anusandhan National Research Foundation
         </h3>
         <p style={{ color: "#64748b", fontSize: "1.1rem", lineHeight: "1.8", maxWidth: "800px", margin: "0 auto" }}>
-          ANRF (Anusandhan National Research Foundation) is the primary funding agency supporting the MAHA-EV Dashboard project. 
-          As India's apex research funding body, ANRF enables comprehensive research in battery safety diagnostics, thermal runaway detection, 
-          and development of advanced sensing technologies for electric vehicle applications under Indian operating conditions.
-        </p>
+          ANRF (Anusandhan National Research Foundation) is the primary funding agency sponsoring      MAHA-EV e-rights. 
+          </p>
       </div>
 
       <div style={fundingCardStyle(false)}>
         <div style={{ display: "inline-block", background: "#64748b", color: "white", padding: "0.5rem 1.5rem", borderRadius: "20px", fontSize: "0.9rem", fontWeight: "700", marginBottom: "1.5rem" }}>
           INDUSTRY PARTNER
         </div>
-        <img src="/enphase.png" alt="Enphase Energy Logo" style={logoImageStyle("140px")} />
+        <img src="/mahaev/enphase.png" alt="Enphase Energy Logo" style={logoImageStyle("140px")} />
         <h3 style={{ fontSize: "1.8rem", color: "#1e293b", fontWeight: "700", marginBottom: "1rem" }}>
           Enphase Energy
         </h3>
         <p style={{ color: "#64748b", fontSize: "1.1rem", lineHeight: "1.8", maxWidth: "800px", margin: "0 auto" }}>
-          Enphase Energy is a global leader in microinverter-based solar and battery systems. 
-          They provide crucial industry partnership and co-funding support, contributing their extensive expertise in energy storage systems, 
-          battery management technologies, and field deployment capabilities. Their real-world insights help bridge the gap between 
-          research innovation and practical industry applications.
+          They provide crucial industry partnership and co-funding support
         </p>
       </div>
     </div>
@@ -689,12 +649,10 @@ function Outputs({ onBack }) {
         <h3 style={{ fontSize: "1.8rem", color: "#1e293b", marginBottom: "1.5rem", display: "flex", alignItems: "center", gap: "0.5rem" }}>
           Conference Proceedings
         </h3>
-        <div style={comingSoonStyle}>
-          <p style={{ fontSize: "1.2rem", color: "#92400e", fontWeight: "700", margin: 0 }}>
-            Coming Soon
-          </p>
-          <p style={{ color: "#78350f", marginTop: "0.5rem" }}>
-            Conference papers under preparation
+        
+        <div style={{ background: "#f8fafc", borderRadius: "8px", padding: "1.5rem", marginBottom: "1rem", borderLeft: "4px solid #334155" }}>
+          <p style={{ color: "#1e293b", fontSize: "1rem", lineHeight: "1.8", margin: 0 }}>
+            <strong>1.</strong> Y.N. Desai, S. Ghosh and P. Bharadwaj, "Predicting Mechanically Induced Thermal Runaway Severity in Multi-Chemistry Lithium-Ion Cells Using LightGBM for Battery Safety Applications," <em>2025 IEEE 12th National Power Electronics Conference (NPEC)</em>, Calicut, India, Dec. 2025.
           </p>
         </div>
       </div>
@@ -703,12 +661,22 @@ function Outputs({ onBack }) {
         <h3 style={{ fontSize: "1.8rem", color: "#1e293b", marginBottom: "1.5rem", display: "flex", alignItems: "center", gap: "0.5rem" }}>
           Journal Publications
         </h3>
-        <div style={comingSoonStyle}>
-          <p style={{ fontSize: "1.2rem", color: "#92400e", fontWeight: "700", margin: 0 }}>
-            Coming Soon
+        
+        <div style={{ background: "#f8fafc", borderRadius: "8px", padding: "1.5rem", marginBottom: "1rem", borderLeft: "4px solid #334155" }}>
+          <p style={{ color: "#1e293b", fontSize: "1rem", lineHeight: "1.8", margin: 0 }}>
+            <strong>1.</strong> S. S. Sinha, B. Lehman and P. Bharadwaj, "Life Extension of Lithium-Ion Battery: Degradation Comprehension, Modeling, Characterization, and Mitigation Strategies," in <em>IEEE Open Journal of Power Electronics</em>, vol. 7, pp. 1-27, 2026.
           </p>
-          <p style={{ color: "#78350f", marginTop: "0.5rem" }}>
-            Journal manuscripts in progress
+        </div>
+        
+        <div style={{ background: "#f8fafc", borderRadius: "8px", padding: "1.5rem", marginBottom: "1rem", borderLeft: "4px solid #334155" }}>
+          <p style={{ color: "#1e293b", fontSize: "1rem", lineHeight: "1.8", margin: 0 }}>
+            <strong>2.</strong> R. D. Fonso, C. Cecati, R. Teodorescu, D. -I. Stroe and P. Bharadwaj, "Data-Driven Modeling of Li-Ion Battery Based on the Manufacturer Specifications and Laboratory Measurements," in <em>IEEE Transactions on Industry Applications</em>, vol. 61, no. 2, pp. 3485-3493, March-April 2025.
+          </p>
+        </div>
+        
+        <div style={{ background: "#f8fafc", borderRadius: "8px", padding: "1.5rem", marginBottom: "1rem", borderLeft: "4px solid #334155" }}>
+          <p style={{ color: "#1e293b", fontSize: "1rem", lineHeight: "1.8", margin: 0 }}>
+            <strong>3.</strong> R. D. Fonso, R. Teodorescu, C. Cecati and P. Bharadwaj, "A Battery Digital Twin From Laboratory Data Using Wavelet Analysis and Neural Networks," in <em>IEEE Transactions on Industrial Informatics</em>, vol. 20, no. 4, pp. 6889-6899, April 2024.
           </p>
         </div>
       </div>
