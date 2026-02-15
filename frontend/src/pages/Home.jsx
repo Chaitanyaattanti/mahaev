@@ -318,30 +318,6 @@ function Home() {
             A platform to showcase ongoing research - battery safety improvement under 
             Indian conditions at Smart Power Electronics Laboratory (SPEL), IIT Gandhinagar
           </p>
-          <div style={datasetCountStyle}>
-            DATASETS AVAILABLE
-          </div>
-          <div style={searchBarContainerStyle}>
-            <input 
-              type="text" 
-              placeholder="Search datasets......" 
-              style={searchInputStyle}
-            />
-            <button 
-              style={searchButtonStyle}
-              onClick={handleSearch}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = "linear-gradient(135deg, #334155 0%, #475569 100%)";
-                e.currentTarget.style.transform = "scale(1.02)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = "linear-gradient(135deg, #1e293b 0%, #334155 100%)";
-                e.currentTarget.style.transform = "scale(1)";
-              }}
-            >
-              Search
-            </button>
-          </div>
         </div>
 
         {/* Decorative Circles with Network Lines */}
@@ -512,107 +488,7 @@ function Home() {
         </div>
       </div>
 
-      {/* Category Section */}
-      <div style={categorySectionStyle}>
-        <h2 style={sectionTitleStyle}>Explore Our Platform</h2>
-        <p style={sectionSubtitleStyle}>
-          Access comprehensive datasets, analytics tools, and research resources
-        </p>
-        
-        <div style={categoryGridStyle}>
-          <a 
-            href="/datasets" 
-            style={categoryCardStyle}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.boxShadow = "0 20px 40px rgba(59, 130, 246, 0.2)";
-              e.currentTarget.style.transform = "translateY(-8px)";
-              e.currentTarget.style.borderColor = "#3b82f6";
-              e.currentTarget.querySelector('.icon-wrapper').style.transform = "scale(1.1) rotate(5deg)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.boxShadow = "0 4px 6px rgba(0,0,0,0.04)";
-              e.currentTarget.style.transform = "translateY(0)";
-              e.currentTarget.style.borderColor = "#e2e8f0";
-              e.currentTarget.querySelector('.icon-wrapper').style.transform = "scale(1) rotate(0deg)";
-            }}
-          >
-            <div style={iconWrapperStyle} className="icon-wrapper">
-              <FaEye size={36} color="white" />
-            </div>
-            <h3 style={categoryTitleStyle}>Most Viewed Datasets</h3>
-            <p style={categoryDescStyle}>Explore our most popular battery safety datasets</p>
-          </a>
 
-          <a 
-            href="/datasets" 
-            style={categoryCardStyle}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.boxShadow = "0 20px 40px rgba(59, 130, 246, 0.2)";
-              e.currentTarget.style.transform = "translateY(-8px)";
-              e.currentTarget.style.borderColor = "#3b82f6";
-              e.currentTarget.querySelector('.icon-wrapper').style.transform = "scale(1.1) rotate(5deg)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.boxShadow = "0 4px 6px rgba(0,0,0,0.04)";
-              e.currentTarget.style.transform = "translateY(0)";
-              e.currentTarget.style.borderColor = "#e2e8f0";
-              e.currentTarget.querySelector('.icon-wrapper').style.transform = "scale(1) rotate(0deg)";
-            }}
-          >
-            <div style={iconWrapperStyle} className="icon-wrapper">
-              <FaClipboardList size={36} color="white" />
-            </div>
-            <h3 style={categoryTitleStyle}>Recently Added</h3>
-            <p style={categoryDescStyle}>Check out the latest thermal runaway data</p>
-          </a>
-
-          <a 
-            href="/analytics" 
-            style={categoryCardStyle}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.boxShadow = "0 20px 40px rgba(59, 130, 246, 0.2)";
-              e.currentTarget.style.transform = "translateY(-8px)";
-              e.currentTarget.style.borderColor = "#3b82f6";
-              e.currentTarget.querySelector('.icon-wrapper').style.transform = "scale(1.1) rotate(5deg)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.boxShadow = "0 4px 6px rgba(0,0,0,0.04)";
-              e.currentTarget.style.transform = "translateY(0)";
-              e.currentTarget.style.borderColor = "#e2e8f0";
-              e.currentTarget.querySelector('.icon-wrapper').style.transform = "scale(1) rotate(0deg)";
-            }}
-          >
-            <div style={iconWrapperStyle} className="icon-wrapper">
-              <FaChartArea size={36} color="white" />
-            </div>
-            <h3 style={categoryTitleStyle}>Analytics Dashboard</h3>
-            <p style={categoryDescStyle}>Visualize battery performance and safety metrics</p>
-          </a>
-
-          <a 
-            href="/datasets" 
-            style={categoryCardStyle}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.boxShadow = "0 20px 40px rgba(59, 130, 246, 0.2)";
-              e.currentTarget.style.transform = "translateY(-8px)";
-              e.currentTarget.style.borderColor = "#3b82f6";
-              e.currentTarget.querySelector('.icon-wrapper').style.transform = "scale(1.1) rotate(5deg)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.boxShadow = "0 4px 6px rgba(0,0,0,0.04)";
-              e.currentTarget.style.transform = "translateY(0)";
-              e.currentTarget.style.borderColor = "#e2e8f0";
-              e.currentTarget.querySelector('.icon-wrapper').style.transform = "scale(1) rotate(0deg)";
-            }}
-          >
-            <div style={iconWrapperStyle} className="icon-wrapper">
-              <FaBatteryFull size={36} color="white" />
-            </div>
-            <h3 style={categoryTitleStyle}>Battery Safety Data</h3>
-            <p style={categoryDescStyle}>Multi-modal sensor data for safety diagnostics</p>
-          </a>
-        </div>
-      </div>
 
       {/* Key Focus Areas Section */}
       <div style={keyFocusSectionStyle}>

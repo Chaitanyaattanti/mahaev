@@ -4,12 +4,15 @@ import { API_URL } from "../config";
 function Datasets() {
   const [datasets, setDatasets] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filteredDatasets, setFilteredDatasets] = useState([]);
 
   useEffect(() => {
     fetch(`${API_URL}/datasets`)
       .then(res => res.json())
       .then(data => {
         setDatasets(data);
+        setFilteredDatasets(data);
         setLoading(false);
       })
       .catch(err => {
@@ -17,6 +20,19 @@ function Datasets() {
         setLoading(false);
       });
   }, []);
+
+  useEffect(() => {
+    if (searchQuery.trim() === '') {
+      setFilteredDatasets(datasets);
+    } else {
+      const filtered = datasets.filter(dataset => 
+        dataset.dataset_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        dataset.dataset_description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (dataset.dataset_source && dataset.dataset_source.toLowerCase().includes(searchQuery.toLowerCase()))
+      );
+      setFilteredDatasets(filtered);
+    }
+  }, [searchQuery, datasets]);
 
   const handleDownload = (url, name) => {
     // Check if it's an external URL or local file
@@ -51,6 +67,44 @@ function Datasets() {
     color: "#555",
     fontSize: "1.1rem",
     marginTop: "0.5rem",
+  };
+
+  const searchBarContainerStyle = {
+    display: "flex",
+    maxWidth: "700px",
+    margin: "2rem auto 0",
+    boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+    borderRadius: "8px",
+    overflow: "hidden",
+    border: "1px solid #ddd",
+  };
+
+  const searchInputStyle = {
+    flex: 1,
+    padding: "1rem 1.5rem",
+    border: "none",
+    fontSize: "1rem",
+    outline: "none",
+    background: "white",
+    color: "#334155",
+  };
+
+  const searchButtonStyle = {
+    background: "#1e293b",
+    color: "white",
+    border: "none",
+    padding: "1rem 2.5rem",
+    fontSize: "1rem",
+    fontWeight: "700",
+    cursor: "pointer",
+    transition: "all 0.3s",
+  };
+
+  const noResultsStyle = {
+    textAlign: "center",
+    padding: "3rem",
+    color: "#555",
+    fontSize: "1.1rem",
   };
 
   const gridContainerStyle = {
@@ -128,15 +182,35 @@ function Datasets() {
         <p style={subtitleStyle}>
           Explore the datasets used in battery research and electric vehicles
         </p>
+        <div style={searchBarContainerStyle}>
+          <input 
+            type="text" 
+            placeholder="Search datasets by name, description, or source..." 
+            style={searchInputStyle}
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+          <button 
+            style={searchButtonStyle}
+            onMouseEnter={(e) => e.currentTarget.style.background = "#334155"}
+            onMouseLeave={(e) => e.currentTarget.style.background = "#1e293b"}
+          >
+            Search
+          </button>
+        </div>
       </div>
 
-      {datasets.length === 0 ? (
-        <div style={loadingStyle}>
-          <p>No datasets available. Please add datasets to the database.</p>
+      {filteredDatasets.length === 0 ? (
+        <div style={noResultsStyle}>
+          {datasets.length === 0 ? (
+            <p>No datasets available. Please add datasets to the database.</p>
+          ) : (
+            <p>No datasets found matching "{searchQuery}". Try a different search term.</p>
+          )}
         </div>
       ) : (
         <div style={gridContainerStyle}>
-          {datasets.map((d, i) => (
+          {filteredDatasets.map((d, i) => (
             <div 
               key={i} 
               style={cardStyle}
