@@ -481,9 +481,11 @@ function Home() {
           <h2 style={projectTitleStyle}>About the Project</h2>
           <p style={projectTextStyle}>
              
-            This project focuses on developing a scalable smart battery safety diagnostic system with multi-modal sensing of Li-ion 
-            battery pack's parameters, namely gas emission, temperature, pressure, and voltage, with subsequent physics-guided 
-            ML-powered signature analysis for early detection of Thermal Runaway (TR).
+The rapid adoption of Electric Vehicles in India faces a 
+critical challenge standard battery management systems often fail to detect early signs of danger under 
+ unique conditions. To address this, the MAHAEV Project is developing a scalable Smart Battery Safety Diagnostic 
+ System.Our solution integrates Multi-Modal Sensing monitoring gas emissions, pressure, temperature, and voltage 
+ simultaneously with a Physics-Guided Machine Learning model. This  approach allows us to detect the specific signatures of battery abuse and predict Thermal Runaway  events before they occur, ensuring safer, longer-lasting battery packs for the Indian EV ecosystem.
           </p>
         </div>
       </div>
