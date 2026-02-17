@@ -480,12 +480,33 @@ function Home() {
         <div style={projectCardStyle}>
           <h2 style={projectTitleStyle}>About the Project</h2>
           <p style={projectTextStyle}>
-             
 The rapid adoption of Electric Vehicles in India faces a 
 critical challenge standard battery management systems often fail to detect early signs of danger under 
- unique conditions. To address this, the MAHAEV Project is developing a scalable Smart Battery Safety Diagnostic 
- System.Our solution integrates Multi-Modal Sensing monitoring gas emissions, pressure, temperature, and voltage 
- simultaneously with a Physics-Guided Machine Learning model. This  approach allows us to detect the specific signatures of battery abuse and predict Thermal Runaway  events before they occur, ensuring safer, longer-lasting battery packs for the Indian EV ecosystem.
+unique conditions.
+          </p>
+          
+          <div style={{
+            margin: "2rem 0",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center"
+          }}>
+            <img 
+              src="/mahaev/motivation.jpeg" 
+              alt="EV Battery Safety Motivation" 
+              style={{
+                maxWidth: "100%",
+                height: "auto",
+                borderRadius: "8px",
+                boxShadow: "0 4px 12px rgba(0,0,0,0.1)"
+              }}
+            />
+          </div>
+
+          <p style={projectTextStyle}>
+To address this, the MAHAEV Project is developing a scalable Smart Battery Safety Diagnostic 
+System. Our solution integrates Multi-Modal Sensing monitoring gas emissions, pressure, temperature, and voltage 
+simultaneously with a Physics-Guided Machine Learning model. This approach allows us to detect the specific signatures of battery abuse and predict Thermal Runaway events before they occur, ensuring safer, longer-lasting battery packs for the Indian EV ecosystem.
           </p>
         </div>
       </div>
