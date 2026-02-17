@@ -11,8 +11,21 @@ function Datasets() {
     fetch(`${API_URL}/datasets`)
       .then(res => res.json())
       .then(data => {
-        setDatasets(data);
-        setFilteredDatasets(data);
+        // Sort datasets by category
+        const sortedData = data.sort((a, b) => {
+          const getCategoryPriority = (name) => {
+            const nameLower = name.toLowerCase();
+            if (nameLower.includes('temperature') || nameLower.includes('thermal')) return 1;
+            if (nameLower.includes('pressure')) return 2;
+            if (nameLower.includes('aging') || nameLower.includes('degradation') || nameLower.includes('cycle')) return 3;
+            if (nameLower.includes('voltage') || nameLower.includes('impedance')) return 4;
+            if (nameLower.includes('gas') || nameLower.includes('emission')) return 5;
+            return 6;
+          };
+          return getCategoryPriority(a.dataset_name) - getCategoryPriority(b.dataset_name);
+        });
+        setDatasets(sortedData);
+        setFilteredDatasets(sortedData);
         setLoading(false);
       })
       .catch(err => {
@@ -50,6 +63,26 @@ function Datasets() {
       document.body.removeChild(link);
     }
   };
+
+  const getCategoryColor = (name) => {
+    const nameLower = name.toLowerCase();
+    if (nameLower.includes('temperature') || nameLower.includes('thermal')) return '#ff6b35'; // Red-orange for temperature
+    if (nameLower.includes('pressure')) return '#3b82f6'; // Blue for pressure
+    if (nameLower.includes('aging') || nameLower.includes('degradation') || nameLower.includes('cycle')) return '#a855f7'; // Purple for aging
+    if (nameLower.includes('voltage') || nameLower.includes('impedance')) return '#10b981'; // Green for voltage
+    if (nameLower.includes('gas') || nameLower.includes('emission')) return '#f59e0b'; // Amber for gas
+    return '#64748b'; // Gray for others
+  };
+
+  const getCardStyle = (name) => ({
+    background: "white",
+    borderRadius: "8px",
+    padding: "2rem",
+    border: "1px solid #ddd",
+    boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+    transition: "all 0.3s ease",
+    cursor: "pointer",
+  });
 
   const containerStyle = {
     padding: "3rem 2rem",
@@ -114,13 +147,17 @@ function Datasets() {
     marginTop: "2rem",
   };
 
-  const cardStyle = {
-    background: "white",
-    borderRadius: "8px",
-    padding: "2rem",
-    border: "1px solid #ddd",
-    boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-  };
+  const citationStyle = (categoryColor) => ({
+    background: "#f8f9fa",
+    padding: "1rem",
+    borderRadius: "5px",
+    marginTop: "1.5rem",
+    borderLeft: `4px solid ${categoryColor}`,
+    fontSize: "0.9rem",
+    color: "#333",
+    fontStyle: "italic",
+    lineHeight: "1.6",
+  });
 
   const sourceStyle = {
     color: "#555",
@@ -128,24 +165,12 @@ function Datasets() {
     fontSize: "0.95rem",
   };
 
-  const citationStyle = {
-    background: "#f8f9fa",
-    padding: "1rem",
-    borderRadius: "5px",
-    marginTop: "1.5rem",
-    borderLeft: "4px solid #1e293b",
-    fontSize: "0.9rem",
-    color: "#333",
-    fontStyle: "italic",
-    lineHeight: "1.6",
-  };
-
-  const citationLabelStyle = {
+  const citationLabelStyle = (categoryColor) => ({
     fontWeight: "600",
     fontStyle: "normal",
-    color: "#1e293b",
+    color: categoryColor,
     marginBottom: "0.5rem",
-  };
+  });
 
   const buttonStyle = {
     display: "inline-block",
@@ -210,19 +235,31 @@ function Datasets() {
         </div>
       ) : (
         <div style={gridContainerStyle}>
-          {filteredDatasets.map((d, i) => (
+          {filteredDatasets.map((d, i) => {
+            const categoryColor = getCategoryColor(d.dataset_name);
+            return (
             <div 
               key={i} 
-              style={cardStyle}
+              style={getCardStyle(d.dataset_name)}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.borderColor = categoryColor;
+                e.currentTarget.style.boxShadow = `0 4px 12px ${categoryColor}40`;
+                e.currentTarget.style.transform = "translateY(-4px)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.borderColor = "#ddd";
+                e.currentTarget.style.boxShadow = "0 2px 4px rgba(0,0,0,0.1)";
+                e.currentTarget.style.transform = "translateY(0)";
+              }}
             >
-            <h3>{d.dataset_name}</h3>
+            <h3 style={{ color: categoryColor }}>{d.dataset_name}</h3>
             <p style={{color: "#555", marginTop: "1rem", lineHeight: "1.8"}}>
               {d.dataset_description}
             </p>
             
             {d.dataset_source && (
-              <div style={citationStyle}>
-                <div style={citationLabelStyle}>📚 Citation:</div>
+              <div style={citationStyle(categoryColor)}>
+                <div style={citationLabelStyle(categoryColor)}>📚 Citation:</div>
                 {d.dataset_source}
               </div>
             )}
@@ -235,18 +272,19 @@ function Datasets() {
               }
               target="_blank"
               rel="noopener noreferrer"
-              style={buttonStyle}
+              style={{...buttonStyle, background: categoryColor}}
               onMouseEnter={(e) => {
-                e.currentTarget.style.background = "#334155";
+                e.currentTarget.style.opacity = "0.8";
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.background = "#1e293b";
+                e.currentTarget.style.opacity = "1";
               }}
             >
               Download Dataset
             </a>
             </div>
-          ))}
+          );
+          })}
         </div>
       )}
     </div>
