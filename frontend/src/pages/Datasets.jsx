@@ -260,7 +260,9 @@ function Datasets() {
             {d.dataset_source && (
               <div style={citationStyle(categoryColor)}>
                 <div style={citationLabelStyle(categoryColor)}>📚 Citation:</div>
-                {d.dataset_source}
+                {d.dataset_source.split('\n').map((line, idx) => (
+                  <div key={idx}>{line}</div>
+                ))}
               </div>
             )}
             

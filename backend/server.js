@@ -40,13 +40,7 @@ const datasets = [
 
   dataset_description: "Comprehensive study comparing Low-Current OCV and Incremental-Current OCV methods for State-of-Charge estimation in Battery Management Systems using cylindrical INR 18650-20R cells (2000 mAh, NMC chemistry). Dataset includes OCV tests at 0°C, 25°C, and 45°C, dynamic drive cycle evaluations (DST, FUDS, US06, BJDST) at multiple SOC levels (80%, 50%), tracking accuracy analysis, convergence time measurements, and robustness assessments under varying temperature and loading conditions. Key finding demonstrates Incremental-OCV provides superior SOC estimation reliability. Essential for BMS algorithm development and validation.",
 
-  dataset_source: [
-    "[1] F. Zheng, Y. Xing, J. Jiang, B. Sun, J. Kim, and M. Pecht, \"Influence of different open circuit voltage tests on state of charge online estimation for lithium-ion batteries,\" Applied Energy, vol. 183, pp. 513–525, 2016.",
-
-    "[2] Y. Xing, W. He, M. Pecht, and K. L. Tsui, \"State of charge estimation of lithium-ion batteries using the open-circuit voltage at various ambient temperatures,\" Applied Energy, vol. 113, pp. 106–115, 2014.",
-
-    "[3] W. He, N. Williard, C. Chen, and M. Pecht, \"State of charge estimation for Li-ion batteries using neural network modeling and unscented Kalman filter-based error cancellation,\" International Journal of Electrical Power & Energy Systems, vol. 62, pp. 783–791, 2014."
-  ],
+  dataset_source: "[1] F. Zheng, Y. Xing, J. Jiang, B. Sun, J. Kim, and M. Pecht, \"Influence of different open circuit voltage tests on state of charge online estimation for lithium-ion batteries,\" Applied Energy, vol. 183, pp. 513–525, 2016.\n\n[2] Y. Xing, W. He, M. Pecht, and K. L. Tsui, \"State of charge estimation of lithium-ion batteries using the open-circuit voltage at various ambient temperatures,\" Applied Energy, vol. 113, pp. 106–115, 2014.\n\n[3] W. He, N. Williard, C. Chen, and M. Pecht, \"State of charge estimation for Li-ion batteries using neural network modeling and unscented Kalman filter-based error cancellation,\" International Journal of Electrical Power & Energy Systems, vol. 62, pp. 783–791, 2014.",
   dataset_url: "https://iitgnacin-my.sharepoint.com/:u:/g/personal/23110052_iitgn_ac_in/IQC8qjZ0-CRQQ5o4jFRESU9HAfGazQ83npJrDnCgoN12NXo?e=8IVN3P"
 },
   {
@@ -58,31 +52,20 @@ const datasets = [
   {
     dataset_name: "Cycle-Life Degradation Study",
     dataset_description: "Extensive degradation analysis dataset from CS2 Prismatic LiCoO₂ cells (1100 mAh) cycled under six distinct discharge behaviors for Remaining Useful Life (RUL) prediction. Includes constant 0.5C cycling (CS2-8, 21, 33, 34), constant 1C cycling (CS2-35-38), variable discharge currents (CS2-3, 9), random cut-off voltage simulation (CS2-7), low-regime partial cycling 3.77-2.7V (CS2-5, 6), and high-regime partial cycling 4.2-3.77V (CS2-24, 25). Each dataset provides detailed cycle logs, voltage-current profiles, capacity fade tracking, and aging progression data. Invaluable for prognostics model development and understanding degradation mechanisms under diverse operating conditions.",
-   dataset_source: [
-    "[1] W. He, N. Williard, M. Osterman, and M. Pecht, \"Prognostics of lithium-ion batteries based on Dempster–Shafer theory and the Bayesian Monte Carlo method,\" Journal of Power Sources, vol. 196, no. 23, pp. 10314–10321, 2011.",
-
-    "[2] Y. Xing, E. W. Ma, K. L. Tsui, and M. Pecht, \"An ensemble model for predicting the remaining useful performance of lithium-ion batteries,\" Microelectronics Reliability, vol. 53, no. 6, pp. 811–820, 2013.",
-
-    "[3] N. Williard, W. He, M. Osterman, and M. Pecht, \"Comparative analysis of features for determining state of health in lithium-ion batteries,\" International Journal of Prognostics and Health Management, vol. 4, no. 1, 2013."],
+   dataset_source: "[1] W. He, N. Williard, M. Osterman, and M. Pecht, \"Prognostics of lithium-ion batteries based on Dempster–Shafer theory and the Bayesian Monte Carlo method,\" Journal of Power Sources, vol. 196, no. 23, pp. 10314–10321, 2011.\n\n[2] Y. Xing, E. W. Ma, K. L. Tsui, and M. Pecht, \"An ensemble model for predicting the remaining useful performance of lithium-ion batteries,\" Microelectronics Reliability, vol. 53, no. 6, pp. 811–820, 2013.\n\n[3] N. Williard, W. He, M. Osterman, and M. Pecht, \"Comparative analysis of features for determining state of health in lithium-ion batteries,\" International Journal of Prognostics and Health Management, vol. 4, no. 1, 2013.",
 
     dataset_url: "https://iitgnacin-my.sharepoint.com/:u:/g/personal/23110052_iitgn_ac_in/IQAcfs5_GU3_QY0MNiz9887QARHXNkG3wCrDnKT3DtQjvVE?e=gsjeaJ"
   },
   {
     dataset_name: "Pulsed-Load and Temperature-Stress Aging ",
     dataset_description: "Comprehensive aging study examining effects of pulse loading, high-rate discharge, and temperature cycling on CX2 Prismatic LiCoO₂ cells (1350 mAh). Dataset includes constant 0.5C cycling baseline (CX2-16, 31, 33-38), aggressive 3C high-rate discharge (CX2-8), alternating pulse discharge patterns (CX2-3), temperature cycling stress tests 25-55°C with thermocouple measurements (CX2-4), and multi-rate pulsed load profiles (CX2-32). Provides insights into accelerated degradation mechanisms, thermal stress impacts, and capacity fade under realistic dynamic loading scenarios. Critical for lifetime prediction under demanding operational conditions.",
-    "dataset_source": [
-  "[1] W. He, N. Williard, M. Osterman, and M. Pecht, \"Prognostics of lithium-ion batteries based on Dempster–Shafer theory and the Bayesian Monte Carlo method,\" Journal of Power Sources, vol. 196, no. 23, pp. 10314–10321, 2011.",
-
-  "[2] Y. Xing, E. Ma, K. L. Tsui, and M. Pecht, \"An ensemble model for predicting the remaining useful performance of lithium-ion batteries,\" Microelectronics Reliability, vol. 53, no. 6, pp. 811–820, 2013."
-],
+    dataset_source: "[1] W. He, N. Williard, M. Osterman, and M. Pecht, \"Prognostics of lithium-ion batteries based on Dempster–Shafer theory and the Bayesian Monte Carlo method,\" Journal of Power Sources, vol. 196, no. 23, pp. 10314–10321, 2011.\n\n[2] Y. Xing, E. Ma, K. L. Tsui, and M. Pecht, \"An ensemble model for predicting the remaining useful performance of lithium-ion batteries,\" Microelectronics Reliability, vol. 53, no. 6, pp. 811–820, 2013.",
     dataset_url: "https://iitgnacin-my.sharepoint.com/:u:/g/personal/23110052_iitgn_ac_in/IQDffbpgdSeWTrRiZLNYfP5XAUNU5Ok6L8Zst2W3-IHTmRQ?e=t2qJF6"
   },
   {
     dataset_name: "Partial-Charge Cycling Impact ",
     dataset_description: "Systematic investigation quantifying how partial State-of-Charge cycling accelerates capacity fade in Graphite/LiCoO₂ pouch cells (1500 mAh). Study variables include mean SOC, SOC swing amplitude (ΔSOC), and discharge rate effects. Dataset organized by SOC windows: 0-60% (PL 3, 10), 40-60% (PL 4, 5), 40-60% at 2C (PL 9, 25), full 0-100% (PL 11, 13), 0-100% at 2C (PL 12, 14), 20-80% (PL 17, 18, 21, 23), and 40-100% (PL 19, 24). Capacity re-characterized every 50-100 cycles. Essential for understanding degradation in partial SOC operation and optimizing charging strategies for extended battery life.",
-    dataset_source: [
-  "[1] S. Saxena, C. Hendricks, and M. Pecht, \"Cycle life testing and modeling of graphite/LiCoO2 cells under different state of charge ranges,\" Journal of Power Sources, vol. 327, pp. 394–400, 2016."
-],
+    dataset_source: "[1] S. Saxena, C. Hendricks, and M. Pecht, \"Cycle life testing and modeling of graphite/LiCoO2 cells under different state of charge ranges,\" Journal of Power Sources, vol. 327, pp. 394–400, 2016.",
     dataset_url: "https://iitgnacin-my.sharepoint.com/:u:/g/personal/23110052_iitgn_ac_in/IQC_FrePzl9oQ67WRcOwSQecAcT3bMTJxz2_CeBDrA-bcB0?e=8rMf7L"
   },
   {
