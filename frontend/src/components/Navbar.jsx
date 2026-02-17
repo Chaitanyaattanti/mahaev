@@ -42,12 +42,14 @@ function Navbar() {
     display: "flex",
     flexDirection: "column",
     gap: "0.1rem",
+    alignItems: "center",
   };
 
   const subTextStyle = {
     fontSize: "0.75rem",
     fontWeight: "500",
     color: "#64748b",
+    textAlign: "center",
   };
 
   const navLinksStyle = {
@@ -83,9 +85,22 @@ function Navbar() {
           <Link to="/contact" style={getLinkStyle("/contact")}>Contact Us</Link>
         </div>
       </div>
-      <div style={logoContainerStyle}>
-        <img src={`${import.meta.env.BASE_URL}icon.jpeg`} alt="IIT Gandhinagar Logo" style={{...logoImageStyle, height: "55px"}} />
-      </div>
+      <a 
+        href="https://iitgn.ac.in/" 
+        target="_blank" 
+        rel="noopener noreferrer"
+        style={{textDecoration: "none"}}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.opacity = "0.7";
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.opacity = "1";
+        }}
+      >
+        <div style={logoContainerStyle}>
+          <img src={`${import.meta.env.BASE_URL}icon.jpeg`} alt="IIT Gandhinagar Logo" style={{...logoImageStyle, height: "55px"}} />
+        </div>
+      </a>
     </nav>
   );
 }
