@@ -38,6 +38,18 @@ function Navbar() {
     color: "#1e293b",
   };
 
+  const logoTextContainerStyle = {
+    display: "flex",
+    flexDirection: "column",
+    gap: "0.1rem",
+  };
+
+  const subTextStyle = {
+    fontSize: "0.75rem",
+    fontWeight: "500",
+    color: "#64748b",
+  };
+
   const navLinksStyle = {
     display: "flex",
     gap: "2rem",
@@ -56,23 +68,13 @@ function Navbar() {
   return (
     <nav style={navStyle}>
       <div style={leftSectionStyle}>
-        <a 
-          href="https://labs.iitgn.ac.in/spel/home.html" 
-          target="_blank" 
-          rel="noopener noreferrer"
-          style={{textDecoration: "none"}}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.opacity = "0.7";
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.opacity = "1";
-          }}
-        >
-          <div style={logoContainerStyle}>
-            <img src={`${import.meta.env.BASE_URL}spel-logo.png`} alt="SPEL Logo" style={logoImageStyle} />
-            <div style={logoTextStyle}>MAHA-EV-DASHBOARD</div>
+        <div style={logoContainerStyle}>
+          <img src={`${import.meta.env.BASE_URL}spel-logo.png`} alt="SPEL Logo" style={logoImageStyle} />
+          <div style={logoTextContainerStyle}>
+            <div style={logoTextStyle}>MAHA-EV-MACHINE</div>
+            <div style={subTextStyle}>IIT Gandhinagar</div>
           </div>
-        </a>
+        </div>
         <div style={navLinksStyle}>
           <Link to="/" style={getLinkStyle("/")}>Home</Link>
           <Link to="/deliverables" style={getLinkStyle("/deliverables")}>Project Overview</Link>
