@@ -249,7 +249,7 @@ function Team() {
           <div style={memberPhotoStyle}>
             <img src={`${import.meta.env.BASE_URL}teams/Screenshot 2026-02-06 000200.png`} alt="Dr. Samsaptak Ghosh" style={photoStyle} />
           </div>
-          <h3 style={memberNameStyle}>Samsaptak Ghosh</h3>
+          <h3 style={memberNameStyle}>Dr. Samsaptak Ghosh</h3>
           <p style={memberRoleStyle}>Project Scientist-I</p>
         </div>
       </div>
