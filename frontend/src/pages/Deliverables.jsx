@@ -1,10 +1,10 @@
-import { FaCalendarAlt, FaRocket, FaUniversity, FaTrophy } from 'react-icons/fa';
 import { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 function ProjectOverview() {
   const [activePage, setActivePage] = useState('main');
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Check if there's a hash in the URL and set the active page accordingly
@@ -19,154 +19,22 @@ function ProjectOverview() {
     }
   }, [location]);
 
-  const containerStyle = {
-    minHeight: "100vh",
-    background: "linear-gradient(to bottom, #f8fafc 0%, #ffffff 100%)",
-    padding: "3rem 2rem",
-  };
-
-  const headerStyle = {
-    textAlign: "center",
-    marginBottom: "4rem",
-  };
-
-  const titleStyle = {
-    fontSize: "3rem",
-    fontWeight: "800",
-    color: "#1e293b",
-    marginBottom: "1rem",
-  };
-
-  const subtitleStyle = {
-    color: "#64748b",
-    fontSize: "1.2rem",
-  };
-
-  const gridStyle = {
-    display: "grid",
-    gridTemplateColumns: "repeat(2, 1fr)",
-    gap: "2rem",
-    maxWidth: "1200px",
-    margin: "0 auto",
-  };
-
-  const cardStyle = {
-    background: "white",
-    borderRadius: "16px",
-    padding: "3rem 2rem",
-    textAlign: "center",
-    cursor: "pointer",
-    transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
-    border: "2px solid #e2e8f0",
-    boxShadow: "0 4px 6px rgba(0,0,0,0.05)",
-    position: "relative",
-    overflow: "hidden",
-  };
-
-  const iconWrapperStyle = (gradient) => ({
-    width: "100px",
-    height: "100px",
-    borderRadius: "50%",
-    background: gradient,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    margin: "0 auto 1.5rem",
-    boxShadow: "0 8px 16px rgba(0,0,0,0.1)",
-  });
-
-  const cardTitleStyle = {
-    fontSize: "1.8rem",
-    fontWeight: "700",
-    color: "#1e293b",
-    marginBottom: "1rem",
-  };
-
-  const cardDescStyle = {
-    fontSize: "1rem",
-    color: "#64748b",
-    lineHeight: "1.6",
-  };
-
-  const sections = [
-    {
-      id: 'timeline',
-      icon: FaCalendarAlt,
-      title: 'Timeline & Deliverables',
-      description: 'Explore project phases and key milestones',
-      gradient: 'linear-gradient(135deg, #334155 0%, #475569 100%)',
-      color: '#334155'
-    },
-    {
-      id: 'status',
-      icon: FaRocket,
-      title: 'Current Status',
-      description: 'View ongoing activities and progress',
-      gradient: 'linear-gradient(135deg, #4b5563 0%, #6b7280 100%)',
-      color: '#4b5563'
-    },
-    {
-      id: 'funding',
-      icon: FaUniversity,
-      title: 'Funding Agencies',
-      description: 'Meet our project sponsors and partners',
-      gradient: 'linear-gradient(135deg, #374151 0%, #4b5563 100%)',
-      color: '#374151'
-    },
-    {
-      id: 'outputs',
-      icon: FaTrophy,
-      title: 'Outputs & Publications',
-      description: 'Research papers, patents, and achievements',
-      gradient: 'linear-gradient(135deg, #52525b 0%, #71717a 100%)',
-      color: '#52525b'
+  const handleBackToOverview = () => {
+    // If there's a referrer in history, go back; otherwise go to home
+    if (window.history.length > 1) {
+      navigate(-1);
+    } else {
+      navigate('/');
     }
-  ];
+  };
 
-  if (activePage === 'timeline') return <TimelineDeliverables onBack={() => setActivePage('main')} />;
-  if (activePage === 'status') return <CurrentStatus onBack={() => setActivePage('main')} />;
-  if (activePage === 'funding') return <FundingAgencies onBack={() => setActivePage('main')} />;
-  if (activePage === 'outputs') return <Outputs onBack={() => setActivePage('main')} />;
+  if (activePage === 'timeline') return <TimelineDeliverables onBack={handleBackToOverview} />;
+  if (activePage === 'status') return <CurrentStatus onBack={handleBackToOverview} />;
+  if (activePage === 'funding') return <FundingAgencies onBack={handleBackToOverview} />;
+  if (activePage === 'outputs') return <Outputs onBack={handleBackToOverview} />;
 
-  return (
-    <div style={containerStyle}>
-      <div style={headerStyle}>
-        <h1 style={titleStyle}>Project Overview</h1>
-        <p style={subtitleStyle}>
-          Smart Battery Safety Diagnostic System - MAHA-EV Dashboard
-        </p>
-      </div>
-
-      <div style={gridStyle}>
-        {sections.map((section) => {
-          const Icon = section.icon;
-          return (
-            <div
-              key={section.id}
-              style={cardStyle}
-              onClick={() => setActivePage(section.id)}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = "translateY(-8px) scale(1.02)";
-                e.currentTarget.style.boxShadow = `0 20px 40px ${section.color}30`;
-                e.currentTarget.style.borderColor = section.color;
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = "translateY(0) scale(1)";
-                e.currentTarget.style.boxShadow = "0 4px 6px rgba(0,0,0,0.05)";
-                e.currentTarget.style.borderColor = "#e2e8f0";
-              }}
-            >
-              <div style={iconWrapperStyle(section.gradient)}>
-                <Icon size={45} color="white" />
-              </div>
-              <h3 style={cardTitleStyle}>{section.title}</h3>
-              <p style={cardDescStyle}>{section.description}</p>
-            </div>
-          );
-        })}
-      </div>
-    </div>
-  );
+  // Don't render anything when no section is selected (user should access via links on other pages)
+  return null;
 }
 
 // Timeline & Deliverables Component
