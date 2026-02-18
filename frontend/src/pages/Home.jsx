@@ -3,18 +3,19 @@ import {
   FaChartLine, 
   FaShieldAlt, 
   FaDatabase,
-  FaThermometerHalf,
+  FaFire,
   FaBolt,
   FaMicrochip,
-  FaPlug,
   FaEye,
   FaClipboardList,
   FaChartArea,
   FaCar,
-  FaCloud
+  FaHardHat
 } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 
 function Home() {
+  const navigate = useNavigate();
   const containerStyle = {
     minHeight: "100vh",
     background: "linear-gradient(to bottom, #f8fafc 0%, #ffffff 100%)",
@@ -61,7 +62,7 @@ function Home() {
   };
 
   const countNumberStyle = {
-    color: "#3b82f6",
+    color: "#1e3a8a",
     fontWeight: "800",
     fontSize: "1.5rem",
   };
@@ -162,6 +163,7 @@ function Home() {
     borderRadius: "12px",
     padding: "3rem",
     boxShadow: "0 4px 6px rgba(0,0,0,0.05)",
+    textAlign: "center",
   };
 
   const projectTitleStyle = {
@@ -169,14 +171,48 @@ function Home() {
     fontWeight: "700",
     color: "#1e293b",
     marginBottom: "1.5rem",
-    textAlign: "left",
+    textAlign: "center",
   };
 
   const projectTextStyle = {
     fontSize: "1.05rem",
     color: "#475569",
     lineHeight: "1.8",
-    textAlign: "left",
+    textAlign: "center",
+    maxWidth: "900px",
+    margin: "0 auto 1.5rem auto",
+  };
+
+  const buttonContainerStyle = {
+    display: "flex",
+    gap: "1.5rem",
+    justifyContent: "center",
+    marginTop: "2.5rem",
+  };
+
+  const primaryButtonStyle = {
+    padding: "1rem 2.5rem",
+    fontSize: "1rem",
+    fontWeight: "600",
+    borderRadius: "8px",
+    border: "none",
+    cursor: "pointer",
+    transition: "all 0.3s ease",
+    background: "linear-gradient(135deg, #7f1d1d 0%, #991b1b 100%)",
+    color: "white",
+    boxShadow: "0 4px 12px rgba(127, 29, 29, 0.3)",
+  };
+
+  const secondaryButtonStyle = {
+    padding: "1rem 2.5rem",
+    fontSize: "1rem",
+    fontWeight: "600",
+    borderRadius: "8px",
+    border: "2px solid #7f1d1d",
+    cursor: "pointer",
+    transition: "all 0.3s ease",
+    background: "white",
+    color: "#7f1d1d",
   };
 
   const keyFocusSectionStyle = {
@@ -210,7 +246,7 @@ function Home() {
     left: 0,
     width: "4px",
     height: "100%",
-    background: "linear-gradient(180deg, #3b82f6 0%, #2563eb 100%)",
+    background: "linear-gradient(180deg, #1e3a8a 0%, #2563eb 100%)",
   };
 
   const focusTitleStyle = {
@@ -235,7 +271,7 @@ function Home() {
   };
 
   const bulletPointStyle = {
-    color: "#3b82f6",
+    color: "#1e3a8a",
     marginRight: "0.75rem",
     fontSize: "1.1rem",
     fontWeight: "bold",
@@ -244,7 +280,7 @@ function Home() {
 
   const bulletTextStyle = {
     color: "#475569",
-    fontSize: "0.95rem",
+    fontSize: "1.1rem",
     lineHeight: "1.6",
   };
 
@@ -277,7 +313,7 @@ function Home() {
     width: "80px",
     height: "80px",
     borderRadius: "50%",
-    background: "linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%)",
+    background: "linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%)",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
@@ -353,33 +389,31 @@ function Home() {
             <line x1="22%" y1="62%" x2="12%" y2="42%" stroke="#cbd5e1" strokeWidth="1.5" opacity="0.3"/>
             <line x1="12%" y1="42%" x2="34%" y2="14%" stroke="#cbd5e1" strokeWidth="1.5" opacity="0.3"/>
 
-            {/* Small dots at connection points */}
-            <circle cx="52%" cy="38%" r="4" fill="#3b82f6" opacity="0.6"/>
-            <circle cx="34%" cy="14%" r="3" fill="#3b82f6" opacity="0.4"/>
-            <circle cx="52%" cy="8%" r="3" fill="#3b82f6" opacity="0.4"/>
-            <circle cx="74%" cy="14%" r="3" fill="#3b82f6" opacity="0.4"/>
-            <circle cx="85%" cy="38%" r="3" fill="#3b82f6" opacity="0.4"/>
-            <circle cx="70%" cy="72%" r="3" fill="#3b82f6" opacity="0.4"/>
-            <circle cx="40%" cy="78%" r="3" fill="#3b82f6" opacity="0.4"/>
-            <circle cx="22%" cy="62%" r="3" fill="#3b82f6" opacity="0.4"/>
-            <circle cx="12%" cy="42%" r="3" fill="#3b82f6" opacity="0.4"/>
+            {/* Extra web-like connections */}
+            <line x1="34%" y1="14%" x2="85%" y2="38%" stroke="#cbd5e1" strokeWidth="1" opacity="0.2"/>
+            <line x1="12%" y1="42%" x2="70%" y2="72%" stroke="#cbd5e1" strokeWidth="1" opacity="0.2"/>
+            <line x1="52%" y1="8%" x2="40%" y2="78%" stroke="#cbd5e1" strokeWidth="1" opacity="0.2"/>
+            <line x1="74%" y1="14%" x2="22%" y2="62%" stroke="#cbd5e1" strokeWidth="1" opacity="0.2"/>
+            <line x1="34%" y1="14%" x2="70%" y2="72%" stroke="#cbd5e1" strokeWidth="1" opacity="0.15"/>
+            <line x1="85%" y1="38%" x2="22%" y2="62%" stroke="#cbd5e1" strokeWidth="1" opacity="0.15"/>
+
           </svg>
 
-          {/* Icon Circles */}
+          {/* Icon Circles - Arranged in circular pattern */}
           <div 
-            style={circleStyle("125px", "#3b82f6", "10%", "30%", 55)}
+            style={circleStyle("110px", "#1e3a8a", "8%", "48%", 50)}
             onMouseEnter={(e) => e.currentTarget.style.transform = "scale(1.1)"}
             onMouseLeave={(e) => e.currentTarget.style.transform = "scale(1)"}
           >
-            <FaBatteryFull size={55} />
+            <FaBatteryFull size={50} />
           </div>
           
           <div 
-            style={circleStyle("100px", "#60a5fa", "38%", "8%", 42)}
+            style={circleStyle("100px", "#1e40af", "20%", "15%", 45)}
             onMouseEnter={(e) => e.currentTarget.style.transform = "scale(1.1)"}
             onMouseLeave={(e) => e.currentTarget.style.transform = "scale(1)"}
           >
-            <FaChartLine size={42} />
+            <FaChartLine size={45} />
           </div>
           
           {/* Center Orange Car Circle */}
@@ -392,39 +426,31 @@ function Home() {
           </div>
           
           <div 
-            style={circleStyle("95px", "#3b82f6", "70%", "68%", 42)}
+            style={circleStyle("100px", "#1e3a8a", "20%", "78%", 45)}
             onMouseEnter={(e) => e.currentTarget.style.transform = "scale(1.1)"}
             onMouseLeave={(e) => e.currentTarget.style.transform = "scale(1)"}
           >
-            <FaBolt size={42} />
+            <FaBolt size={45} />
           </div>
           
           <div 
-            style={circleStyle("88px", "#60a5fa", "4%", "70%", 40)}
+            style={circleStyle("95px", "#2563eb", "65%", "15%", 42)}
             onMouseEnter={(e) => e.currentTarget.style.transform = "scale(1.1)"}
             onMouseLeave={(e) => e.currentTarget.style.transform = "scale(1)"}
           >
-            <FaPlug size={40} />
+            <FaDatabase size={42} />
           </div>
           
           <div 
-            style={circleStyle("78px", "#93c5fd", "58%", "18%", 36)}
+            style={circleStyle("105px", "#1e40af", "48%", "5%", 48)}
             onMouseEnter={(e) => e.currentTarget.style.transform = "scale(1.1)"}
             onMouseLeave={(e) => e.currentTarget.style.transform = "scale(1)"}
           >
-            <FaDatabase size={36} />
+            <FaFire size={48} />
           </div>
           
           <div 
-            style={circleStyle("92px", "#3b82f6", "4%", "48%", 44)}
-            onMouseEnter={(e) => e.currentTarget.style.transform = "scale(1.1)"}
-            onMouseLeave={(e) => e.currentTarget.style.transform = "scale(1)"}
-          >
-            <FaThermometerHalf size={44} />
-          </div>
-          
-          <div 
-            style={circleStyle("110px", "#60a5fa", "75%", "36%", 48)}
+            style={circleStyle("105px", "#1e3a8a", "65%", "78%", 48)}
             onMouseEnter={(e) => e.currentTarget.style.transform = "scale(1.1)"}
             onMouseLeave={(e) => e.currentTarget.style.transform = "scale(1)"}
           >
@@ -432,46 +458,13 @@ function Home() {
           </div>
           
           <div 
-            style={circleStyle("85px", "#3b82f6", "34%", "81%", 38)}
+            style={circleStyle("95px", "#1e40af", "48%", "88%", 42)}
             onMouseEnter={(e) => e.currentTarget.style.transform = "scale(1.1)"}
             onMouseLeave={(e) => e.currentTarget.style.transform = "scale(1)"}
           >
-            <FaCloud size={38} />
+            <FaHardHat size={42} />
           </div>
 
-          {/* Small decorative circles (like in Data.gov) */}
-          <div style={{
-            position: "absolute",
-            width: "18px",
-            height: "18px",
-            borderRadius: "50%",
-            background: "#3b82f6",
-            top: "25%",
-            left: "15%",
-            zIndex: 2,
-          }}></div>
-          
-          <div style={{
-            position: "absolute",
-            width: "22px",
-            height: "22px",
-            borderRadius: "50%",
-            background: "#60a5fa",
-            top: "85%",
-            left: "55%",
-            zIndex: 2,
-          }}></div>
-          
-          <div style={{
-            position: "absolute",
-            width: "16px",
-            height: "16px",
-            borderRadius: "50%",
-            background: "#3b82f6",
-            top: "18%",
-            left: "90%",
-            zIndex: 2,
-          }}></div>
         </div>
       </div>
 
@@ -480,34 +473,39 @@ function Home() {
         <div style={projectCardStyle}>
           <h2 style={projectTitleStyle}>About the Project</h2>
           <p style={projectTextStyle}>
-The rapid adoption of Electric Vehicles in India faces a 
-critical challenge standard battery management systems often fail to detect early signs of danger under 
-unique conditions.
+An open-access initiative designed to advance Indian EV safety by equipping researchers and manufacturers with the high-fidelity datasets and predictive models needed to detect thermal runaway before it starts.
           </p>
-          
-          <div style={{
-            margin: "2rem 0",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center"
-          }}>
-            <img 
-              src="/mahaev/motivation.jpeg" 
-              alt="EV Battery Safety Motivation" 
-              style={{
-                maxWidth: "100%",
-                height: "auto",
-                borderRadius: "8px",
-                boxShadow: "0 4px 12px rgba(0,0,0,0.1)"
-              }}
-            />
-          </div>
 
-          <p style={projectTextStyle}>
-To address this, the MAHAEV Project is developing a scalable Smart Battery Safety Diagnostic 
-System. Our solution integrates Multi-Modal Sensing monitoring gas emissions, pressure, temperature, and voltage 
-simultaneously with a Physics-Guided Machine Learning model. This approach allows us to detect the specific signatures of battery abuse and predict Thermal Runaway events before they occur, ensuring safer, longer-lasting battery packs for the Indian EV ecosystem.
-          </p>
+          <div style={buttonContainerStyle}>
+            <button 
+              style={primaryButtonStyle}
+              onClick={() => navigate('/about')}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = "translateY(-2px)";
+                e.currentTarget.style.boxShadow = "0 6px 20px rgba(127, 29, 29, 0.4)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = "translateY(0)";
+                e.currentTarget.style.boxShadow = "0 4px 12px rgba(127, 29, 29, 0.3)";
+              }}
+            >
+              View Project Details
+            </button>
+            <button 
+              style={secondaryButtonStyle}
+              onClick={() => navigate('/deliverables#timeline')}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = "#7f1d1d";
+                e.currentTarget.style.color = "white";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = "white";
+                e.currentTarget.style.color = "#7f1d1d";
+              }}
+            >
+              View Timeline
+            </button>
+          </div>
         </div>
       </div>
 
@@ -523,7 +521,7 @@ simultaneously with a Physics-Guided Machine Learning model. This approach allow
             onMouseEnter={(e) => {
               e.currentTarget.style.transform = "translateY(-6px)";
               e.currentTarget.style.boxShadow = "0 12px 24px rgba(59,130,246,0.15)";
-              e.currentTarget.style.borderColor = "#3b82f6";
+              e.currentTarget.style.borderColor = "#1e3a8a";
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.transform = "translateY(0)";
@@ -552,7 +550,7 @@ simultaneously with a Physics-Guided Machine Learning model. This approach allow
             onMouseEnter={(e) => {
               e.currentTarget.style.transform = "translateY(-6px)";
               e.currentTarget.style.boxShadow = "0 12px 24px rgba(59,130,246,0.15)";
-              e.currentTarget.style.borderColor = "#3b82f6";
+              e.currentTarget.style.borderColor = "#1e3a8a";
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.transform = "translateY(0)";
@@ -581,7 +579,7 @@ simultaneously with a Physics-Guided Machine Learning model. This approach allow
             onMouseEnter={(e) => {
               e.currentTarget.style.transform = "translateY(-6px)";
               e.currentTarget.style.boxShadow = "0 12px 24px rgba(59,130,246,0.15)";
-              e.currentTarget.style.borderColor = "#3b82f6";
+              e.currentTarget.style.borderColor = "#1e3a8a";
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.transform = "translateY(0)";

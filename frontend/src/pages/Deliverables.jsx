@@ -1,8 +1,23 @@
 import { FaCalendarAlt, FaRocket, FaUniversity, FaTrophy } from 'react-icons/fa';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
 function ProjectOverview() {
   const [activePage, setActivePage] = useState('main');
+  const location = useLocation();
+
+  useEffect(() => {
+    // Check if there's a hash in the URL and set the active page accordingly
+    if (location.hash === '#timeline') {
+      setActivePage('timeline');
+    } else if (location.hash === '#status') {
+      setActivePage('status');
+    } else if (location.hash === '#funding') {
+      setActivePage('funding');
+    } else if (location.hash === '#outputs') {
+      setActivePage('outputs');
+    }
+  }, [location]);
 
   const containerStyle = {
     minHeight: "100vh",
@@ -229,9 +244,9 @@ function TimelineDeliverables({ onBack }) {
   };
 
   const phases = [
-    { label: "A", title: "Experimental Data Collection + Battery Digital Twin (BDT) Development", duration: "Months 1-12", description: "Analyse influence of battery temperature and charging current rate on Lithium-Ion Battery (LIB) degradation. Design Electrothermal Abuse (ETA) test rig with integrated on-board controller, heater bench, and communication line." },
-    { label: "B", title: "Multimodal Sensing Suite with Internet of Things (IoT) + BDT Integration", duration: "Months 13-24", description: "Develop multi-modal sensing suite for temperature, voltage, pressure, and gas detection with ETA rig. Integrate BDT with sensing setup to forecast Thermal Runaway (TR) events and prevent abuse conditions. Real-time implementation of Artificial Intelligence (AI)-based fault detection algorithm." },
-    { label: "C", title: "Deployment of Smart Battery Safety Diagnostic System", duration: "Months 25-36", description: "Develop real-time anomaly detection algorithm coupled with IoT hardware board. Deployment and testing of smart battery safety diagnostics system. Implement model to optimize battery pack charging and discharging cycles to improve lifespan." },
+    { label: "A", title: "Experimental Data Collection + Battery Digital Twin (BDT) Development", duration: "Year 1", description: "Analyse influence of battery temperature and charging current rate on Lithium-Ion Battery (LIB) degradation. Design Electrothermal Abuse (ETA) test rig with integrated on-board controller, heater bench, and communication line." },
+    { label: "B", title: "Multimodal Sensing Suite with Internet of Things (IoT) + BDT Integration", duration: "Year 2", description: "Develop multi-modal sensing suite for temperature, voltage, pressure, and gas detection with ETA rig. Integrate BDT with sensing setup to forecast Thermal Runaway (TR) events and prevent abuse conditions. Real-time implementation of Artificial Intelligence (AI)-based fault detection algorithm." },
+    { label: "C", title: "Deployment of Smart Battery Safety Diagnostic System", duration: "Year 3", description: "Develop real-time anomaly detection algorithm coupled with IoT hardware board. Deployment and testing of smart battery safety diagnostics system. Implement model to optimize battery pack charging and discharging cycles to improve lifespan." },
   ];
 
   return (
@@ -564,7 +579,7 @@ function FundingAgencies({ onBack }) {
           Anusandhan National Research Foundation
         </h3>
         <p style={{ color: "#64748b", fontSize: "1.1rem", lineHeight: "1.8", maxWidth: "800px", margin: "0 auto" }}>
-          ANRF (Anusandhan National Research Foundation) is the primary funding agency sponsoring      MAHA-EV e-rights. 
+          ANRF (Anusandhan National Research Foundation) is the primary funding agency sponsoring MAHA-EV E-rides. 
           </p>
       </div>
 
@@ -650,7 +665,10 @@ function Outputs({ onBack }) {
           Conference Proceedings
         </h3>
         
-        <div style={{ background: "#f8fafc", borderRadius: "8px", padding: "1.5rem", marginBottom: "1rem", borderLeft: "4px solid #334155" }}>
+        <div style={{ background: "#f8fafc", borderRadius: "8px", padding: "1.5rem", marginBottom: "1rem", borderLeft: "4px solid #334155", position: "relative" }}>
+          <div style={{ display: "inline-block", background: "linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)", color: "#1e293b", padding: "0.4rem 1rem", borderRadius: "20px", fontSize: "0.85rem", fontWeight: "700", marginBottom: "0.75rem" }}>
+            Best Paper Award
+          </div>
           <p style={{ color: "#1e293b", fontSize: "1rem", lineHeight: "1.8", margin: 0 }}>
             <strong>1.</strong> Y.N. Desai, S. Ghosh and P. Bharadwaj, "Predicting Mechanically Induced Thermal Runaway Severity in Multi-Chemistry Lithium-Ion Cells Using LightGBM for Battery Safety Applications," <em>2025 IEEE 12th National Power Electronics Conference (NPEC)</em>, Calicut, India, Dec. 2025.
           </p>
