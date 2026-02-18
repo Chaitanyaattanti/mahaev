@@ -204,7 +204,7 @@ function About() {
                   rel="noopener noreferrer"
                   style={{ color: "#7f1d1d", fontWeight: "600" }}
                 >
-                  Smart Power and Energy Laboratory (SPEL)
+                  Smart Power and Electronics Laboratory (SPEL)
                 </a>
                 . The project is supported by leading funding agencies committed to advancing electric vehicle
                 safety and sustainable energy solutions.
