@@ -85,7 +85,7 @@ function Navbar() {
             <img src={`${import.meta.env.BASE_URL}spel-logo.png`} alt="SPEL Logo" style={logoImageStyle} />
           </a>
           <div style={logoTextContainerStyle}>
-            <div style={logoTextStyle}>MAHA-EV-MACHINE</div>
+            <div style={logoTextStyle}>MAHA-EV-MISSION</div>
             <div style={subTextStyle}>IIT Gandhinagar</div>
           </div>
         </div>
