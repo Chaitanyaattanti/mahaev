@@ -289,36 +289,34 @@ function CurrentStatus({ onBack }) {
 
       {/* Project Status Indicator */}
       <div style={{
-        background: "linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%)",
-        border: "3px solid #4b5563",
-        borderRadius: "16px",
-        padding: "2rem",
+        background: "white",
+        border: "2px solid #e2e8f0",
+        borderRadius: "12px",
+        padding: "2.5rem",
         marginBottom: "3rem",
         textAlign: "center",
-        boxShadow: "0 8px 16px rgba(59,130,246,0.2)"
+        boxShadow: "0 4px 12px rgba(0,0,0,0.08)"
       }}>
         <div style={{
           display: "inline-flex",
           alignItems: "center",
           gap: "1rem",
-          background: "white",
+          background: "linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%)",
           padding: "1rem 2.5rem",
-          borderRadius: "50px",
-          border: "2px solid #4b5563",
-          boxShadow: "0 4px 8px rgba(0,0,0,0.1)"
+          borderRadius: "8px",
+          boxShadow: "0 4px 12px rgba(30, 58, 138, 0.3)"
         }}>
           <div style={{
-            width: "20px",
-            height: "20px",
+            width: "12px",
+            height: "12px",
             borderRadius: "50%",
-            background: "#4b5563",
-            animation: "pulse 2s infinite",
-            boxShadow: "0 0 0 0 rgba(59,130,246,0.7)"
+            background: "#f97316",
+            boxShadow: "0 0 8px rgba(249, 115, 22, 0.6)"
           }}></div>
           <span style={{
-            fontSize: "1.5rem",
-            fontWeight: "800",
-            color: "#1e293b",
+            fontSize: "1.3rem",
+            fontWeight: "700",
+            color: "white",
             letterSpacing: "0.02em"
           }}>
             IN DEVELOPMENT
@@ -326,9 +324,9 @@ function CurrentStatus({ onBack }) {
         </div>
         <p style={{
           marginTop: "1.5rem",
-          fontSize: "1.1rem",
-          color: "#1e40af",
-          fontWeight: "600"
+          fontSize: "1.05rem",
+          color: "#475569",
+          lineHeight: "1.6"
         }}>
           Active research phase - Multiple work streams in progress
         </p>
