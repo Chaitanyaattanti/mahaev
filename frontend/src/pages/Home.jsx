@@ -577,6 +577,24 @@ function Home() {
           <p style={projectTextStyle}>
 An open-access initiative designed to advance Indian EV safety by equipping researchers and manufacturers with the high-fidelity datasets and predictive models needed to detect thermal runaway before it starts.
           </p>
+          <div style={{
+            margin: "2rem 0",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center"
+          }}>
+            <img 
+              src="/mahaev/EV_charging_station_fire_Delhi_1654666921139_1654666944812.jpeg" 
+              alt="EV Charging Station Fire Delhi" 
+              style={{
+                maxWidth: "600px",
+                width: "100%",
+                height: "auto",
+                borderRadius: "8px",
+                boxShadow: "0 4px 12px rgba(0,0,0,0.1)"
+              }}
+            />
+          </div>
 
           <div style={buttonContainerStyle}>
             <button 
