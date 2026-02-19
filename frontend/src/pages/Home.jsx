@@ -49,7 +49,7 @@ function Home() {
     fontSize: "1.15rem",
     color: "#475569",
     lineHeight: "1.7",
-    marginBottom: "2.5rem",
+    marginBottom: "2rem",
     maxWidth: "580px",
   };
 
@@ -361,31 +361,27 @@ function Home() {
           <style>
             {`
               @keyframes float {
-                0%, 100% { transform: translateY(0px) rotate(0deg); }
-                50% { transform: translateY(-20px) rotate(5deg); }
+                0%, 100% { transform: translateY(0px); }
+                50% { transform: translateY(-15px); }
               }
               @keyframes floatSlow {
-                0%, 100% { transform: translateY(0px) rotate(0deg); }
-                50% { transform: translateY(-15px) rotate(-3deg); }
+                0%, 100% { transform: translateY(0px); }
+                50% { transform: translateY(-10px); }
               }
               @keyframes pulse {
-                0%, 100% { opacity: 0.6; transform: scale(1); }
-                50% { opacity: 1; transform: scale(1.1); }
-              }
-              @keyframes rotate {
-                from { transform: rotate(0deg); }
-                to { transform: rotate(360deg); }
+                0%, 100% { opacity: 0.6; }
+                50% { opacity: 1; }
               }
               .kinetic-text {
                 position: absolute;
                 font-weight: 700;
-                cursor: default;
+                cursor: pointer;
                 transition: all 0.3s ease;
                 user-select: none;
               }
               .kinetic-text:hover {
-                transform: scale(1.2) !important;
-                z-index: 10;
+                transform: scale(1.15);
+                filter: brightness(1.2);
               }
               .kinetic-icon {
                 position: absolute;
@@ -393,178 +389,192 @@ function Home() {
                 align-items: center;
                 justify-content: center;
                 transition: all 0.3s ease;
-                cursor: default;
+                cursor: pointer;
               }
               .kinetic-icon:hover {
-                transform: scale(1.3) rotate(15deg) !important;
-                z-index: 10;
+                transform: scale(1.2) rotate(5deg);
+                filter: drop-shadow(0 0 8px currentColor);
               }
             `}
           </style>
 
-          {/* Large Terms */}
+          {/* Large Terms - Better spacing */}
           <div className="kinetic-text" style={{ 
-            top: "5%", left: "45%", fontSize: "2.8rem", color: "#1e3a8a", 
-            animation: "float 6s ease-in-out infinite" 
+            top: "8%", left: "42%", fontSize: "2.5rem", color: "#1e3a8a", 
+            animation: "float 6s ease-in-out infinite"
           }}>
             BATTERY SAFETY
           </div>
 
           <div className="kinetic-text" style={{ 
-            top: "15%", left: "70%", fontSize: "2rem", color: "#f97316", 
-            animation: "floatSlow 5s ease-in-out infinite 1s" 
+            top: "18%", left: "72%", fontSize: "1.8rem", color: "#f97316", 
+            animation: "floatSlow 5s ease-in-out infinite 1s"
           }}>
             EV RIDES
           </div>
 
           <div className="kinetic-text" style={{ 
-            top: "35%", left: "8%", fontSize: "1.8rem", color: "#2563eb", 
-            animation: "float 7s ease-in-out infinite 2s" 
+            top: "38%", left: "5%", fontSize: "1.6rem", color: "#2563eb", 
+            animation: "float 7s ease-in-out infinite 2s"
           }}>
             Thermal Runaway
           </div>
 
           <div className="kinetic-text" style={{ 
-            top: "55%", left: "75%", fontSize: "2.2rem", color: "#1e40af", 
-            animation: "floatSlow 6s ease-in-out infinite 0.5s" 
+            top: "58%", left: "70%", fontSize: "2rem", color: "#1e40af", 
+            animation: "floatSlow 6s ease-in-out infinite 0.5s"
           }}>
             Machine Learning
           </div>
 
           <div className="kinetic-text" style={{ 
-            top: "75%", left: "15%", fontSize: "1.6rem", color: "#f97316", 
-            animation: "float 5.5s ease-in-out infinite 1.5s" 
+            top: "78%", left: "12%", fontSize: "1.5rem", color: "#f97316", 
+            animation: "float 5.5s ease-in-out infinite 1.5s"
           }}>
             Predictive
           </div>
 
           {/* Medium Terms */}
           <div className="kinetic-text" style={{ 
-            top: "25%", left: "15%", fontSize: "1.4rem", color: "#1e3a8a", opacity: 0.8,
-            animation: "floatSlow 6.5s ease-in-out infinite 2.5s" 
+            top: "28%", left: "12%", fontSize: "1.3rem", color: "#1e3a8a", opacity: 0.8,
+            animation: "floatSlow 6.5s ease-in-out infinite 2.5s"
           }}>
             Diagnostics
           </div>
 
           <div className="kinetic-text" style={{ 
-            top: "48%", left: "45%", fontSize: "1.5rem", color: "#64748b", opacity: 0.7,
-            animation: "float 7s ease-in-out infinite 1s" 
+            top: "52%", left: "42%", fontSize: "1.4rem", color: "#64748b", opacity: 0.7,
+            animation: "float 7s ease-in-out infinite 1s"
           }}>
             IoT Sensors
           </div>
 
           <div className="kinetic-text" style={{ 
-            top: "68%", left: "52%", fontSize: "1.3rem", color: "#2563eb", opacity: 0.8,
-            animation: "floatSlow 5s ease-in-out infinite 2s" 
+            top: "72%", left: "50%", fontSize: "1.2rem", color: "#2563eb", opacity: 0.8,
+            animation: "floatSlow 5s ease-in-out infinite 2s"
           }}>
             Real-time
           </div>
 
           <div className="kinetic-text" style={{ 
-            top: "12%", left: "25%", fontSize: "1.2rem", color: "#475569", opacity: 0.7,
-            animation: "float 6s ease-in-out infinite 3s" 
+            top: "15%", left: "22%", fontSize: "1.1rem", color: "#475569", opacity: 0.7,
+            animation: "float 6s ease-in-out infinite 3s"
           }}>
             Datasets
           </div>
 
+          <div className="kinetic-text" style={{ 
+            top: "45%", left: "8%", fontSize: "1.4rem", color: "#f97316", opacity: 0.75,
+            animation: "float 6s ease-in-out infinite 1.5s"
+          }}>
+            Electric Vehicle
+          </div>
+
+          <div className="kinetic-text" style={{ 
+            top: "62%", left: "25%", fontSize: "1.3rem", color: "#1e40af", opacity: 0.75,
+            animation: "floatSlow 6.5s ease-in-out infinite 2.5s"
+          }}>
+            Battery Testing
+          </div>
+
           {/* Small Terms */}
           <div className="kinetic-text" style={{ 
-            top: "42%", left: "28%", fontSize: "1rem", color: "#94a3b8", opacity: 0.6,
-            animation: "pulse 4s ease-in-out infinite" 
+            top: "35%", left: "28%", fontSize: "0.95rem", color: "#94a3b8", opacity: 0.6,
+            animation: "pulse 4s ease-in-out infinite"
           }}>
             AIS-156
           </div>
 
           <div className="kinetic-text" style={{ 
-            top: "62%", left: "38%", fontSize: "1rem", color: "#94a3b8", opacity: 0.6,
-            animation: "pulse 4.5s ease-in-out infinite 1s" 
+            top: "68%", left: "35%", fontSize: "0.95rem", color: "#94a3b8", opacity: 0.6,
+            animation: "pulse 4.5s ease-in-out infinite 1s"
           }}>
             Monitoring
           </div>
 
           <div className="kinetic-text" style={{ 
-            top: "85%", left: "60%", fontSize: "0.95rem", color: "#94a3b8", opacity: 0.6,
-            animation: "pulse 5s ease-in-out infinite 0.5s" 
+            top: "88%", left: "58%", fontSize: "0.9rem", color: "#94a3b8", opacity: 0.6,
+            animation: "pulse 5s ease-in-out infinite 0.5s"
           }}>
             Safety Standards
           </div>
 
           <div className="kinetic-text" style={{ 
-            top: "8%", left: "82%", fontSize: "0.9rem", color: "#94a3b8", opacity: 0.6,
-            animation: "pulse 4.2s ease-in-out infinite 2s" 
+            top: "10%", left: "80%", fontSize: "0.85rem", color: "#94a3b8", opacity: 0.6,
+            animation: "pulse 4.2s ease-in-out infinite 2s"
           }}>
             ANRF
           </div>
 
           <div className="kinetic-text" style={{ 
-            top: "82%", left: "85%", fontSize: "0.9rem", color: "#94a3b8", opacity: 0.6,
-            animation: "pulse 4.8s ease-in-out infinite 1.5s" 
+            top: "85%", left: "82%", fontSize: "0.85rem", color: "#94a3b8", opacity: 0.6,
+            animation: "pulse 4.8s ease-in-out infinite 1.5s"
           }}>
             AIS-038
           </div>
 
-          {/* Floating Icons */}
+          {/* Floating Icons - Better spacing */}
           <div className="kinetic-icon" style={{ 
-            top: "30%", left: "62%", color: "#f97316",
-            animation: "float 5s ease-in-out infinite 0.5s" 
+            top: "32%", left: "60%", color: "#f97316",
+            animation: "float 5s ease-in-out infinite 0.5s"
           }}>
-            <FaCar size={50} />
+            <FaCar size={45} />
           </div>
 
           <div className="kinetic-icon" style={{ 
-            top: "20%", left: "55%", color: "#1e3a8a",
-            animation: "floatSlow 6s ease-in-out infinite 2s" 
+            top: "22%", left: "52%", color: "#1e3a8a",
+            animation: "floatSlow 6s ease-in-out infinite 2s"
           }}>
-            <FaBatteryFull size={38} />
+            <FaBatteryFull size={36} />
           </div>
 
           <div className="kinetic-icon" style={{ 
-            top: "50%", left: "12%", color: "#2563eb",
-            animation: "pulse 3s ease-in-out infinite" 
+            top: "52%", left: "10%", color: "#2563eb",
+            animation: "pulse 3s ease-in-out infinite"
           }}>
-            <FaFire size={35} />
+            <FaFire size={32} />
           </div>
 
           <div className="kinetic-icon" style={{ 
-            top: "65%", left: "68%", color: "#1e40af",
-            animation: "floatSlow 7s ease-in-out infinite 1s" 
+            top: "68%", left: "65%", color: "#1e40af",
+            animation: "floatSlow 7s ease-in-out infinite 1s"
           }}>
-            <FaMicrochip size={32} />
+            <FaMicrochip size={30} />
           </div>
 
           <div className="kinetic-icon" style={{ 
-            top: "78%", left: "42%", color: "#f97316",
-            animation: "float 5.5s ease-in-out infinite 2.5s" 
+            top: "82%", left: "40%", color: "#f97316",
+            animation: "float 5.8s ease-in-out infinite 3s"
           }}>
-            <FaBolt size={28} />
+            <FaBolt size={26} />
           </div>
 
           <div className="kinetic-icon" style={{ 
-            top: "38%", left: "88%", color: "#2563eb",
-            animation: "pulse 4s ease-in-out infinite 0.8s" 
+            top: "40%", left: "85%", color: "#2563eb",
+            animation: "pulse 4s ease-in-out infinite 0.8s"
           }}>
-            <FaChartLine size={30} />
+            <FaChartLine size={28} />
           </div>
 
           <div className="kinetic-icon" style={{ 
-            top: "15%", left: "5%", color: "#1e3a8a",
-            animation: "floatSlow 6.5s ease-in-out infinite 1.5s" 
+            top: "18%", left: "8%", color: "#1e3a8a",
+            animation: "floatSlow 6.5s ease-in-out infinite 1.5s"
           }}>
-            <FaDatabase size={26} />
+            <FaDatabase size={24} />
           </div>
 
           <div className="kinetic-icon" style={{ 
-            top: "88%", left: "25%", color: "#f97316",
-            animation: "float 5.8s ease-in-out infinite 3s" 
+            top: "90%", left: "22%", color: "#f97316",
+            animation: "float 5.8s ease-in-out infinite 2.5s"
           }}>
-            <FaHardHat size={24} />
+            <FaHardHat size={22} />
           </div>
 
           <div className="kinetic-icon" style={{ 
-            top: "58%", left: "90%", color: "#1e40af",
-            animation: "pulse 4.5s ease-in-out infinite 1.2s" 
+            top: "60%", left: "88%", color: "#1e40af",
+            animation: "pulse 4.5s ease-in-out infinite 1.2s"
           }}>
-            <FaEye size={28} />
+            <FaEye size={26} />
           </div>
 
         </div>
