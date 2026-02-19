@@ -89,6 +89,25 @@ function Standards() {
     lineHeight: "1.7",
   };
 
+  const bulletListStyle = {
+    marginTop: "1.5rem",
+    paddingLeft: "1.5rem",
+  };
+
+  const bulletItemStyle = {
+    marginBottom: "0.8rem",
+    fontSize: "1rem",
+    color: "#475569",
+    lineHeight: "1.7",
+  };
+
+  const linkStyle = {
+    color: "#1e40af",
+    textDecoration: "none",
+    fontWeight: "600",
+    transition: "all 0.3s ease",
+  };
+
   return (
     <div style={containerStyle}>
       <h1 style={headerStyle}>Indian Standards for Battery Safety</h1>
@@ -102,7 +121,66 @@ function Standards() {
                 alt="Automotive Industry Standards in India under CMVR"
                 style={imageStyle}
               />
-              <h3 style={imageTitleStyle}>Automotive Industry Standards in India under CMVR (Central Motor Vehicle Rules)</h3>
+              <h3 style={imageTitleStyle}>AIS-038 Rev.2: Power-Driven Vehicles and Components - Requirements for Electric Power Train</h3>
+              
+              <div style={{ marginTop: "1.5rem" }}>
+                <ul style={bulletListStyle}>
+                  <li style={bulletItemStyle}>
+                    <a 
+                      href="https://evreporter.com/battery-safety-standards-in-india-by-arai/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={linkStyle}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.color = "#1e3a8a";
+                        e.currentTarget.style.textDecoration = "underline";
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.color = "#1e40af";
+                        e.currentTarget.style.textDecoration = "none";
+                      }}
+                    >
+                      Battery Safety Standards in India by ARAI - EV Reporter
+                    </a>
+                  </li>
+                  <li style={bulletItemStyle}>
+                    <a 
+                      href="https://morth.nic.in/sites/default/files/ASI/AIS-038_Rev.2.doc.pdf"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={linkStyle}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.color = "#1e3a8a";
+                        e.currentTarget.style.textDecoration = "underline";
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.color = "#1e40af";
+                        e.currentTarget.style.textDecoration = "none";
+                      }}
+                    >
+                      AIS-038: Battery + Vehicle Safety (M&N Category)
+                    </a>
+                  </li>
+                  <li style={bulletItemStyle}>
+                    <a 
+                      href="https://morth.nic.in/sites/default/files/ASI/AIS-156.pdf"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={linkStyle}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.color = "#1e3a8a";
+                        e.currentTarget.style.textDecoration = "underline";
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.color = "#1e40af";
+                        e.currentTarget.style.textDecoration = "none";
+                      }}
+                    >
+                      AIS-156: Battery + Vehicle Safety (L Category)
+                    </a>
+                  </li>
+                </ul>
+              </div>
             </div>
 
             <div style={imageBoxStyle}>
@@ -111,7 +189,7 @@ function Standards() {
                 alt="AIS-156 Battery Safety Standards"
                 style={imageStyle}
               />
-              <h3 style={imageTitleStyle}>AIS-156 Standard: Battery Operated Vehicles Safety</h3>
+              <h3 style={imageTitleStyle}>AIS-156: Battery Operated Vehicles - Safety Requirements</h3>
             </div>
           </div>
         </section>

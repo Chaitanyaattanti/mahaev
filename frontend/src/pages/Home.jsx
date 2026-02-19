@@ -351,118 +351,220 @@ function Home() {
             Diagnostic System
           </h1>
           <p style={descriptionStyle}>
-            A platform to showcase ongoing research - battery safety improvement under 
-            Indian conditions at Smart Power Electronics Laboratory (SPEL), IIT Gandhinagar
+           A platform to showcase ongoing research for battery safety improvement in Indian conditions at Smart Power Electronics Laboratory (SPEL), IIT Gandhinagar, under ANRF MAHA-EV E-RIDES.
+
           </p>
         </div>
 
-        {/* Decorative Circles with Network Lines */}
+        {/* Kinetic Typography Cloud */}
         <div style={decorativeCirclesStyle}>
-          {/* SVG for connection lines - matching Data.gov style */}
-          <svg 
-            style={{
-              position: "absolute",
-              width: "100%",
-              height: "100%",
-              top: 0,
-              left: 0,
-              zIndex: 1,
-            }}
-          >
-            {/* Lines from center (orange database) to other circles */}
-            <line x1="52%" y1="38%" x2="34%" y2="14%" stroke="#cbd5e1" strokeWidth="1.5" opacity="0.4"/>
-            <line x1="52%" y1="38%" x2="12%" y2="42%" stroke="#cbd5e1" strokeWidth="1.5" opacity="0.4"/>
-            <line x1="52%" y1="38%" x2="40%" y2="78%" stroke="#cbd5e1" strokeWidth="1.5" opacity="0.4"/>
-            <line x1="52%" y1="38%" x2="70%" y2="72%" stroke="#cbd5e1" strokeWidth="1.5" opacity="0.4"/>
-            <line x1="52%" y1="38%" x2="85%" y2="38%" stroke="#cbd5e1" strokeWidth="1.5" opacity="0.4"/>
-            <line x1="52%" y1="38%" x2="74%" y2="14%" stroke="#cbd5e1" strokeWidth="1.5" opacity="0.4"/>
-            <line x1="52%" y1="38%" x2="52%" y2="8%" stroke="#cbd5e1" strokeWidth="1.5" opacity="0.4"/>
-            <line x1="52%" y1="38%" x2="22%" y2="62%" stroke="#cbd5e1" strokeWidth="1.5" opacity="0.4"/>
+          <style>
+            {`
+              @keyframes float {
+                0%, 100% { transform: translateY(0px) rotate(0deg); }
+                50% { transform: translateY(-20px) rotate(5deg); }
+              }
+              @keyframes floatSlow {
+                0%, 100% { transform: translateY(0px) rotate(0deg); }
+                50% { transform: translateY(-15px) rotate(-3deg); }
+              }
+              @keyframes pulse {
+                0%, 100% { opacity: 0.6; transform: scale(1); }
+                50% { opacity: 1; transform: scale(1.1); }
+              }
+              @keyframes rotate {
+                from { transform: rotate(0deg); }
+                to { transform: rotate(360deg); }
+              }
+              .kinetic-text {
+                position: absolute;
+                font-weight: 700;
+                cursor: default;
+                transition: all 0.3s ease;
+                user-select: none;
+              }
+              .kinetic-text:hover {
+                transform: scale(1.2) !important;
+                z-index: 10;
+              }
+              .kinetic-icon {
+                position: absolute;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: all 0.3s ease;
+                cursor: default;
+              }
+              .kinetic-icon:hover {
+                transform: scale(1.3) rotate(15deg) !important;
+                z-index: 10;
+              }
+            `}
+          </style>
 
-            {/* Additional connecting lines between outer circles */}
-            <line x1="34%" y1="14%" x2="52%" y2="8%" stroke="#cbd5e1" strokeWidth="1.5" opacity="0.3"/>
-            <line x1="52%" y1="8%" x2="74%" y2="14%" stroke="#cbd5e1" strokeWidth="1.5" opacity="0.3"/>
-            <line x1="74%" y1="14%" x2="85%" y2="38%" stroke="#cbd5e1" strokeWidth="1.5" opacity="0.3"/>
-            <line x1="85%" y1="38%" x2="70%" y2="72%" stroke="#cbd5e1" strokeWidth="1.5" opacity="0.3"/>
-            <line x1="70%" y1="72%" x2="40%" y2="78%" stroke="#cbd5e1" strokeWidth="1.5" opacity="0.3"/>
-            <line x1="40%" y1="78%" x2="22%" y2="62%" stroke="#cbd5e1" strokeWidth="1.5" opacity="0.3"/>
-            <line x1="22%" y1="62%" x2="12%" y2="42%" stroke="#cbd5e1" strokeWidth="1.5" opacity="0.3"/>
-            <line x1="12%" y1="42%" x2="34%" y2="14%" stroke="#cbd5e1" strokeWidth="1.5" opacity="0.3"/>
+          {/* Large Terms */}
+          <div className="kinetic-text" style={{ 
+            top: "5%", left: "45%", fontSize: "2.8rem", color: "#1e3a8a", 
+            animation: "float 6s ease-in-out infinite" 
+          }}>
+            BATTERY SAFETY
+          </div>
 
-            {/* Extra web-like connections */}
-            <line x1="34%" y1="14%" x2="85%" y2="38%" stroke="#cbd5e1" strokeWidth="1" opacity="0.2"/>
-            <line x1="12%" y1="42%" x2="70%" y2="72%" stroke="#cbd5e1" strokeWidth="1" opacity="0.2"/>
-            <line x1="52%" y1="8%" x2="40%" y2="78%" stroke="#cbd5e1" strokeWidth="1" opacity="0.2"/>
-            <line x1="74%" y1="14%" x2="22%" y2="62%" stroke="#cbd5e1" strokeWidth="1" opacity="0.2"/>
-            <line x1="34%" y1="14%" x2="70%" y2="72%" stroke="#cbd5e1" strokeWidth="1" opacity="0.15"/>
-            <line x1="85%" y1="38%" x2="22%" y2="62%" stroke="#cbd5e1" strokeWidth="1" opacity="0.15"/>
+          <div className="kinetic-text" style={{ 
+            top: "15%", left: "70%", fontSize: "2rem", color: "#f97316", 
+            animation: "floatSlow 5s ease-in-out infinite 1s" 
+          }}>
+            EV RIDES
+          </div>
 
-          </svg>
+          <div className="kinetic-text" style={{ 
+            top: "35%", left: "8%", fontSize: "1.8rem", color: "#2563eb", 
+            animation: "float 7s ease-in-out infinite 2s" 
+          }}>
+            Thermal Runaway
+          </div>
 
-          {/* Icon Circles - Arranged in circular pattern */}
-          <div 
-            style={circleStyle("110px", "#1e3a8a", "8%", "48%", 50)}
-            onMouseEnter={(e) => e.currentTarget.style.transform = "scale(1.1)"}
-            onMouseLeave={(e) => e.currentTarget.style.transform = "scale(1)"}
-          >
-            <FaBatteryFull size={50} />
+          <div className="kinetic-text" style={{ 
+            top: "55%", left: "75%", fontSize: "2.2rem", color: "#1e40af", 
+            animation: "floatSlow 6s ease-in-out infinite 0.5s" 
+          }}>
+            Machine Learning
           </div>
-          
-          <div 
-            style={circleStyle("100px", "#1e40af", "20%", "15%", 45)}
-            onMouseEnter={(e) => e.currentTarget.style.transform = "scale(1.1)"}
-            onMouseLeave={(e) => e.currentTarget.style.transform = "scale(1)"}
-          >
-            <FaChartLine size={45} />
+
+          <div className="kinetic-text" style={{ 
+            top: "75%", left: "15%", fontSize: "1.6rem", color: "#f97316", 
+            animation: "float 5.5s ease-in-out infinite 1.5s" 
+          }}>
+            Predictive
           </div>
-          
-          {/* Center Orange Car Circle */}
-          <div 
-            style={circleStyle("160px", "#f97316", "33%", "48%", 70)}
-            onMouseEnter={(e) => e.currentTarget.style.transform = "scale(1.1)"}
-            onMouseLeave={(e) => e.currentTarget.style.transform = "scale(1)"}
-          >
-            <FaCar size={70} />
+
+          {/* Medium Terms */}
+          <div className="kinetic-text" style={{ 
+            top: "25%", left: "15%", fontSize: "1.4rem", color: "#1e3a8a", opacity: 0.8,
+            animation: "floatSlow 6.5s ease-in-out infinite 2.5s" 
+          }}>
+            Diagnostics
           </div>
-          
-          <div 
-            style={circleStyle("100px", "#1e3a8a", "20%", "78%", 45)}
-            onMouseEnter={(e) => e.currentTarget.style.transform = "scale(1.1)"}
-            onMouseLeave={(e) => e.currentTarget.style.transform = "scale(1)"}
-          >
-            <FaBolt size={45} />
+
+          <div className="kinetic-text" style={{ 
+            top: "48%", left: "45%", fontSize: "1.5rem", color: "#64748b", opacity: 0.7,
+            animation: "float 7s ease-in-out infinite 1s" 
+          }}>
+            IoT Sensors
           </div>
-          
-          <div 
-            style={circleStyle("95px", "#2563eb", "65%", "15%", 42)}
-            onMouseEnter={(e) => e.currentTarget.style.transform = "scale(1.1)"}
-            onMouseLeave={(e) => e.currentTarget.style.transform = "scale(1)"}
-          >
-            <FaDatabase size={42} />
+
+          <div className="kinetic-text" style={{ 
+            top: "68%", left: "52%", fontSize: "1.3rem", color: "#2563eb", opacity: 0.8,
+            animation: "floatSlow 5s ease-in-out infinite 2s" 
+          }}>
+            Real-time
           </div>
-          
-          <div 
-            style={circleStyle("105px", "#1e40af", "48%", "5%", 48)}
-            onMouseEnter={(e) => e.currentTarget.style.transform = "scale(1.1)"}
-            onMouseLeave={(e) => e.currentTarget.style.transform = "scale(1)"}
-          >
-            <FaFire size={48} />
+
+          <div className="kinetic-text" style={{ 
+            top: "12%", left: "25%", fontSize: "1.2rem", color: "#475569", opacity: 0.7,
+            animation: "float 6s ease-in-out infinite 3s" 
+          }}>
+            Datasets
           </div>
-          
-          <div 
-            style={circleStyle("105px", "#1e3a8a", "65%", "78%", 48)}
-            onMouseEnter={(e) => e.currentTarget.style.transform = "scale(1.1)"}
-            onMouseLeave={(e) => e.currentTarget.style.transform = "scale(1)"}
-          >
-            <FaMicrochip size={48} />
+
+          {/* Small Terms */}
+          <div className="kinetic-text" style={{ 
+            top: "42%", left: "28%", fontSize: "1rem", color: "#94a3b8", opacity: 0.6,
+            animation: "pulse 4s ease-in-out infinite" 
+          }}>
+            AIS-156
           </div>
-          
-          <div 
-            style={circleStyle("95px", "#1e40af", "48%", "88%", 42)}
-            onMouseEnter={(e) => e.currentTarget.style.transform = "scale(1.1)"}
-            onMouseLeave={(e) => e.currentTarget.style.transform = "scale(1)"}
-          >
-            <FaHardHat size={42} />
+
+          <div className="kinetic-text" style={{ 
+            top: "62%", left: "38%", fontSize: "1rem", color: "#94a3b8", opacity: 0.6,
+            animation: "pulse 4.5s ease-in-out infinite 1s" 
+          }}>
+            Monitoring
+          </div>
+
+          <div className="kinetic-text" style={{ 
+            top: "85%", left: "60%", fontSize: "0.95rem", color: "#94a3b8", opacity: 0.6,
+            animation: "pulse 5s ease-in-out infinite 0.5s" 
+          }}>
+            Safety Standards
+          </div>
+
+          <div className="kinetic-text" style={{ 
+            top: "8%", left: "82%", fontSize: "0.9rem", color: "#94a3b8", opacity: 0.6,
+            animation: "pulse 4.2s ease-in-out infinite 2s" 
+          }}>
+            ANRF
+          </div>
+
+          <div className="kinetic-text" style={{ 
+            top: "82%", left: "85%", fontSize: "0.9rem", color: "#94a3b8", opacity: 0.6,
+            animation: "pulse 4.8s ease-in-out infinite 1.5s" 
+          }}>
+            AIS-038
+          </div>
+
+          {/* Floating Icons */}
+          <div className="kinetic-icon" style={{ 
+            top: "30%", left: "62%", color: "#f97316",
+            animation: "float 5s ease-in-out infinite 0.5s" 
+          }}>
+            <FaCar size={50} />
+          </div>
+
+          <div className="kinetic-icon" style={{ 
+            top: "20%", left: "55%", color: "#1e3a8a",
+            animation: "floatSlow 6s ease-in-out infinite 2s" 
+          }}>
+            <FaBatteryFull size={38} />
+          </div>
+
+          <div className="kinetic-icon" style={{ 
+            top: "50%", left: "12%", color: "#2563eb",
+            animation: "pulse 3s ease-in-out infinite" 
+          }}>
+            <FaFire size={35} />
+          </div>
+
+          <div className="kinetic-icon" style={{ 
+            top: "65%", left: "68%", color: "#1e40af",
+            animation: "floatSlow 7s ease-in-out infinite 1s" 
+          }}>
+            <FaMicrochip size={32} />
+          </div>
+
+          <div className="kinetic-icon" style={{ 
+            top: "78%", left: "42%", color: "#f97316",
+            animation: "float 5.5s ease-in-out infinite 2.5s" 
+          }}>
+            <FaBolt size={28} />
+          </div>
+
+          <div className="kinetic-icon" style={{ 
+            top: "38%", left: "88%", color: "#2563eb",
+            animation: "pulse 4s ease-in-out infinite 0.8s" 
+          }}>
+            <FaChartLine size={30} />
+          </div>
+
+          <div className="kinetic-icon" style={{ 
+            top: "15%", left: "5%", color: "#1e3a8a",
+            animation: "floatSlow 6.5s ease-in-out infinite 1.5s" 
+          }}>
+            <FaDatabase size={26} />
+          </div>
+
+          <div className="kinetic-icon" style={{ 
+            top: "88%", left: "25%", color: "#f97316",
+            animation: "float 5.8s ease-in-out infinite 3s" 
+          }}>
+            <FaHardHat size={24} />
+          </div>
+
+          <div className="kinetic-icon" style={{ 
+            top: "58%", left: "90%", color: "#1e40af",
+            animation: "pulse 4.5s ease-in-out infinite 1.2s" 
+          }}>
+            <FaEye size={28} />
           </div>
 
         </div>

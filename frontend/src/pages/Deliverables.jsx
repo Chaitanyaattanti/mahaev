@@ -399,15 +399,26 @@ function FundingAgencies({ onBack }) {
     transition: "all 0.3s",
   };
 
-  const fundingCardStyle = (isPrimary) => ({
+  const fundingGridStyle = {
+    display: "flex",
+    gap: "2rem",
+    justifyContent: "center",
+    alignItems: "stretch",
+    flexWrap: "wrap",
+    marginTop: "3rem",
+  };
+
+  const fundingCardStyle = {
     background: "white",
     borderRadius: "16px",
     padding: "3rem 2rem",
-    marginBottom: "2rem",
-    boxShadow: isPrimary ? "0 12px 24px rgba(249, 158, 11, 0.2)" : "0 4px 8px rgba(0,0,0,0.1)",
-    border: isPrimary ? "3px solid #52525b" : "2px solid #e2e8f0",
+    boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
+    border: "2px solid #e2e8f0",
     textAlign: "center",
-  });
+    flex: "1",
+    minWidth: "300px",
+    maxWidth: "500px",
+  };
 
   const logoImageStyle = (height) => ({
     height: height,
@@ -438,30 +449,26 @@ function FundingAgencies({ onBack }) {
         </p>
       </div>
 
-      <div style={fundingCardStyle(true)}>
-        <div style={{ display: "inline-block", background: "linear-gradient(135deg, #52525b 0%, #71717a 100%)", color: "white", padding: "0.5rem 1.5rem", borderRadius: "20px", fontSize: "0.9rem", fontWeight: "700", marginBottom: "1.5rem" }}>
-          PRIMARY FUNDING
+      <div style={fundingGridStyle}>
+        <div style={fundingCardStyle}>
+          <div style={{ display: "inline-block", background: "linear-gradient(135deg, #52525b 0%, #71717a 100%)", color: "white", padding: "0.5rem 1.5rem", borderRadius: "20px", fontSize: "0.9rem", fontWeight: "700", marginBottom: "1.5rem" }}>
+            PRIMARY FUNDING
+          </div>
+          <img src="/mahaev/ANRF.png" alt="ANRF Logo" style={logoImageStyle("180px")} />
+          <h3 style={{ fontSize: "2rem", color: "#1e293b", fontWeight: "800", marginBottom: "1rem" }}>
+            Anusandhan National Research Foundation
+          </h3>
         </div>
-        <img src="/mahaev/ANRF.png" alt="ANRF Logo" style={logoImageStyle("180px")} />
-        <h3 style={{ fontSize: "2rem", color: "#1e293b", fontWeight: "800", marginBottom: "1rem" }}>
-          Anusandhan National Research Foundation
-        </h3>
-        <p style={{ color: "#64748b", fontSize: "1.1rem", lineHeight: "1.8", maxWidth: "800px", margin: "0 auto" }}>
-          ANRF (Anusandhan National Research Foundation) is the primary funding agency sponsoring MAHA-EV E-rides. 
-          </p>
-      </div>
 
-      <div style={fundingCardStyle(false)}>
-        <div style={{ display: "inline-block", background: "#64748b", color: "white", padding: "0.5rem 1.5rem", borderRadius: "20px", fontSize: "0.9rem", fontWeight: "700", marginBottom: "1.5rem" }}>
-          INDUSTRY PARTNER
+        <div style={fundingCardStyle}>
+          <div style={{ display: "inline-block", background: "#64748b", color: "white", padding: "0.5rem 1.5rem", borderRadius: "20px", fontSize: "0.9rem", fontWeight: "700", marginBottom: "1.5rem" }}>
+            INDUSTRY PARTNER
+          </div>
+          <img src="/mahaev/enphase.png" alt="Enphase Energy Logo" style={logoImageStyle("140px")} />
+          <h3 style={{ fontSize: "1.8rem", color: "#1e293b", fontWeight: "700", marginBottom: "1rem" }}>
+            Enphase Energy
+          </h3>
         </div>
-        <img src="/mahaev/enphase.png" alt="Enphase Energy Logo" style={logoImageStyle("140px")} />
-        <h3 style={{ fontSize: "1.8rem", color: "#1e293b", fontWeight: "700", marginBottom: "1rem" }}>
-          Enphase Energy
-        </h3>
-        <p style={{ color: "#64748b", fontSize: "1.1rem", lineHeight: "1.8", maxWidth: "800px", margin: "0 auto" }}>
-          They provide crucial industry partnership and co-funding support
-        </p>
       </div>
     </div>
   );
@@ -551,18 +558,6 @@ function Outputs({ onBack }) {
         <div style={{ background: "#f8fafc", borderRadius: "8px", padding: "1.5rem", marginBottom: "1rem", borderLeft: "4px solid #334155" }}>
           <p style={{ color: "#1e293b", fontSize: "1rem", lineHeight: "1.8", margin: 0 }}>
             <strong>1.</strong> S. S. Sinha, B. Lehman and P. Bharadwaj, "Life Extension of Lithium-Ion Battery: Degradation Comprehension, Modeling, Characterization, and Mitigation Strategies," in <em>IEEE Open Journal of Power Electronics</em>, vol. 7, pp. 1-27, 2026.
-          </p>
-        </div>
-        
-        <div style={{ background: "#f8fafc", borderRadius: "8px", padding: "1.5rem", marginBottom: "1rem", borderLeft: "4px solid #334155" }}>
-          <p style={{ color: "#1e293b", fontSize: "1rem", lineHeight: "1.8", margin: 0 }}>
-            <strong>2.</strong> R. D. Fonso, C. Cecati, R. Teodorescu, D. -I. Stroe and P. Bharadwaj, "Data-Driven Modeling of Li-Ion Battery Based on the Manufacturer Specifications and Laboratory Measurements," in <em>IEEE Transactions on Industry Applications</em>, vol. 61, no. 2, pp. 3485-3493, March-April 2025.
-          </p>
-        </div>
-        
-        <div style={{ background: "#f8fafc", borderRadius: "8px", padding: "1.5rem", marginBottom: "1rem", borderLeft: "4px solid #334155" }}>
-          <p style={{ color: "#1e293b", fontSize: "1rem", lineHeight: "1.8", margin: 0 }}>
-            <strong>3.</strong> R. D. Fonso, R. Teodorescu, C. Cecati and P. Bharadwaj, "A Battery Digital Twin From Laboratory Data Using Wavelet Analysis and Neural Networks," in <em>IEEE Transactions on Industrial Informatics</em>, vol. 20, no. 4, pp. 6889-6899, April 2024.
           </p>
         </div>
       </div>
