@@ -184,7 +184,7 @@ function Contact() {
             <div>
               <div style={contactLabelStyle}>LinkedIn</div>
               <a 
-                href="https://www.linkedin.com/company/spel-iitgn" 
+                href="https://www.linkedin.com/company/spel--iit-/" 
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{...contactValueStyle, ...linkStyle}}

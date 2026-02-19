@@ -206,18 +206,7 @@ function About() {
                 >
                   Smart Power and Electronics Laboratory (SPEL)
                 </a>
-                {" "}(
-                <a
-                  href="https://www.linkedin.com/company/spel--iit-/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{ color: "#0077b5", fontWeight: "600", textDecoration: "none" }}
-                  onMouseEnter={(e) => e.currentTarget.style.textDecoration = "underline"}
-                  onMouseLeave={(e) => e.currentTarget.style.textDecoration = "none"}
-                >
-                  LinkedIn
-                </a>
-                ). The project is supported by leading funding agencies committed to advancing electric vehicle
+                . The project is supported by leading funding agencies committed to advancing electric vehicle
                 safety and sustainable energy solutions.
               </p>
               <button

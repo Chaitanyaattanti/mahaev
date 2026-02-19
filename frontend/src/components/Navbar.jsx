@@ -86,7 +86,7 @@ function Navbar() {
           </a>
           <div style={logoTextContainerStyle}>
             <div style={logoTextStyle}>MAHA-EV-MISSION</div>
-            <div style={subTextStyle}>IIT Gandhinagar</div>
+            <div style={logoTextStyle}>IIT Gandhinagar</div>
           </div>
         </div>
         <div style={navLinksStyle}>
