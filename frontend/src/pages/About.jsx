@@ -124,7 +124,7 @@ function About() {
     <div style={containerStyle}>
       {/* Header */}
       <div style={headerSectionStyle}>
-        <h1 style={titleStyle}>About Us</h1>
+        <h1 style={titleStyle}>About the Project</h1>
       </div>
 
       {/* Mission Section */}

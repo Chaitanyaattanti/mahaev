@@ -408,10 +408,10 @@ function Home() {
           </div>
 
           <div className="kinetic-text" style={{ 
-            top: "18%", left: "72%", fontSize: "1.8rem", color: "#f97316", 
+            top: "18%", left: "68%", fontSize: "1.6rem", color: "#f97316", 
             animation: "floatSlow 5s ease-in-out infinite 1s"
           }}>
-            EV RIDES
+            Battery Standards
           </div>
 
           <div className="kinetic-text" style={{ 
@@ -480,13 +480,6 @@ function Home() {
 
           {/* Small Terms */}
           <div className="kinetic-text" style={{ 
-            top: "35%", left: "28%", fontSize: "0.95rem", color: "#94a3b8", opacity: 0.6,
-            animation: "pulse 4s ease-in-out infinite"
-          }}>
-            AIS-156
-          </div>
-
-          <div className="kinetic-text" style={{ 
             top: "68%", left: "35%", fontSize: "0.95rem", color: "#94a3b8", opacity: 0.6,
             animation: "pulse 4.5s ease-in-out infinite 1s"
           }}>
@@ -497,21 +490,7 @@ function Home() {
             top: "88%", left: "58%", fontSize: "0.9rem", color: "#94a3b8", opacity: 0.6,
             animation: "pulse 5s ease-in-out infinite 0.5s"
           }}>
-            Safety Standards
-          </div>
-
-          <div className="kinetic-text" style={{ 
-            top: "10%", left: "80%", fontSize: "0.85rem", color: "#94a3b8", opacity: 0.6,
-            animation: "pulse 4.2s ease-in-out infinite 2s"
-          }}>
-            ANRF
-          </div>
-
-          <div className="kinetic-text" style={{ 
-            top: "85%", left: "82%", fontSize: "0.85rem", color: "#94a3b8", opacity: 0.6,
-            animation: "pulse 4.8s ease-in-out infinite 1.5s"
-          }}>
-            AIS-038
+            Lithium Batteries
           </div>
 
           {/* Floating Icons - Better spacing */}
@@ -604,7 +583,7 @@ function Home() {
             />
           </div>
           <p style={projectTextStyle}>
-Lithium-ion batteries (LIBs) power modern EVs, but their safety is challenged by harsh Indian conditions high temperatures, humidity, and variable road loads. Abuse or faults can trigger fires and toxic gas release. Our project aims to develop a real-time early-warning system for battery abuse and fire prevention, supporting safer EV adoption in India’s Net Zero transition.
+Lithium-ion batteries (LIBs) power modern EVs, but their safety is challenged by harsh Indian conditions (high temperatures, humidity, and variable road loads). Abuse or faults can trigger fires and toxic gas release. Our project aims to develop a real-time early-warning system for battery abuse and fire prevention, supporting safer EV adoption in India’s net zero transition.
           </p>
           <div style={buttonContainerStyle}>
             <button 
