@@ -121,7 +121,7 @@ function Standards() {
                 alt="Automotive Industry Standards in India under CMVR"
                 style={imageStyle}
               />
-              <h3 style={imageTitleStyle}>AIS-038 Rev.2: Power-Driven Vehicles and Components - Requirements for Electric Power Train</h3>
+              <h3 style={imageTitleStyle}>Automotive Industry Standards in India under CMVR</h3>
               
               <div style={{ marginTop: "1.5rem" }}>
                 <ul style={bulletListStyle}>

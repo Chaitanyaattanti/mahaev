@@ -76,7 +76,7 @@ function TimelineDeliverables({ onBack }) {
     top: "0",
     bottom: "0",
     width: "4px",
-    background: "linear-gradient(to bottom, #4b5563, #374151)",
+    background: "linear-gradient(to bottom, #1e3a8a, #f97316, #059669)",
     transform: "translateX(-50%)",
     zIndex: 0,
   };
@@ -98,7 +98,7 @@ function TimelineDeliverables({ onBack }) {
     position: "relative",
   };
 
-  const phaseDotStyle = {
+  const phaseDotStyle = (phaseIndex) => ({
     position: "absolute",
     left: "50%",
     top: "50%",
@@ -107,14 +107,14 @@ function TimelineDeliverables({ onBack }) {
     height: "24px",
     borderRadius: "50%",
     background: "white",
-    border: "4px solid #4b5563",
+    border: `4px solid ${phaseIndex === 0 ? '#1e3a8a' : phaseIndex === 1 ? '#f97316' : '#059669'}`,
     zIndex: 2,
-  };
+  });
 
   const phases = [
-    { label: "A", title: "Experimental Data Collection + Battery Digital Twin (BDT) Development", duration: "Year 1", description: "Analyse influence of battery temperature and charging current rate on Lithium-Ion Battery (LIB) degradation. Design Electrothermal Abuse (ETA) test rig with integrated on-board controller, heater bench, and communication line." },
-    { label: "B", title: "Multimodal Sensing Suite with Internet of Things (IoT) + BDT Integration", duration: "Year 2", description: "Develop multi-modal sensing suite for temperature, voltage, pressure, and gas detection with ETA rig. Integrate BDT with sensing setup to forecast Thermal Runaway (TR) events and prevent abuse conditions. Real-time implementation of Artificial Intelligence (AI)-based fault detection algorithm." },
-    { label: "C", title: "Deployment of Smart Battery Safety Diagnostic System", duration: "Year 3", description: "Develop real-time anomaly detection algorithm coupled with IoT hardware board. Deployment and testing of smart battery safety diagnostics system. Implement model to optimize battery pack charging and discharging cycles to improve lifespan." },
+    { label: "A", title: "Experimental Data Collection + Battery Digital Twin (BDT) Development", duration: "Year 1", description: "Analyse influence of battery temperature and charging current rate on Lithium-Ion Battery (LIB) degradation. Design Electrothermal Abuse (ETA) test rig with integrated on-board controller, heater bench, and communication line.", color: "#1e3a8a", lightColor: "#2563eb" },
+    { label: "B", title: "Multimodal Sensing Suite with Internet of Things (IoT) + BDT Integration", duration: "Year 2", description: "Develop multi-modal sensing suite for temperature, voltage, pressure, and gas detection with ETA rig. Integrate BDT with sensing setup to forecast Thermal Runaway (TR) events and prevent abuse conditions. Real-time implementation of Artificial Intelligence (AI)-based fault detection algorithm.", color: "#f97316", lightColor: "#fb923c" },
+    { label: "C", title: "Deployment of Smart Battery Safety Diagnostic System", duration: "Year 3", description: "Develop real-time anomaly detection algorithm coupled with IoT hardware board. Deployment and testing of smart battery safety diagnostics system. Implement model to optimize battery pack charging and discharging cycles to improve lifespan.", color: "#059669", lightColor: "#10b981" },
   ];
 
   return (
@@ -144,7 +144,7 @@ function TimelineDeliverables({ onBack }) {
           <div key={index} style={phaseStyle(index % 2 === 0)}>
             <div style={phaseCardStyle}>
               <div style={{
-                background: "linear-gradient(135deg, #4b5563 0%, #6b7280 100%)",
+                background: `linear-gradient(135deg, ${phase.color} 0%, ${phase.lightColor} 100%)`,
                 color: "white",
                 padding: "0.5rem 1rem",
                 borderRadius: "8px",
@@ -162,7 +162,7 @@ function TimelineDeliverables({ onBack }) {
                 {phase.description}
               </p>
             </div>
-            <div style={phaseDotStyle}></div>
+            <div style={phaseDotStyle(index)}></div>
           </div>
         ))}
       </div>

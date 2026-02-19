@@ -208,11 +208,12 @@ function Home() {
     fontSize: "1rem",
     fontWeight: "600",
     borderRadius: "8px",
-    border: "2px solid #7f1d1d",
+    border: "none",
     cursor: "pointer",
     transition: "all 0.3s ease",
-    background: "white",
-    color: "#7f1d1d",
+    background: "linear-gradient(135deg, #dc2626 0%, #b91c1c 100%)",
+    color: "white",
+    boxShadow: "0 4px 12px rgba(220, 38, 38, 0.3)",
   };
 
   const keyFocusSectionStyle = {
@@ -603,7 +604,7 @@ function Home() {
             />
           </div>
           <p style={projectTextStyle}>
-Lithium-ion batteries (LIBs) power modern EVs, but their safety is challenged by harsh Indian conditions—high temperatures, humidity, and variable road loads. Abuse or faults can trigger fires and toxic gas release. Our project aims to develop a real-time early-warning system for battery abuse and fire prevention, supporting safer EV adoption in India’s Net Zero transition.
+Lithium-ion batteries (LIBs) power modern EVs, but their safety is challenged by harsh Indian conditions high temperatures, humidity, and variable road loads. Abuse or faults can trigger fires and toxic gas release. Our project aims to develop a real-time early-warning system for battery abuse and fire prevention, supporting safer EV adoption in India’s Net Zero transition.
           </p>
           <div style={buttonContainerStyle}>
             <button 
@@ -624,12 +625,12 @@ Lithium-ion batteries (LIBs) power modern EVs, but their safety is challenged by
               style={secondaryButtonStyle}
               onClick={() => navigate('/deliverables#timeline')}
               onMouseEnter={(e) => {
-                e.currentTarget.style.background = "#7f1d1d";
-                e.currentTarget.style.color = "white";
+                e.currentTarget.style.transform = "translateY(-2px)";
+                e.currentTarget.style.boxShadow = "0 6px 20px rgba(220, 38, 38, 0.4)";
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.background = "white";
-                e.currentTarget.style.color = "#7f1d1d";
+                e.currentTarget.style.transform = "translateY(0)";
+                e.currentTarget.style.boxShadow = "0 4px 12px rgba(220, 38, 38, 0.3)";
               }}
             >
               View Timeline
