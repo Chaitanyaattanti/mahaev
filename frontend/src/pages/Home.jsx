@@ -574,9 +574,6 @@ function Home() {
       <div style={projectOverviewStyle}>
         <div style={projectCardStyle}>
           <h2 style={projectTitleStyle}>About the Project</h2>
-          <p style={projectTextStyle}>
-An open-access initiative designed to advance Indian EV safety by equipping researchers and manufacturers with the high-fidelity datasets and predictive models needed to detect thermal runaway before it starts.
-          </p>
           <div style={{
             margin: "2rem 0",
             display: "flex",
@@ -595,7 +592,9 @@ An open-access initiative designed to advance Indian EV safety by equipping rese
               }}
             />
           </div>
-
+          <p style={projectTextStyle}>
+Lithium-ion batteries (LIBs) power modern EVs, but their safety is challenged by harsh Indian conditions—high temperatures, humidity, and variable road loads. Abuse or faults can trigger fires and toxic gas release. Our project aims to develop a real-time early-warning system for battery abuse and fire prevention, supporting safer EV adoption in India’s Net Zero transition.
+          </p>
           <div style={buttonContainerStyle}>
             <button 
               style={primaryButtonStyle}
