@@ -159,8 +159,8 @@ function Contact() {
             <div>
               <div style={contactLabelStyle}>Location</div>
               <div style={contactValueStyle}>
-                Smart Power Electronics Laboratory (SPEL)<br />
-                Indian Institute of Technology Gandhinagar(Academic Block 13/305)<br />
+                Academic Block - 13/305 Smart Power Electronics Laboratory (SPEL)<br />
+                Indian Institute of Technology Gandhinagar<br />
                 Palaj, Gandhinagar - 382355<br />
                 Gujarat, India
               </div>
