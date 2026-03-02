@@ -1,6 +1,8 @@
 node_modules/
 backend/node_modules/
 frontend/node_modules/
+ML/ml_training_data/
+backend/datasets/datasets/
 .env
 .env.local
 .env.production
