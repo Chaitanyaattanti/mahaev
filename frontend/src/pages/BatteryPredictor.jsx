@@ -1,0 +1,315 @@
+import { useState } from "react";
+import { API_URL } from "../config";
+
+// ── Chemistry reference data ────────────────────────────────────────────────
+const CHEMISTRY_INFO = {
+  NMC: { label: "NMC — Nickel Manganese Cobalt", eol: 700,  voltRange: "3.0–4.2 V",  example: "Mainstream EV packs (Hyundai, BMW, VW)" },
+  LFP: { label: "LFP — Lithium Iron Phosphate",  eol: 2000, voltRange: "2.5–3.65 V", example: "BYD, Tesla Standard Range" },
+  LCO: { label: "LCO — Lithium Cobalt Oxide",    eol: 400,  voltRange: "3.0–4.2 V",  example: "Consumer electronics" },
+  NCA: { label: "NCA — Nickel Cobalt Aluminum",  eol: 800,  voltRange: "3.0–4.25 V", example: "Tesla Long Range (Panasonic cells)" },
+};
+
+// ── Gauge (SVG semi-circle) ─────────────────────────────────────────────────
+function Gauge({ score, color }) {
+  const r = 80, cx = 100, cy = 100;
+  const arc = Math.PI * r;           // π × 80 ≈ 251.3
+  const dashOffset = arc - (score / 100) * arc;
+
+  return (
+    <svg viewBox="0 0 200 110" style={{ width: "280px", display: "block", margin: "0 auto", overflow: "visible" }}>
+      {/* Track */}
+      <path
+        d={`M ${cx - r},${cy} A ${r},${r} 0 0,1 ${cx + r},${cy}`}
+        fill="none" stroke="#e2e8f0" strokeWidth="15" strokeLinecap="round"
+      />
+      {/* Fill */}
+      <path
+        d={`M ${cx - r},${cy} A ${r},${r} 0 0,1 ${cx + r},${cy}`}
+        fill="none" stroke={color} strokeWidth="15" strokeLinecap="round"
+        strokeDasharray={arc} strokeDashoffset={dashOffset}
+        style={{ transition: "stroke-dashoffset 1.3s cubic-bezier(0.4,0,0.2,1)" }}
+      />
+      {/* Score number */}
+      <text x={cx} y={cy - 14} textAnchor="middle" fontSize="36" fontWeight="800" fill={color}>
+        {score}
+      </text>
+      {/* Label */}
+      <text x={cx} y={cy + 6} textAnchor="middle" fontSize="9.5" fontWeight="600" fill="#94a3b8" letterSpacing="1.5">
+        HEALTH SCORE
+      </text>
+    </svg>
+  );
+}
+
+// ── Score breakdown bar ─────────────────────────────────────────────────────
+function ScoreBar({ label, score, weight, icon }) {
+  const color = score >= 75 ? "#10b981" : score >= 50 ? "#f59e0b" : "#ef4444";
+  return (
+    <div style={{ marginBottom: "1.1rem" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.35rem" }}>
+        <span style={{ fontSize: "0.85rem", fontWeight: "600", color: "#374151" }}>
+          {icon}&nbsp;&nbsp;{label}
+          <span style={{ color: "#94a3b8", fontWeight: "400", marginLeft: "0.5rem", fontSize: "0.78rem" }}>({weight})</span>
+        </span>
+        <span style={{ fontSize: "0.85rem", fontWeight: "700", color, minWidth: "50px", textAlign: "right" }}>{score}/100</span>
+      </div>
+      <div style={{ background: "#f1f5f9", borderRadius: "99px", height: "7px", overflow: "hidden" }}>
+        <div style={{
+          width: `${score}%`, height: "100%", background: color,
+          borderRadius: "99px", transition: "width 1.3s cubic-bezier(0.4,0,0.2,1)",
+        }} />
+      </div>
+    </div>
+  );
+}
+
+// ── Slider with live value badge ────────────────────────────────────────────
+function SliderInput({ label, value, min, max, step, unit, onChange, hint }) {
+  return (
+    <div style={{ marginBottom: "1.6rem" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.45rem" }}>
+        <label style={{ fontWeight: "600", fontSize: "0.875rem", color: "#374151" }}>{label}</label>
+        <span style={{
+          fontWeight: "700", fontSize: "0.95rem", color: "#1e293b",
+          background: "#f1f5f9", padding: "0.15rem 0.75rem", borderRadius: "99px",
+          minWidth: "64px", textAlign: "center",
+        }}>
+          {value}{unit}
+        </span>
+      </div>
+      <input
+        type="range" min={min} max={max} step={step} value={value}
+        onChange={e => onChange(parseFloat(e.target.value))}
+        style={{ width: "100%", accentColor: "#3b82f6", cursor: "pointer", height: "4px" }}
+      />
+      <div style={{ display: "flex", justifyContent: "space-between", marginTop: "0.25rem" }}>
+        <span style={{ fontSize: "0.72rem", color: "#94a3b8" }}>{min}{unit}</span>
+        <span style={{ fontSize: "0.72rem", color: "#64748b", fontStyle: "italic" }}>{hint}</span>
+        <span style={{ fontSize: "0.72rem", color: "#94a3b8" }}>{max}{unit}</span>
+      </div>
+    </div>
+  );
+}
+
+// ── Main page ───────────────────────────────────────────────────────────────
+const DEFAULT = { chemistry: "NMC", voltage: 3.7, temperature: 25, cycle_count: 0, soc: 60, c_rate: 1.0 };
+
+export default function BatteryPredictor() {
+  const [form, setForm] = useState(DEFAULT);
+  const [result, setResult] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const set = (key) => (val) => setForm(f => ({ ...f, [key]: val }));
+
+  const handlePredict = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const resp = await fetch(`${API_URL}/predict`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      if (!resp.ok) throw new Error("Server error");
+      setResult(await resp.json());
+    } catch {
+      setError("Could not reach the prediction server. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const info = CHEMISTRY_INFO[form.chemistry];
+
+  // ── Styles ──
+  const pageStyle = {
+    minHeight: "100vh",
+    background: "linear-gradient(to bottom, #f8fafc 0%, #ffffff 100%)",
+    padding: "3rem 2rem 4rem",
+  };
+
+  const cardStyle = {
+    background: "white",
+    borderRadius: "12px",
+    padding: "2rem",
+    boxShadow: "0 2px 8px rgba(0,0,0,0.07)",
+    border: "1px solid #e2e8f0",
+  };
+
+  const btnStyle = (disabled) => ({
+    width: "100%",
+    padding: "0.9rem",
+    borderRadius: "8px",
+    background: disabled ? "#94a3b8" : "#3b82f6",
+    color: "white",
+    border: "none",
+    fontSize: "1rem",
+    fontWeight: "700",
+    cursor: disabled ? "not-allowed" : "pointer",
+    marginTop: "0.5rem",
+    letterSpacing: "0.3px",
+    transition: "background 0.2s",
+  });
+
+  return (
+    <div style={pageStyle}>
+      <div style={{ maxWidth: "1140px", margin: "0 auto" }}>
+
+        {/* ── Header ── */}
+        <div style={{ textAlign: "center", marginBottom: "3rem" }}>
+          <div style={{ fontSize: "2.8rem", marginBottom: "0.6rem" }}>🔋</div>
+          <h1 style={{ fontSize: "2.3rem", fontWeight: "800", color: "#1e293b", margin: "0 0 0.75rem" }}>
+            Battery Health Predictor
+          </h1>
+          <p style={{ color: "#64748b", fontSize: "1.05rem", maxWidth: "620px", margin: "0 auto", lineHeight: "1.6" }}>
+            Enter your battery's operating parameters to receive an instant health rating and personalised recommendations — powered by insights from our trained ML models built on CALCE, NASA PCoE, and McMaster University datasets.
+          </p>
+        </div>
+
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "2rem", alignItems: "start" }}>
+
+          {/* ── Left: inputs ── */}
+          <div style={cardStyle}>
+            <h2 style={{ fontSize: "1.15rem", fontWeight: "700", color: "#1e293b", marginTop: 0, marginBottom: "1.75rem" }}>
+              Battery Parameters
+            </h2>
+
+            {/* Chemistry selector */}
+            <div style={{ marginBottom: "1.6rem" }}>
+              <label style={{ fontWeight: "600", fontSize: "0.875rem", color: "#374151", display: "block", marginBottom: "0.5rem" }}>
+                Battery Chemistry
+              </label>
+              <select
+                value={form.chemistry}
+                onChange={e => setForm(f => ({ ...f, chemistry: e.target.value }))}
+                style={{
+                  width: "100%", padding: "0.65rem 1rem", borderRadius: "8px",
+                  border: "1.5px solid #e2e8f0", fontSize: "0.9rem", color: "#1e293b",
+                  background: "#f8fafc", cursor: "pointer", outline: "none",
+                }}
+              >
+                {Object.entries(CHEMISTRY_INFO).map(([k, v]) => (
+                  <option key={k} value={k}>{v.label}</option>
+                ))}
+              </select>
+              <p style={{ fontSize: "0.76rem", color: "#64748b", margin: "0.4rem 0 0" }}>
+                Typical voltage: <strong>{info.voltRange}</strong> &nbsp;·&nbsp; Example: {info.example}
+              </p>
+            </div>
+
+            <SliderInput
+              label="Current Resting Voltage"
+              value={form.voltage} min={2.5} max={4.5} step={0.01} unit=" V"
+              onChange={set("voltage")} hint="Open-circuit, no load"
+            />
+            <SliderInput
+              label="Operating Temperature"
+              value={form.temperature} min={-20} max={80} step={1} unit="°C"
+              onChange={set("temperature")} hint="Optimal: 15–35 °C"
+            />
+            <SliderInput
+              label="Charge–Discharge Cycle Count"
+              value={form.cycle_count} min={0} max={3000} step={10} unit=" cycles"
+              onChange={set("cycle_count")} hint={`~EOL at ${info.eol} cycles`}
+            />
+            <SliderInput
+              label="State of Charge (SOC)"
+              value={form.soc} min={0} max={100} step={1} unit="%"
+              onChange={set("soc")} hint="Best storage: 40–60%"
+            />
+            <SliderInput
+              label="Discharge C-rate"
+              value={form.c_rate} min={0.1} max={5} step={0.1} unit=" C"
+              onChange={set("c_rate")} hint="Lower = gentler on cells"
+            />
+
+            <button onClick={handlePredict} disabled={loading} style={btnStyle(loading)}>
+              {loading ? "Analysing…" : "Predict Battery Health"}
+            </button>
+
+            {error && (
+              <p style={{ color: "#ef4444", fontSize: "0.85rem", marginTop: "0.75rem", textAlign: "center" }}>{error}</p>
+            )}
+          </div>
+
+          {/* ── Right: results ── */}
+          <div>
+            {!result ? (
+              <div style={{ ...cardStyle, textAlign: "center", padding: "4rem 2rem" }}>
+                <div style={{ fontSize: "4rem", marginBottom: "1.25rem", opacity: 0.4 }}>📊</div>
+                <p style={{ color: "#94a3b8", fontSize: "1rem", lineHeight: "1.6" }}>
+                  Configure your battery parameters on the left and click&nbsp;
+                  <strong style={{ color: "#3b82f6" }}>Predict Battery Health</strong> to see the analysis.
+                </p>
+              </div>
+            ) : (
+              <>
+                {/* ── Score card ── */}
+                <div style={{ ...cardStyle, textAlign: "center", marginBottom: "1.5rem" }}>
+                  <Gauge score={result.overall} color={result.color} />
+
+                  <div style={{
+                    display: "inline-block", marginTop: "1.1rem",
+                    padding: "0.45rem 1.6rem", borderRadius: "99px",
+                    background: result.color + "1a",
+                    color: result.color, fontWeight: "700", fontSize: "1.1rem",
+                  }}>
+                    Grade {result.grade} &mdash; {result.status}
+                  </div>
+
+                  <p style={{ color: "#64748b", fontSize: "0.85rem", marginTop: "0.7rem", marginBottom: 0 }}>
+                    Estimated capacity retention:&nbsp;
+                    <strong style={{ color: "#1e293b" }}>{result.capacity_retention_pct}%</strong>
+                    &nbsp;of rated
+                  </p>
+                </div>
+
+                {/* ── Breakdown bars ── */}
+                <div style={{ ...cardStyle, marginBottom: "1.5rem" }}>
+                  <h3 style={{ fontSize: "1rem", fontWeight: "700", color: "#1e293b", marginTop: 0, marginBottom: "1.25rem" }}>
+                    Score Breakdown
+                  </h3>
+                  <ScoreBar label="Capacity Retention"  score={result.breakdown.capacity}    weight="35%" icon="🔋" />
+                  <ScoreBar label="Voltage Health"       score={result.breakdown.voltage}     weight="25%" icon="⚡" />
+                  <ScoreBar label="Thermal Condition"    score={result.breakdown.temperature} weight="20%" icon="🌡️" />
+                  <ScoreBar label="SOC Balance"          score={result.breakdown.soc}         weight="10%" icon="📊" />
+                  <ScoreBar label="C-rate Stress"        score={result.breakdown.c_rate}      weight="10%" icon="⚙️" />
+                </div>
+
+                {/* ── Recommendations ── */}
+                <div style={cardStyle}>
+                  <h3 style={{ fontSize: "1rem", fontWeight: "700", color: "#1e293b", marginTop: 0, marginBottom: "1rem" }}>
+                    Recommendations
+                  </h3>
+                  <ul style={{ margin: 0, padding: 0, listStyle: "none" }}>
+                    {result.recommendations.map((rec, i) => (
+                      <li key={i} style={{
+                        padding: "0.75rem 1rem",
+                        background: "#f8fafc",
+                        borderRadius: "8px",
+                        marginBottom: "0.6rem",
+                        fontSize: "0.875rem",
+                        color: "#374151",
+                        borderLeft: "3px solid #3b82f6",
+                        lineHeight: "1.55",
+                      }}>
+                        {rec}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+
+        {/* ── Disclaimer ── */}
+        <p style={{ textAlign: "center", color: "#94a3b8", fontSize: "0.78rem", marginTop: "2.5rem" }}>
+          Predictions are derived from physics-informed models validated against CALCE, NASA PCoE, and McMaster University battery datasets.
+          Results are indicative — always validate with laboratory measurements before safety-critical decisions.
+        </p>
+      </div>
+    </div>
+  );
+}

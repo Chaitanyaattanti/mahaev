@@ -7,6 +7,7 @@ import Team from "./pages/Team";
 import Contact from "./pages/Contact";
 import About from "./pages/About";
 import Standards from "./pages/Standards";
+import BatteryPredictor from "./pages/BatteryPredictor";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/deliverables" element={<Deliverables />} />
         <Route path="/team" element={<Team />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/predictor" element={<BatteryPredictor />} />
       </Routes>
     </Router>
   );
