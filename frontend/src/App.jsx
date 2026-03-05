@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
+import Chatbot from "./components/Chatbot";
 import Home from "./pages/Home";
 import Datasets from "./pages/Datasets";
 import Deliverables from "./pages/Deliverables";
@@ -23,6 +24,7 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/predictor" element={<BatteryPredictor />} />
       </Routes>
+      <Chatbot />
     </Router>
   );
 }

@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { API_URL } from "../config";
 
 // ── Chemistry reference data ────────────────────────────────────────────────
@@ -95,10 +96,26 @@ function SliderInput({ label, value, min, max, step, unit, onChange, hint }) {
 const DEFAULT = { chemistry: "NMC", voltage: 3.7, temperature: 25, cycle_count: 0, soc: 60, c_rate: 1.0 };
 
 export default function BatteryPredictor() {
+  const location = useLocation();
   const [form, setForm] = useState(DEFAULT);
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  // Check for URL parameters from chatbot
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const updates = {};
+    
+    if (params.get('voltage')) updates.voltage = parseFloat(params.get('voltage'));
+    if (params.get('temperature')) updates.temperature = parseFloat(params.get('temperature'));
+    if (params.get('cycle_count')) updates.cycle_count = parseInt(params.get('cycle_count'));
+    if (params.get('soc')) updates.soc = parseFloat(params.get('soc'));
+    
+    if (Object.keys(updates).length > 0) {
+      setForm(f => ({ ...f, ...updates }));
+    }
+  }, [location.search]);
 
   const set = (key) => (val) => setForm(f => ({ ...f, [key]: val }));
 
