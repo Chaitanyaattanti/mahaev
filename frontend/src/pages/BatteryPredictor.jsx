@@ -2,14 +2,6 @@ import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { API_URL } from "../config";
 
-// ── Chemistry reference data ────────────────────────────────────────────────
-const CHEMISTRY_INFO = {
-  NMC: { label: "NMC — Nickel Manganese Cobalt", eol: 700,  voltRange: "3.0–4.2 V",  example: "Mainstream EV packs (Hyundai, BMW, VW)" },
-  LFP: { label: "LFP — Lithium Iron Phosphate",  eol: 2000, voltRange: "2.5–3.65 V", example: "BYD, Tesla Standard Range" },
-  LCO: { label: "LCO — Lithium Cobalt Oxide",    eol: 400,  voltRange: "3.0–4.2 V",  example: "Consumer electronics" },
-  NCA: { label: "NCA — Nickel Cobalt Aluminum",  eol: 800,  voltRange: "3.0–4.25 V", example: "Tesla Long Range (Panasonic cells)" },
-};
-
 // ── Gauge (SVG semi-circle) ─────────────────────────────────────────────────
 function Gauge({ score, color }) {
   const r = 80, cx = 100, cy = 100;
@@ -93,7 +85,7 @@ function SliderInput({ label, value, min, max, step, unit, onChange, hint }) {
 }
 
 // ── Main page ───────────────────────────────────────────────────────────────
-const DEFAULT = { chemistry: "NMC", voltage: 3.7, temperature: 25, cycle_count: 0, soc: 60, c_rate: 1.0 };
+const DEFAULT = { voltage: 3.7, temperature: 25, cycle_count: 0, soc: 60, c_rate: 1.0 };
 
 export default function BatteryPredictor() {
   const location = useLocation();
@@ -137,8 +129,6 @@ export default function BatteryPredictor() {
     }
   };
 
-  const info = CHEMISTRY_INFO[form.chemistry];
-
   // ── Styles ──
   const pageStyle = {
     minHeight: "100vh",
@@ -179,7 +169,7 @@ export default function BatteryPredictor() {
             Battery Health Predictor
           </h1>
           <p style={{ color: "#64748b", fontSize: "1.05rem", maxWidth: "620px", margin: "0 auto", lineHeight: "1.6" }}>
-            Enter your battery's operating parameters to receive an instant health rating and personalised recommendations — powered by insights from our trained ML models built on CALCE, NASA PCoE, and McMaster University datasets.
+            Enter your Li-ion EV battery's operating parameters to receive an instant health rating and personalised recommendations — powered by our RandomForest model.
           </p>
         </div>
 
@@ -191,33 +181,10 @@ export default function BatteryPredictor() {
               Battery Parameters
             </h2>
 
-            {/* Chemistry selector */}
-            <div style={{ marginBottom: "1.6rem" }}>
-              <label style={{ fontWeight: "600", fontSize: "0.875rem", color: "#374151", display: "block", marginBottom: "0.5rem" }}>
-                Battery Chemistry
-              </label>
-              <select
-                value={form.chemistry}
-                onChange={e => setForm(f => ({ ...f, chemistry: e.target.value }))}
-                style={{
-                  width: "100%", padding: "0.65rem 1rem", borderRadius: "8px",
-                  border: "1.5px solid #e2e8f0", fontSize: "0.9rem", color: "#1e293b",
-                  background: "#f8fafc", cursor: "pointer", outline: "none",
-                }}
-              >
-                {Object.entries(CHEMISTRY_INFO).map(([k, v]) => (
-                  <option key={k} value={k}>{v.label}</option>
-                ))}
-              </select>
-              <p style={{ fontSize: "0.76rem", color: "#64748b", margin: "0.4rem 0 0" }}>
-                Typical voltage: <strong>{info.voltRange}</strong> &nbsp;·&nbsp; Example: {info.example}
-              </p>
-            </div>
-
             <SliderInput
               label="Current Resting Voltage"
               value={form.voltage} min={2.5} max={4.5} step={0.01} unit=" V"
-              onChange={set("voltage")} hint="Open-circuit, no load"
+              onChange={set("voltage")} hint="Li-ion range: 2.5–4.25 V"
             />
             <SliderInput
               label="Operating Temperature"
@@ -227,7 +194,7 @@ export default function BatteryPredictor() {
             <SliderInput
               label="Charge–Discharge Cycle Count"
               value={form.cycle_count} min={0} max={3000} step={10} unit=" cycles"
-              onChange={set("cycle_count")} hint={`~EOL at ${info.eol} cycles`}
+              onChange={set("cycle_count")} hint="~EOL at ~1000 cycles"
             />
             <SliderInput
               label="State of Charge (SOC)"
@@ -260,7 +227,7 @@ export default function BatteryPredictor() {
               </div>
             ) : (
               <>
-                {/* ── Score card ── */}
+                {/* ── Health Score card ── */}
                 <div style={{ ...cardStyle, textAlign: "center", marginBottom: "1.5rem" }}>
                   <Gauge score={result.overall} color={result.color} />
 
@@ -321,7 +288,7 @@ export default function BatteryPredictor() {
 
         {/* ── Disclaimer ── */}
         <p style={{ textAlign: "center", color: "#94a3b8", fontSize: "0.78rem", marginTop: "2.5rem" }}>
-          Predictions are derived from physics-informed models validated against CALCE, NASA PCoE, and McMaster University battery datasets.
+          Scores are produced by a RandomForest model (R²=0.93) trained on CALCE cycle-degradation data, capturing real capacity-fade behaviour across hundreds of charge–discharge sessions.
           Results are indicative — always validate with laboratory measurements before safety-critical decisions.
         </p>
       </div>

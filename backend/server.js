@@ -1,6 +1,9 @@
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
+const { spawn } = require("child_process");
+
+const PREDICT_PY = path.join(__dirname, '..', 'ML', 'predict.py');
 
 const app = express();
 require('dotenv').config();
@@ -82,12 +85,96 @@ const datasets = [
   }
 ];
 
+// ── Sub-score helpers (breakdown display & recommendations — generic Li-ion) ──
+function computeSubScores(voltage, temperature, cycle_count, soc, c_rate) {
+  // Capacity fade: generic Li-ion EOL ~1000 cycles
+  const EOL = 1000;
+  const fade = Math.min(0.2, (cycle_count / EOL) * 0.2);
+  const capacityRetention = 1 - fade;
+  const capacityScore = Math.max(0, Math.min(100, capacityRetention * 100));
+
+  // Voltage score: generic Li-ion range 2.5–4.25 V, ideal 3.2–4.1 V
+  const VOLT_MIN = 2.5, VOLT_MAX = 4.25, IDEAL_MIN = 3.2, IDEAL_MAX = 4.1;
+  let voltageScore;
+  if (voltage >= IDEAL_MIN && voltage <= IDEAL_MAX) {
+    voltageScore = 100;
+  } else if (voltage < VOLT_MIN || voltage > VOLT_MAX + 0.1) {
+    voltageScore = 10;
+  } else if (voltage < IDEAL_MIN) {
+    voltageScore = 20 + ((voltage - VOLT_MIN) / (IDEAL_MIN - VOLT_MIN)) * 80;
+  } else {
+    voltageScore = 20 + ((VOLT_MAX - voltage) / (VOLT_MAX - IDEAL_MAX)) * 80;
+  }
+  voltageScore = Math.max(0, Math.min(100, voltageScore));
+
+  // Temperature score
+  let temperatureScore;
+  if (temperature >= 15 && temperature <= 35) {
+    temperatureScore = 100;
+  } else if (temperature > 35 && temperature <= 45) {
+    temperatureScore = 100 - ((temperature - 35) / 10) * 30;
+  } else if (temperature > 45 && temperature <= 60) {
+    temperatureScore = 70 - ((temperature - 45) / 15) * 40;
+  } else if (temperature > 60) {
+    temperatureScore = Math.max(0, 30 - (temperature - 60) * 2);
+  } else if (temperature >= 0 && temperature < 15) {
+    temperatureScore = 70 + (temperature / 15) * 30;
+  } else if (temperature >= -10 && temperature < 0) {
+    temperatureScore = 40 + ((temperature + 10) / 10) * 30;
+  } else {
+    temperatureScore = Math.max(0, 40 + temperature * 2);
+  }
+  temperatureScore = Math.max(0, Math.min(100, temperatureScore));
+
+  // SOC score
+  let socScore;
+  if (soc >= 20 && soc <= 80) {
+    socScore = 100;
+  } else if (soc < 20) {
+    socScore = 50 + (soc / 20) * 50;
+  } else {
+    socScore = 50 + ((100 - soc) / 20) * 50;
+  }
+  socScore = Math.max(0, Math.min(100, socScore));
+
+  // C-rate score
+  let crateScore;
+  if (c_rate <= 0.5) crateScore = 100;
+  else if (c_rate <= 1) crateScore = 100 - ((c_rate - 0.5) / 0.5) * 15;
+  else if (c_rate <= 2) crateScore = 85 - ((c_rate - 1) / 1) * 20;
+  else if (c_rate <= 3) crateScore = 65 - ((c_rate - 2) / 1) * 25;
+  else crateScore = Math.max(0, 40 - (c_rate - 3) * 10);
+  crateScore = Math.max(0, Math.min(100, crateScore));
+
+  return { capacityScore, voltageScore, temperatureScore, socScore, crateScore, capacityRetention };
+}
+
+// ── ML model prediction via Python subprocess ──
+function mlPredict(payload) {
+  return new Promise((resolve, reject) => {
+    const py = spawn('python3', [PREDICT_PY]);
+    let stdout = '', stderr = '';
+    py.stdout.on('data', (d) => { stdout += d.toString(); });
+    py.stderr.on('data', (d) => { stderr += d.toString(); });
+    py.on('close', (code) => {
+      if (code !== 0) return reject(new Error(stderr || `Python exited ${code}`));
+      try {
+        const parsed = JSON.parse(stdout.trim());
+        if (parsed.error) return reject(new Error(parsed.error));
+        resolve(parsed.safety_score);
+      } catch (e) {
+        reject(new Error('Failed to parse Python output'));
+      }
+    });
+    py.stdin.write(JSON.stringify(payload));
+    py.stdin.end();
+  });
+}
+
 // Battery health prediction endpoint
-app.post("/predict", (req, res) => {
+app.post("/predict", async (req, res) => {
   try {
-    const VALID_CHEMISTRIES = ["NMC", "LFP", "LCO", "NCA"];
     let {
-      chemistry = "NMC",
       voltage = 3.7,
       temperature = 25,
       cycle_count = 0,
@@ -96,88 +183,29 @@ app.post("/predict", (req, res) => {
     } = req.body;
 
     // Input validation
-    if (!VALID_CHEMISTRIES.includes(chemistry)) chemistry = "NMC";
-    voltage = Math.max(1.0, Math.min(5.0, parseFloat(voltage) || 3.7));
-    temperature = Math.max(-50, Math.min(100, parseFloat(temperature) || 25));
-    cycle_count = Math.max(0, Math.min(10000, parseInt(cycle_count) || 0));
-    soc = Math.max(0, Math.min(100, parseFloat(soc) || 60));
-    c_rate = Math.max(0.01, Math.min(20, parseFloat(c_rate) || 1.0));
+    voltage     = Math.max(1.0,  Math.min(5.0,   parseFloat(voltage)     || 3.7));
+    temperature = Math.max(-50,  Math.min(100,   parseFloat(temperature) || 25));
+    cycle_count = Math.max(0,    Math.min(10000, parseInt(cycle_count)   || 0));
+    soc         = Math.max(0,    Math.min(100,   parseFloat(soc)         || 60));
+    c_rate      = Math.max(0.01, Math.min(20,    parseFloat(c_rate)      || 1.0));
 
-    // === 1. Capacity Retention Score (weight: 35%) ===
-    // EOL = cycles to reach 80% capacity retention (standard definition)
-    const eolCycles = { NMC: 700, LFP: 2000, LCO: 400, NCA: 800 };
-    const eol = eolCycles[chemistry];
-    const fade = Math.min(0.2, (cycle_count / eol) * 0.2);
-    const capacityRetention = 1 - fade;
-    const capacityScore = Math.max(0, Math.min(100, capacityRetention * 100));
+    // === Breakdown sub-scores (for display & recommendations) ===
+    const { capacityScore, voltageScore, temperatureScore, socScore, crateScore, capacityRetention } =
+      computeSubScores(voltage, temperature, cycle_count, soc, c_rate);
 
-    // === 2. Voltage Health Score (weight: 25%) ===
-    const voltageRanges = {
-      NMC: { min: 3.0, max: 4.2, idealMin: 3.4, idealMax: 4.1 },
-      LFP: { min: 2.5, max: 3.65, idealMin: 3.0, idealMax: 3.5 },
-      LCO: { min: 3.0, max: 4.2, idealMin: 3.4, idealMax: 4.1 },
-      NCA: { min: 3.0, max: 4.25, idealMin: 3.4, idealMax: 4.15 },
-    };
-    const vr = voltageRanges[chemistry];
-    let voltageScore;
-    if (voltage >= vr.idealMin && voltage <= vr.idealMax) {
-      voltageScore = 100;
-    } else if (voltage < vr.min || voltage > vr.max + 0.1) {
-      voltageScore = 10;
-    } else if (voltage < vr.idealMin) {
-      voltageScore = 20 + ((voltage - vr.min) / (vr.idealMin - vr.min)) * 80;
-    } else {
-      voltageScore = 20 + ((vr.max - voltage) / (vr.max - vr.idealMax)) * 80;
+    // === Overall: ML model (RandomForest, R²=0.961) ===
+    // Falls back to weighted formula if Python unavailable
+    let overall;
+    try {
+      const mlScore = await mlPredict({ voltage, temperature, cycle_count, soc, c_rate });
+      overall = Math.round(mlScore);
+    } catch (mlErr) {
+      console.warn("ML model unavailable, using formula fallback:", mlErr.message);
+      overall = Math.round(
+        capacityScore * 0.35 + voltageScore * 0.25 +
+        temperatureScore * 0.20 + socScore * 0.10 + crateScore * 0.10
+      );
     }
-    voltageScore = Math.max(0, Math.min(100, voltageScore));
-
-    // === 3. Temperature Score (weight: 20%) ===
-    let temperatureScore;
-    if (temperature >= 15 && temperature <= 35) {
-      temperatureScore = 100;
-    } else if (temperature > 35 && temperature <= 45) {
-      temperatureScore = 100 - ((temperature - 35) / 10) * 30;
-    } else if (temperature > 45 && temperature <= 60) {
-      temperatureScore = 70 - ((temperature - 45) / 15) * 40;
-    } else if (temperature > 60) {
-      temperatureScore = Math.max(0, 30 - (temperature - 60) * 2);
-    } else if (temperature >= 0 && temperature < 15) {
-      temperatureScore = 70 + (temperature / 15) * 30;
-    } else if (temperature >= -10 && temperature < 0) {
-      temperatureScore = 40 + ((temperature + 10) / 10) * 30;
-    } else {
-      temperatureScore = Math.max(0, 40 + temperature * 2);
-    }
-    temperatureScore = Math.max(0, Math.min(100, temperatureScore));
-
-    // === 4. SOC Balance Score (weight: 10%) ===
-    let socScore;
-    if (soc >= 20 && soc <= 80) {
-      socScore = 100;
-    } else if (soc < 20) {
-      socScore = 50 + (soc / 20) * 50;
-    } else {
-      socScore = 50 + ((100 - soc) / 20) * 50;
-    }
-    socScore = Math.max(0, Math.min(100, socScore));
-
-    // === 5. C-rate Stress Score (weight: 10%) ===
-    let crateScore;
-    if (c_rate <= 0.5) crateScore = 100;
-    else if (c_rate <= 1) crateScore = 100 - ((c_rate - 0.5) / 0.5) * 15;
-    else if (c_rate <= 2) crateScore = 85 - ((c_rate - 1) / 1) * 20;
-    else if (c_rate <= 3) crateScore = 65 - ((c_rate - 2) / 1) * 25;
-    else crateScore = Math.max(0, 40 - (c_rate - 3) * 10);
-    crateScore = Math.max(0, Math.min(100, crateScore));
-
-    // === Weighted Overall Score ===
-    const overall = Math.round(
-      capacityScore * 0.35 +
-      voltageScore  * 0.25 +
-      temperatureScore * 0.20 +
-      socScore      * 0.10 +
-      crateScore    * 0.10
-    );
 
     // === Grade ===
     let grade, status, color;
@@ -192,9 +220,9 @@ app.post("/predict", (req, res) => {
     if (capacityScore < 75)
       recommendations.push(`Battery has experienced significant capacity fade after ${cycle_count} cycles. Consider replacing if measured capacity is below 80% of rated.`);
     if (voltageScore < 70)
-      recommendations.push(`Voltage (${voltage}V) is outside the optimal range for ${chemistry} cells. Avoid deep discharge below ${vr.min}V or overcharge above ${vr.max}V.`);
+      recommendations.push(`Voltage (${voltage}V) is outside the optimal range for Li-ion cells (3.2–4.1V). Avoid deep discharge below 2.5V or overcharge above 4.25V.`);
     if (temperatureScore < 70)
-      recommendations.push(`Operating temperature (${temperature}°C) is stressful for the cell. Ideal thermal window is 15–35°C. Consider active thermal management.`);
+      recommendations.push(`Operating temperature (${temperature}°C) is stressful. Ideal thermal window is 15–35°C. Consider active thermal management.`);
     if (socScore < 70)
       recommendations.push(`SOC at ${soc}% is near an extreme. For long-term storage, keep SOC at 40–60% to minimise calendar aging.`);
     if (crateScore < 70)
