@@ -169,7 +169,7 @@ export default function BatteryPredictor() {
             Battery Health Predictor
           </h1>
           <p style={{ color: "#64748b", fontSize: "1.05rem", maxWidth: "620px", margin: "0 auto", lineHeight: "1.6" }}>
-            Enter your Li-ion EV battery's operating parameters to receive an instant health rating and personalised recommendations — powered by our RandomForest model.
+            Enter your Li-ion EV battery's operating parameters to receive an instant health rating and personalised recommendations - powered by our RandomForest model.
           </p>
         </div>
 
