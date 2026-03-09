@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FaCommentDots, FaTimes, FaRobot } from 'react-icons/fa';
+import { FaCommentDots, FaTimes, FaRobot, FaArrowRight } from 'react-icons/fa';
 
 function Chatbot() {
   const [isOpen, setIsOpen] = useState(false);
-  const [view, setView] = useState('main'); // main, battery-predictor
+  const [view, setView] = useState('intro'); // intro, about, timeline, current, predictor-info, predictor-form
   const [batteryInputs, setBatteryInputs] = useState({
     voltage: '',
     temperature: '',
@@ -14,33 +14,7 @@ function Chatbot() {
   const navigate = useNavigate();
 
   const handleQuickAction = (action) => {
-    switch(action) {
-      case 'about':
-        navigate('/about');
-        setIsOpen(false);
-        break;
-      case 'contact':
-        navigate('/contact');
-        setIsOpen(false);
-        break;
-      case 'datasets':
-        navigate('/datasets');
-        setIsOpen(false);
-        break;
-      case 'team':
-        navigate('/team');
-        setIsOpen(false);
-        break;
-      case 'standards':
-        navigate('/standards');
-        setIsOpen(false);
-        break;
-      case 'predictor':
-        setView('battery-predictor');
-        break;
-      default:
-        break;
-    }
+    setView(action);
   };
 
   const handleBatterySubmit = () => {
@@ -48,7 +22,7 @@ function Chatbot() {
     const params = new URLSearchParams(batteryInputs).toString();
     navigate(`/predictor?${params}`);
     setIsOpen(false);
-    setView('main');
+    setView('intro');
   };
 
   const chatContainerStyle = {
@@ -195,7 +169,7 @@ function Chatbot() {
             <button
               onClick={() => {
                 setIsOpen(false);
-                setView('main');
+                setView('intro');
               }}
               style={{
                 background: 'transparent',
@@ -212,14 +186,19 @@ function Chatbot() {
 
           {/* Body */}
           <div style={chatBodyStyle}>
-            {view === 'main' ? (
+            {view === 'intro' ? (
               <>
                 <div style={messageStyle}>
-                  👋 Welcome! I'm here to help you navigate the MAHA-EV project website and assist with battery predictions.
+                  👋 Hi! I'm your MAHA-EV assistant. Get quick insights about our battery safety research without navigating through pages.
                 </div>
                 
-                <div style={{ ...messageStyle, fontWeight: '600', fontSize: '0.85rem', marginBottom: '0.5rem' }}>
-                  Quick Actions:
+                <div style={{ ...messageStyle, fontSize: '0.8rem', background: '#eff6ff', borderLeft: '3px solid #2563eb', padding: '0.75rem' }}>
+                  <strong>💡 Why use me?</strong><br/>
+                  Quick summaries · Fast battery predictions · No page navigation needed
+                </div>
+
+                <div style={{ ...messageStyle, fontWeight: '600', fontSize: '0.85rem', marginBottom: '0.5rem', marginTop: '1rem' }}>
+                  What can I help you with?
                 </div>
 
                 <div style={quickActionGridStyle}>
@@ -235,12 +214,12 @@ function Chatbot() {
                       e.currentTarget.style.background = 'white';
                     }}
                   >
-                    📖 About Project
+                    About Project
                   </button>
                   
                   <button
                     style={quickActionButtonStyle}
-                    onClick={() => handleQuickAction('contact')}
+                    onClick={() => handleQuickAction('timeline')}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.borderColor = '#1e3a8a';
                       e.currentTarget.style.background = '#eff6ff';
@@ -250,12 +229,12 @@ function Chatbot() {
                       e.currentTarget.style.background = 'white';
                     }}
                   >
-                    📞 Contact Us
+                    Timeline
                   </button>
                   
                   <button
                     style={quickActionButtonStyle}
-                    onClick={() => handleQuickAction('datasets')}
+                    onClick={() => handleQuickAction('current')}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.borderColor = '#1e3a8a';
                       e.currentTarget.style.background = '#eff6ff';
@@ -265,12 +244,12 @@ function Chatbot() {
                       e.currentTarget.style.background = 'white';
                     }}
                   >
-                    📊 Datasets
+                    Current Status
                   </button>
                   
                   <button
                     style={quickActionButtonStyle}
-                    onClick={() => handleQuickAction('team')}
+                    onClick={() => handleQuickAction('predictor-info')}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.borderColor = '#1e3a8a';
                       e.currentTarget.style.background = '#eff6ff';
@@ -280,53 +259,199 @@ function Chatbot() {
                       e.currentTarget.style.background = 'white';
                     }}
                   >
-                    👥 Our Team
-                  </button>
-                  
-                  <button
-                    style={quickActionButtonStyle}
-                    onClick={() => handleQuickAction('standards')}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.borderColor = '#1e3a8a';
-                      e.currentTarget.style.background = '#eff6ff';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.borderColor = '#e2e8f0';
-                      e.currentTarget.style.background = 'white';
-                    }}
-                  >
-                    📋 Standards
-                  </button>
-                  
-                  <button
-                    style={quickActionButtonStyle}
-                    onClick={() => handleQuickAction('predictor')}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.borderColor = '#1e3a8a';
-                      e.currentTarget.style.background = '#eff6ff';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.borderColor = '#e2e8f0';
-                      e.currentTarget.style.background = 'white';
-                    }}
-                  >
-                    🔋 Battery Predictor
+                    Battery Predictor
                   </button>
                 </div>
               </>
-            ) : (
+            ) : view === 'about' ? (
               <>
                 <button
                   style={backButtonStyle}
-                  onClick={() => setView('main')}
+                  onClick={() => setView('intro')}
                   onMouseEnter={(e) => e.currentTarget.style.background = '#64748b'}
                   onMouseLeave={(e) => e.currentTarget.style.background = '#94a3b8'}
                 >
-                  ← Back to Menu
+                  ← Back
+                </button>
+
+                <div style={{ ...messageStyle, fontWeight: '700', background: '#1e3a8a', color: 'white' }}>
+                  About MAHA-EV E-RIDES
+                </div>
+
+                <div style={messageStyle}>
+                  <strong>Focus:</strong> Real-time early-warning system for battery abuse and fire prevention in Indian EVs.
+                </div>
+
+                <div style={messageStyle}>
+                  <strong>Challenge:</strong> Indian conditions (high temperature, humidity, variable road loads) stress lithium-ion batteries, potentially triggering thermal runaway.
+                </div>
+
+                <div style={messageStyle}>
+                  <strong>Solution:</strong> Predictive diagnostics with IoT sensors for proactive battery safety monitoring.
+                </div>
+
+                <button
+                  style={{ ...submitButtonStyle, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}
+                  onClick={() => { navigate('/about'); setIsOpen(false); setView('intro'); }}
+                  onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-2px)'}
+                  onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
+                >
+                  Learn More <FaArrowRight size={12} />
+                </button>
+              </>
+            ) : view === 'timeline' ? (
+              <>
+                <button
+                  style={backButtonStyle}
+                  onClick={() => setView('intro')}
+                  onMouseEnter={(e) => e.currentTarget.style.background = '#64748b'}
+                  onMouseLeave={(e) => e.currentTarget.style.background = '#94a3b8'}
+                >
+                  ← Back
+                </button>
+
+                <div style={{ ...messageStyle, fontWeight: '700', background: '#1e3a8a', color: 'white' }}>
+                  3-Year Research Timeline
+                </div>
+
+                <div style={{ ...messageStyle, borderLeft: '3px solid #1e3a8a' }}>
+                  <strong style={{ color: '#1e3a8a' }}>Year 1 - Phase A</strong><br/>
+                  Experimental data collection + Battery Digital Twin development
+                </div>
+
+                <div style={{ ...messageStyle, borderLeft: '3px solid #f97316' }}>
+                  <strong style={{ color: '#f97316' }}>Year 2 - Phase B</strong><br/>
+                  Multimodal IoT sensing suite + AI fault detection integration
+                </div>
+
+                <div style={{ ...messageStyle, borderLeft: '3px solid #059669' }}>
+                  <strong style={{ color: '#059669' }}>Year 3 - Phase C</strong><br/>
+                  Smart battery safety diagnostic system deployment & testing
+                </div>
+
+                <button
+                  style={{ ...submitButtonStyle, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}
+                  onClick={() => { navigate('/deliverables#timeline'); setIsOpen(false); setView('intro'); }}
+                  onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-2px)'}
+                  onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
+                >
+                  View Full Timeline <FaArrowRight size={12} />
+                </button>
+              </>
+            ) : view === 'current' ? (
+              <>
+                <button
+                  style={backButtonStyle}
+                  onClick={() => setView('intro')}
+                  onMouseEnter={(e) => e.currentTarget.style.background = '#64748b'}
+                  onMouseLeave={(e) => e.currentTarget.style.background = '#94a3b8'}
+                >
+                  ← Back
+                </button>
+
+                <div style={{ ...messageStyle, fontWeight: '700', background: '#1e3a8a', color: 'white' }}>
+                  Current Research Status
+                </div>
+
+                <div style={{ ...messageStyle, background: '#dcfce7', borderLeft: '3px solid #16a34a' }}>
+                  <strong style={{ color: '#15803d' }}>🟢 IN DEVELOPMENT</strong><br/>
+                  <span style={{ fontSize: '0.85rem', color: '#166534' }}>Active research phase - Multiple work streams in progress</span>
+                </div>
+
+                <div style={messageStyle}>
+                  <strong>Current Focus:</strong><br/>
+                  • Electrothermal Abuse (ETA) Test Setup<br/>
+                  • Anomaly Detection Using Deep Learning<br/>
+                  • Battery Digital Twin Based Adaptive RL
+                </div>
+
+                <div style={messageStyle}>
+                  <strong>Recent Progress:</strong><br/>
+                  Physical test rig development, machine learning model training, and real-time prediction system integration.
+                </div>
+
+                <button
+                  style={{ ...submitButtonStyle, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}
+                  onClick={() => { navigate('/deliverables#status'); setIsOpen(false); setView('intro'); }}
+                  onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-2px)'}
+                  onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
+                >
+                  View Details <FaArrowRight size={12} />
+                </button>
+              </>
+            ) : view === 'predictor-info' ? (
+              <>
+                <button
+                  style={backButtonStyle}
+                  onClick={() => setView('intro')}
+                  onMouseEnter={(e) => e.currentTarget.style.background = '#64748b'}
+                  onMouseLeave={(e) => e.currentTarget.style.background = '#94a3b8'}
+                >
+                  ← Back
+                </button>
+
+                <div style={{ ...messageStyle, fontWeight: '700', background: '#1e3a8a', color: 'white' }}>
+                  Battery Health Predictor
+                </div>
+
+                <div style={messageStyle}>
+                  <strong>What it does:</strong><br/>
+                  Predicts battery health score (0-100) based on voltage, temperature, cycle count, SOC, and C-rate.
+                </div>
+
+                <div style={messageStyle}>
+                  <strong>Get instant insights on:</strong><br/>
+                  • Overall health grade (A-F)<br/>
+                  • Capacity retention percentage<br/>
+                  • Component-wise breakdown<br/>
+                  • Actionable recommendations
+                </div>
+
+                <div style={quickActionGridStyle}>
+                  <button
+                    style={quickActionButtonStyle}
+                    onClick={() => setView('predictor-form')}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.borderColor = '#1e3a8a';
+                      e.currentTarget.style.background = '#eff6ff';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.borderColor = '#e2e8f0';
+                      e.currentTarget.style.background = 'white';
+                    }}
+                  >
+                    Quick Predict
+                  </button>
+                  
+                  <button
+                    style={quickActionButtonStyle}
+                    onClick={() => { navigate('/predictor'); setIsOpen(false); setView('intro'); }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.borderColor = '#1e3a8a';
+                      e.currentTarget.style.background = '#eff6ff';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.borderColor = '#e2e8f0';
+                      e.currentTarget.style.background = 'white';
+                    }}
+                  >
+                    Full Predictor
+                  </button>
+                </div>
+              </>
+            ) : view === 'predictor-form' ? (
+              <>
+                <button
+                  style={backButtonStyle}
+                  onClick={() => setView('predictor-info')}
+                  onMouseEnter={(e) => e.currentTarget.style.background = '#64748b'}
+                  onMouseLeave={(e) => e.currentTarget.style.background = '#94a3b8'}
+                >
+                  ← Back
                 </button>
 
                 <div style={messageStyle}>
-                  🔋 Enter battery parameters for health prediction:
+                  Enter battery parameters for quick health prediction:
                 </div>
 
                 <div style={{ fontSize: '0.8rem', fontWeight: '600', color: '#475569', marginBottom: '0.5rem' }}>
@@ -391,7 +516,7 @@ function Chatbot() {
                   Get Prediction →
                 </button>
               </>
-            )}
+            ) : null}
           </div>
         </div>
       )}

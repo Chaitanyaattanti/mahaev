@@ -43,13 +43,13 @@ function Gauge({ score, color }) {
 }
 
 // ── Score breakdown bar ─────────────────────────────────────────────────────
-function ScoreBar({ label, score, weight, icon }) {
+function ScoreBar({ label, score, weight }) {
   const color = score >= 75 ? "#10b981" : score >= 50 ? "#f59e0b" : "#ef4444";
   return (
     <div style={{ marginBottom: "1.1rem" }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.35rem" }}>
         <span style={{ fontSize: "0.85rem", fontWeight: "600", color: "#374151" }}>
-          {icon}&nbsp;&nbsp;{label}
+          {label}
           <span style={{ color: "#94a3b8", fontWeight: "400", marginLeft: "0.5rem", fontSize: "0.78rem" }}>({weight})</span>
         </span>
         <span style={{ fontSize: "0.85rem", fontWeight: "700", color, minWidth: "50px", textAlign: "right" }}>{score}/100</span>
@@ -175,7 +175,6 @@ export default function BatteryPredictor() {
 
         {/* ── Header ── */}
         <div style={{ textAlign: "center", marginBottom: "3rem" }}>
-          <div style={{ fontSize: "2.8rem", marginBottom: "0.6rem" }}>🔋</div>
           <h1 style={{ fontSize: "2.3rem", fontWeight: "800", color: "#1e293b", margin: "0 0 0.75rem" }}>
             Battery Health Predictor
           </h1>
@@ -254,7 +253,6 @@ export default function BatteryPredictor() {
           <div>
             {!result ? (
               <div style={{ ...cardStyle, textAlign: "center", padding: "4rem 2rem" }}>
-                <div style={{ fontSize: "4rem", marginBottom: "1.25rem", opacity: 0.4 }}>📊</div>
                 <p style={{ color: "#94a3b8", fontSize: "1rem", lineHeight: "1.6" }}>
                   Configure your battery parameters on the left and click&nbsp;
                   <strong style={{ color: "#3b82f6" }}>Predict Battery Health</strong> to see the analysis.
@@ -287,11 +285,11 @@ export default function BatteryPredictor() {
                   <h3 style={{ fontSize: "1rem", fontWeight: "700", color: "#1e293b", marginTop: 0, marginBottom: "1.25rem" }}>
                     Score Breakdown
                   </h3>
-                  <ScoreBar label="Capacity Retention"  score={result.breakdown.capacity}    weight="35%" icon="🔋" />
-                  <ScoreBar label="Voltage Health"       score={result.breakdown.voltage}     weight="25%" icon="⚡" />
-                  <ScoreBar label="Thermal Condition"    score={result.breakdown.temperature} weight="20%" icon="🌡️" />
-                  <ScoreBar label="SOC Balance"          score={result.breakdown.soc}         weight="10%" icon="📊" />
-                  <ScoreBar label="C-rate Stress"        score={result.breakdown.c_rate}      weight="10%" icon="⚙️" />
+                  <ScoreBar label="Capacity Retention"  score={result.breakdown.capacity}    weight="35%" />
+                  <ScoreBar label="Voltage Health"       score={result.breakdown.voltage}     weight="25%" />
+                  <ScoreBar label="Thermal Condition"    score={result.breakdown.temperature} weight="20%" />
+                  <ScoreBar label="SOC Balance"          score={result.breakdown.soc}         weight="10%" />
+                  <ScoreBar label="C-rate Stress"        score={result.breakdown.c_rate}      weight="10%" />
                 </div>
 
                 {/* ── Recommendations ── */}
