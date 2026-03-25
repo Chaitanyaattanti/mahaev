@@ -321,8 +321,8 @@ export default function BatteryPredictor() {
 
         {/* ── Disclaimer ── */}
         <p style={{ textAlign: "center", color: "#94a3b8", fontSize: "0.78rem", marginTop: "2.5rem" }}>
-          Predictions are derived from physics-informed models validated against CALCE, NASA PCoE, and McMaster University battery datasets.
-          Results are indicative — always validate with laboratory measurements before safety-critical decisions.
+          Predictions are derived from physics informed models validated against CALCE, NASA PCoE, and McMaster University battery datasets.
+          Results are indicative  always validate with laboratory measurements before safety-critical decisions.
         </p>
       </div>
     </div>
