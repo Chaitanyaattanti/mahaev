@@ -10,8 +10,15 @@ function Chatbot() {
     {
       id: 1,
       type: 'bot',
-      content: "Hi! I'm your MAHA-EV assistant. Ask me about the project, timeline, status, or datasets.",
+      content: "👋 Hi! I'm your MAHA-EV assistant. I can help you learn about:\n\n• About the Project\n• Project Timeline\n• Current Work\n• Explore Datasets\n• Battery Predictor\n\nWhat would you like to know?",
       timestamp: new Date(),
+      buttons: [
+        { label: "About", action: "navigate", target: "/about" },
+        { label: "Timeline", action: "navigate", target: "/deliverables" },
+        { label: "Current", action: "navigate", target: "/deliverables" },
+        { label: "Datasets", action: "navigate", target: "/datasets" },
+        { label: "Predictor", action: "navigate", target: "/predictor" }
+      ]
     },
   ]);
   const [userInput, setUserInput] = useState('');
@@ -94,9 +101,10 @@ function Chatbot() {
 
   const quickQueries = {
     about: 'Tell me about the MAHA-EV project',
-    timeline: 'What is the 3-year timeline?',
-    current: 'What is the current status?',
+    timeline: 'What is the project timeline?',
+    current: 'What is the current work status?',
     datasets: 'What datasets are used?',
+    predictor: 'How does the battery predictor work?'
   };
 
   const handleQuickAction = async (action) => {
@@ -111,8 +119,21 @@ function Chatbot() {
   };
 
   const handleNavigate = (target) => {
-    navigate(target);
-    setIsOpen(false);
+    if (target) {
+      console.log('🔗 Navigating to:', target);
+      setIsOpen(false);
+      setTimeout(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        navigate(target);
+      }, 100);
+    }
+  };
+
+  const handleButtonClick = (btn) => {
+    if (btn && btn.action === 'navigate' && btn.target) {
+      console.log('✅ Button clicked:', btn);
+      handleNavigate(btn.target);
+    }
   };
 
   const handleNewConversation = () => {
@@ -120,8 +141,15 @@ function Chatbot() {
       {
         id: 1,
         type: 'bot',
-        content: "Hi! I'm your MAHA-EV assistant. Ask me about the project, timeline, status, or datasets.",
+        content: "👋 Hi! I'm your MAHA-EV assistant. I can help you learn about:\n\n• About the Project\n• Project Timeline\n• Current Work\n• Explore Datasets\n• Battery Predictor\n\nWhat would you like to know?",
         timestamp: new Date(),
+        buttons: [
+          { label: "About", action: "navigate", target: "/about" },
+          { label: "Timeline", action: "navigate", target: "/deliverables" },
+          { label: "Current", action: "navigate", target: "/deliverables" },
+          { label: "Datasets", action: "navigate", target: "/datasets" },
+          { label: "Predictor", action: "navigate", target: "/predictor" }
+        ]
       },
     ]);
     setUserInput('');
@@ -133,7 +161,8 @@ function Chatbot() {
     position: 'fixed',
     bottom: '20px',
     right: '20px',
-    zIndex: 9999,
+    zIndex: isOpen ? 9999 : 50,
+    pointerEvents: isOpen ? 'auto' : 'auto',
   };
 
   const chatButtonStyle = {
@@ -268,7 +297,7 @@ function Chatbot() {
                     {msg.buttons.map((btn, idx) => (
                       <button
                         key={idx}
-                        onClick={() => btn.action === 'navigate' && handleNavigate(btn.target)}
+                        onClick={() => handleButtonClick(btn)}
                         style={buttonStyle}
                         onMouseEnter={(e) => (e.target.style.background = '#1d4ed8')}
                         onMouseLeave={(e) => (e.target.style.background = '#2563eb')}
@@ -289,20 +318,31 @@ function Chatbot() {
 
             {messages.length <= 2 && !loading && (
               <div>
-                <div style={{ fontSize: '0.75rem', color: '#64748b', marginBottom: '0.5rem' }}>Quick Actions</div>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '0.5rem' }}>
-                  {['about', 'timeline', 'current', 'datasets'].map((action) => (
+                <div style={{ fontSize: '0.75rem', color: '#64748b', marginBottom: '0.8rem', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Quick Actions</div>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+                  {['about', 'timeline', 'current', 'datasets', 'predictor'].map((action) => (
                     <button
                       key={action}
                       onClick={() => handleQuickAction(action)}
                       style={{
-                        padding: '0.5rem',
+                        padding: '0.6rem 0.9rem',
                         borderRadius: '6px',
-                        border: '1px solid #e2e8f0',
+                        border: '1px solid #cbd5e1',
                         background: '#fff',
                         cursor: 'pointer',
                         fontSize: '0.8rem',
+                        fontWeight: '600',
                         textTransform: 'capitalize',
+                        transition: 'all 0.2s',
+                        color: '#1e293b'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.target.style.background = '#f1f5f9';
+                        e.target.style.borderColor = '#cbd5e1';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.target.style.background = '#fff';
+                        e.target.style.borderColor = '#e2e8f0';
                       }}
                     >
                       {action}

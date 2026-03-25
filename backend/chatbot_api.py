@@ -180,9 +180,9 @@ def get_datasets():
 @app.route('/api/chat', methods=['POST'])
 def chat():
     """
-    Main chatbot endpoint - processes user queries
+    Main chatbot endpoint - processes user queries with concise, structured responses
     Expects: { "query": "user message" }
-    Returns: { "response": "bot message", "intent": "detected_intent", "data": {...} }
+    Returns: { "response": "bot message", "intent": "detected_intent", "buttons": [...] }
     """
     try:
         payload = request.json or {}
@@ -192,57 +192,62 @@ def chat():
             return jsonify({
                 'success': False,
                 'error': 'Empty query',
-                'response': 'Please ask me something about the MAHA-EV project!'
+                'response': 'Hi! I can help you explore:\n• About the Project\n• Project Timeline\n• Current Work\n• Datasets\n• Battery Predictor'
             }), 400
         
         # Detect user intent
         intent, confidence = detect_intent(user_query)
         
-        # Route to appropriate data source with simple responses and action buttons
+        # Route with concise responses following chatbot guidelines
         if intent == 'about':
             response_data = ABOUT_DATA
-            bot_response = "MAHA-EV is building an early-warning system for battery safety in Indian EVs."
+            # Show: Purpose, Problem, Key Features
+            bot_response = "MAHA-EV builds an early-warning system to detect battery degradation in Indian EVs before they fail. It uses multi-modal IoT sensors for real-time monitoring and physics-guided AI to predict thermal runaway."
             buttons = [
-                {"label": "Learn More", "action": "navigate", "target": "/about"}
+                {"label": "View Full About Page", "action": "navigate", "target": "/about"}
             ]
             
         elif intent == 'timeline':
             response_data = TIMELINE_DATA
-            bot_response = "Our research is organized into 3 phases over 3 years."
+            # Show 3 phases
+            bot_response = "📅 Phase A (Year 1): Foundation & data collection\n📅 Phase B (Year 2): AI integration & sensing suite\n📅 Phase C (Year 3): System deployment & optimization"
             buttons = [
-                {"label": "View Timeline", "action": "navigate", "target": "/deliverables"}
+                {"label": "View Deliverables", "action": "navigate", "target": "/deliverables"}
             ]
             
         elif intent == 'current':
             response_data = CURRENT_DATA
-            bot_response = "We're actively developing ETA testing, anomaly detection, and battery digital twin models."
+            # Show current status + focus areas
+            bot_response = "🚀 Current Focus: ETA test rig development, AI anomaly detection model, and Battery Digital Twin integration. We're in active development phase."
             buttons = [
-                {"label": "View Progress", "action": "navigate", "target": "/deliverables"}
+                {"label": "See Details", "action": "navigate", "target": "/deliverables"}
             ]
             
         elif intent == 'datasets':
             response_data = DATASETS_DATA
-            bot_response = "We use CALCE, NASA PCoE, and McMaster University battery datasets."
+            # Explain types and what users can download
+            bot_response = "We use world-class EV battery datasets:\n• CALCE (UMD) - Degradation data\n• NASA PCoE - Real-world aging data\n• McMaster - Electrochemical data"
             buttons = [
-                {"label": "View Datasets", "action": "navigate", "target": "/datasets"}
+                {"label": "Go to Datasets", "action": "navigate", "target": "/datasets"}
             ]
             
         elif intent == 'predictor':
             response_data = PREDICTOR_DATA
-            bot_response = "Check battery health with our predictor tool."
+            # Explain what predictor does + show action buttons
+            bot_response = "🔋 Battery predictor estimates health score (0-100) based on voltage, temperature, cycle count, SOC, and C-rate. Get actionable insights on battery condition."
             buttons = [
-                {"label": "Go to Predictor", "action": "navigate", "target": "/predictor"}
+                {"label": "Quick Predict", "action": "navigate", "target": "/predictor"},
+                {"label": "Full Predictor Page", "action": "navigate", "target": "/predictor"}
             ]
             
         else:  # help / generic
-            response_data = {
-                'topics': ['About Project', 'Timeline', 'Current Status', 'Datasets', 'Battery Predictor']
-            }
-            bot_response = "I can help with project info, timeline, status, datasets, or battery prediction."
+            response_data = {}
+            bot_response = "I can help you learn about:\n• About the Project\n• Project Timeline\n• Current Work\n• Explore Datasets\n• Battery Predictor"
             buttons = [
                 {"label": "About", "action": "navigate", "target": "/about"},
-                {"label": "Deliverables", "action": "navigate", "target": "/deliverables"},
-                {"label": "Datasets", "action": "navigate", "target": "/datasets"}
+                {"label": "Timeline", "action": "navigate", "target": "/deliverables"},
+                {"label": "Datasets", "action": "navigate", "target": "/datasets"},
+                {"label": "Predictor", "action": "navigate", "target": "/predictor"}
             ]
         
         return jsonify({
