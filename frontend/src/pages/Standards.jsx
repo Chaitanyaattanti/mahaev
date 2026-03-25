@@ -8,14 +8,14 @@ function Standards() {
   const containerStyle = {
     minHeight: "100vh",
     background: "linear-gradient(to bottom, #f8fafc 0%, #ffffff 100%)",
-    padding: "4rem 2rem",
+    padding: "clamp(2rem, 5vw, 4rem) clamp(1rem, 3vw, 2rem)",
   };
 
   const headerStyle = {
-    fontSize: "3rem",
+    fontSize: "clamp(1.8rem, 5vw, 3rem)",
     fontWeight: "800",
     color: "#1e293b",
-    marginBottom: "1rem",
+    marginBottom: "clamp(0.75rem, 1.5vw, 1rem)",
     textAlign: "center",
   };
 
@@ -34,16 +34,16 @@ function Standards() {
   const sectionStyle = {
     background: "white",
     borderRadius: "12px",
-    padding: "3rem",
-    marginBottom: "3rem",
+    padding: "clamp(1.5rem, 3vw, 3rem)",
+    marginBottom: "clamp(1.5rem, 3vw, 3rem)",
     boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
   };
 
   const headingStyle = {
-    fontSize: "2rem",
+    fontSize: "clamp(1.3rem, 3vw, 2rem)",
     fontWeight: "700",
     color: "#1e293b",
-    marginBottom: "1.5rem",
+    marginBottom: "clamp(0.8rem, 1.5vw, 1.5rem)",
   };
 
   const textStyle = {
@@ -55,15 +55,15 @@ function Standards() {
 
   const imageContainerStyle = {
     display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(500px, 1fr))",
-    gap: "3rem",
-    marginTop: "2rem",
+    gridTemplateColumns: "repeat(auto-fit, minmax(350px, 1fr))",
+    gap: "clamp(1.5rem, 3vw, 3rem)",
+    marginTop: "clamp(1rem, 2vw, 2rem)",
   };
 
   const imageBoxStyle = {
     background: "#f8fafc",
     borderRadius: "12px",
-    padding: "2rem",
+    padding: "clamp(1rem, 2vw, 2rem)",
     border: "2px solid #e2e8f0",
     transition: "all 0.3s ease",
   };

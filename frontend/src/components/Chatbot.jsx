@@ -159,33 +159,37 @@ function Chatbot() {
 
   const chatContainerStyle = {
     position: 'fixed',
-    bottom: '20px',
-    right: '20px',
+    bottom: 'clamp(1rem, 2vw, 1.5rem)',
+    right: 'clamp(1rem, 2vw, 1.5rem)',
     zIndex: isOpen ? 9999 : 50,
     pointerEvents: isOpen ? 'auto' : 'auto',
   };
 
   const chatButtonStyle = {
-    width: '60px',
-    height: '60px',
+    width: 'clamp(50px, 10vw, 60px)',
+    height: 'clamp(50px, 10vw, 60px)',
     borderRadius: '50%',
     background: 'linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%)',
     border: 'none',
     color: '#fff',
-    fontSize: '1.5rem',
+    fontSize: 'clamp(1.2rem, 3vw, 1.5rem)',
     cursor: 'pointer',
     boxShadow: '0 4px 12px rgba(30, 58, 138, 0.4)',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    minHeight: '44px',
+    minWidth: '44px',
+    padding: 0,
   };
 
   const chatWindowStyle = {
-    position: 'absolute',
-    bottom: '80px',
-    right: '0',
-    width: '380px',
-    maxHeight: '600px',
+    position: 'fixed',
+    bottom: 'clamp(5rem, 18vw, 6rem)',
+    right: 'clamp(1rem, 2vw, 1.5rem)',
+    width: 'clamp(85vw, 90vw, 380px)',
+    maxWidth: '90vw',
+    maxHeight: 'clamp(400px, 70vh, 600px)',
     background: '#fff',
     borderRadius: '16px',
     boxShadow: '0 8px 32px rgba(0,0,0,0.15)',
@@ -197,43 +201,44 @@ function Chatbot() {
   const chatHeaderStyle = {
     background: 'linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%)',
     color: '#fff',
-    padding: '1rem 1.25rem',
+    padding: 'clamp(0.75rem, 2vw, 1rem) clamp(1rem, 2vw, 1.25rem)',
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
   };
 
   const chatBodyStyle = {
-    padding: '1.25rem',
+    padding: 'clamp(0.75rem, 2vw, 1.25rem)',
     flex: 1,
     overflowY: 'auto',
-    maxHeight: '400px',
+    maxHeight: 'clamp(250px, 55vh, 400px)',
     display: 'flex',
     flexDirection: 'column',
-    gap: '0.8rem',
+    gap: 'clamp(0.5rem, 1vw, 0.8rem)',
   };
 
   const inputAreaStyle = {
-    padding: '1rem',
+    padding: 'clamp(0.75rem, 2vw, 1rem)',
     borderTop: '1px solid #e2e8f0',
     display: 'flex',
-    gap: '0.5rem',
+    gap: 'clamp(0.35rem, 1vw, 0.5rem)',
+    flexWrap: 'nowrap',
   };
 
   const bubbleStyle = (type) => ({
-    maxWidth: '75%',
-    padding: '0.75rem 1rem',
+    maxWidth: '85%',
+    padding: 'clamp(0.5rem, 1vw, 0.75rem) clamp(0.75rem, 1.5vw, 1rem)',
     borderRadius: type === 'user' ? '12px 12px 0 12px' : '12px 12px 12px 0',
     background: type === 'user' ? '#3b82f6' : '#f1f5f9',
     color: type === 'user' ? '#fff' : '#334155',
     whiteSpace: 'pre-wrap',
     wordBreak: 'break-word',
     lineHeight: 1.45,
-    fontSize: '0.9rem',
+    fontSize: 'clamp(0.8rem, 1.2vw, 0.9rem)',
   });
 
   const buttonStyle = {
-    padding: '0.5rem 0.8rem',
+    padding: 'clamp(0.4rem, 1vw, 0.5rem) clamp(0.6rem, 1.5vw, 0.8rem)',
     background: '#2563eb',
     color: '#fff',
     border: 'none',
@@ -255,21 +260,45 @@ function Chatbot() {
       ) : (
         <div style={chatWindowStyle}>
           <div style={chatHeaderStyle}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 'clamp(0.5rem, 1vw, 0.6rem)', fontSize: 'clamp(0.8rem, 1vw, 1rem)' }}>
               <FaRobot />
               <strong>MAHA-EV Assistant</strong>
             </div>
-            <div style={{ display: 'flex', gap: '0.4rem' }}>
+            <div style={{ display: 'flex', gap: 'clamp(0.3rem, 1vw, 0.4rem)' }}>
               <button
                 onClick={handleNewConversation}
-                style={{ background: 'transparent', border: 'none', color: '#fff', cursor: 'pointer' }}
+                style={{ 
+                  background: 'transparent', 
+                  border: 'none', 
+                  color: '#fff', 
+                  cursor: 'pointer',
+                  fontSize: 'clamp(1rem, 1.2vw, 1.2rem)',
+                  padding: '0.5rem',
+                  minHeight: '36px',
+                  minWidth: '36px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
                 title="New conversation"
               >
                 ↻
               </button>
               <button
                 onClick={() => setIsOpen(false)}
-                style={{ background: 'transparent', border: 'none', color: '#fff', cursor: 'pointer' }}
+                style={{ 
+                  background: 'transparent', 
+                  border: 'none', 
+                  color: '#fff', 
+                  cursor: 'pointer',
+                  fontSize: 'clamp(1rem, 1.2vw, 1.2rem)',
+                  padding: '0.5rem',
+                  minHeight: '36px',
+                  minWidth: '36px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
                 title="Close"
               >
                 <FaTimes />
@@ -293,12 +322,12 @@ function Chatbot() {
                 </div>
                 
                 {msg.buttons && msg.buttons.length > 0 && (
-                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginTop: '0.5rem' }}>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'clamp(0.35rem, 1vw, 0.5rem)', marginTop: 'clamp(0.35rem, 1vw, 0.5rem)' }}>
                     {msg.buttons.map((btn, idx) => (
                       <button
                         key={idx}
                         onClick={() => handleButtonClick(btn)}
-                        style={buttonStyle}
+                        style={{...buttonStyle, minHeight: '32px', display: 'flex', alignItems: 'center'}}
                         onMouseEnter={(e) => (e.target.style.background = '#1d4ed8')}
                         onMouseLeave={(e) => (e.target.style.background = '#2563eb')}
                       >
@@ -318,23 +347,26 @@ function Chatbot() {
 
             {messages.length <= 2 && !loading && (
               <div>
-                <div style={{ fontSize: '0.75rem', color: '#64748b', marginBottom: '0.8rem', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Quick Actions</div>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+                <div style={{ fontSize: 'clamp(0.65rem, 0.9vw, 0.75rem)', color: '#64748b', marginBottom: 'clamp(0.5rem, 1vw, 0.8rem)', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Quick Actions</div>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'clamp(0.35rem, 1vw, 0.5rem)' }}>
                   {['about', 'timeline', 'current', 'datasets', 'predictor'].map((action) => (
                     <button
                       key={action}
                       onClick={() => handleQuickAction(action)}
                       style={{
-                        padding: '0.6rem 0.9rem',
+                        padding: 'clamp(0.4rem, 0.8vw, 0.6rem) clamp(0.6rem, 1.2vw, 0.9rem)',
                         borderRadius: '6px',
                         border: '1px solid #cbd5e1',
                         background: '#fff',
                         cursor: 'pointer',
-                        fontSize: '0.8rem',
+                        fontSize: 'clamp(0.7rem, 0.9vw, 0.8rem)',
                         fontWeight: '600',
                         textTransform: 'capitalize',
                         transition: 'all 0.2s',
-                        color: '#1e293b'
+                        color: '#1e293b',
+                        minHeight: '32px',
+                        display: 'flex',
+                        alignItems: 'center',
                       }}
                       onMouseEnter={(e) => {
                         e.target.style.background = '#f1f5f9';
@@ -367,10 +399,12 @@ function Chatbot() {
               disabled={loading}
               style={{
                 flex: 1,
-                padding: '0.6rem 0.8rem',
+                padding: 'clamp(0.5rem, 1vw, 0.6rem) clamp(0.6rem, 1.5vw, 0.8rem)',
                 border: '1px solid #cbd5e1',
                 borderRadius: '8px',
                 outline: 'none',
+                fontSize: 'clamp(0.8rem, 1vw, 0.9rem)',
+                minHeight: '36px',
               }}
             />
             <button
@@ -379,11 +413,17 @@ function Chatbot() {
               style={{
                 border: 'none',
                 borderRadius: '8px',
-                padding: '0.6rem 0.9rem',
+                padding: 'clamp(0.5rem, 1vw, 0.6rem) clamp(0.6rem, 1.5vw, 0.9rem)',
                 background: '#3b82f6',
                 color: '#fff',
                 cursor: loading || !userInput.trim() ? 'not-allowed' : 'pointer',
                 opacity: loading || !userInput.trim() ? 0.6 : 1,
+                minHeight: '36px',
+                minWidth: '36px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: 'clamp(0.9rem, 1.2vw, 1rem)',
               }}
               title="Send"
             >

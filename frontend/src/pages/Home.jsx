@@ -23,10 +23,10 @@ function Home() {
 
   const heroSectionStyle = {
     background: "linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 50%, #f9fafb 100%)",
-    padding: "5rem 4rem",
+    padding: "clamp(2rem, 8vw, 5rem) clamp(1rem, 6vw, 4rem)",
     position: "relative",
     overflow: "hidden",
-    minHeight: "550px",
+    minHeight: "clamp(400px, 80vh, 550px)",
     borderBottom: "1px solid #e2e8f0",
   };
 
@@ -37,19 +37,19 @@ function Home() {
   };
 
   const mainTitleStyle = {
-    fontSize: "3.5rem",
+    fontSize: "clamp(1.8rem, 5vw, 3.5rem)",
     fontWeight: "800",
     color: "#1e293b",
-    margin: "0 0 1.5rem 0",
+    margin: "0 0 clamp(1rem, 2vw, 1.5rem) 0",
     lineHeight: "1.1",
     letterSpacing: "-0.02em",
   };
 
   const descriptionStyle = {
-    fontSize: "1.15rem",
+    fontSize: "clamp(0.95rem, 1.5vw, 1.15rem)",
     color: "#475569",
     lineHeight: "1.7",
-    marginBottom: "2rem",
+    marginBottom: "clamp(1rem, 2vw, 2rem)",
     maxWidth: "580px",
   };
 
@@ -108,6 +108,7 @@ function Home() {
     height: "500px",
     pointerEvents: "none",
     zIndex: 1,
+    display: window.innerWidth <= 768 ? "none" : "block",
   };
 
   const circleStyle = (size, color, top, left, iconSize) => ({
@@ -130,16 +131,16 @@ function Home() {
   });
 
   const categorySectionStyle = {
-    padding: "4rem 3rem",
+    padding: "clamp(2rem, 6vw, 4rem) clamp(1rem, 4vw, 3rem)",
     maxWidth: "1400px",
     margin: "0 auto",
   };
 
   const sectionTitleStyle = {
-    fontSize: "2rem",
+    fontSize: "clamp(1.5rem, 4vw, 2rem)",
     fontWeight: "700",
     color: "#1e293b",
-    marginBottom: "1rem",
+    marginBottom: "clamp(0.75rem, 1.5vw, 1rem)",
     textAlign: "center",
   };
 
@@ -191,8 +192,8 @@ function Home() {
   };
 
   const primaryButtonStyle = {
-    padding: "1rem 2.5rem",
-    fontSize: "1rem",
+    padding: "clamp(0.75rem, 1.5vw, 1rem) clamp(1.5rem, 3vw, 2.5rem)",
+    fontSize: "clamp(0.9rem, 1.5vw, 1rem)",
     fontWeight: "600",
     borderRadius: "8px",
     border: "none",
@@ -201,11 +202,13 @@ function Home() {
     background: "linear-gradient(135deg, #7f1d1d 0%, #991b1b 100%)",
     color: "white",
     boxShadow: "0 4px 12px rgba(127, 29, 29, 0.3)",
+    minHeight: "44px",
+    minWidth: "44px",
   };
 
   const secondaryButtonStyle = {
-    padding: "1rem 2.5rem",
-    fontSize: "1rem",
+    padding: "clamp(0.75rem, 1.5vw, 1rem) clamp(1.5rem, 3vw, 2.5rem)",
+    fontSize: "clamp(0.9rem, 1.5vw, 1rem)",
     fontWeight: "600",
     borderRadius: "8px",
     border: "none",
@@ -214,6 +217,8 @@ function Home() {
     background: "linear-gradient(135deg, #dc2626 0%, #b91c1c 100%)",
     color: "white",
     boxShadow: "0 4px 12px rgba(220, 38, 38, 0.3)",
+    minHeight: "44px",
+    minWidth: "44px",
   };
 
   const keyFocusSectionStyle = {
@@ -225,9 +230,9 @@ function Home() {
 
   const focusGridStyle = {
     display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-    gap: "2rem",
-    marginTop: "2rem",
+    gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+    gap: "clamp(1rem, 2vw, 2rem)",
+    marginTop: "clamp(1rem, 2vw, 2rem)",
   };
 
   const focusItemStyle = {
@@ -287,9 +292,9 @@ function Home() {
 
   const categoryGridStyle = {
     display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-    gap: "2rem",
-    marginTop: "3rem",
+    gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
+    gap: "clamp(1rem, 2vw, 2rem)",
+    marginTop: "clamp(1.5rem, 3vw, 3rem)",
   };
 
   const categoryCardStyle = {

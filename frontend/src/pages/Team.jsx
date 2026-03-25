@@ -2,7 +2,7 @@ import { FaUser, FaUserTie, FaUserGraduate, FaFlask } from 'react-icons/fa';
 
 function Team() {
   const containerStyle = {
-    padding: "3rem 2rem",
+    padding: "clamp(1.5rem, 4vw, 3rem) clamp(1rem, 3vw, 2rem)",
     maxWidth: "1400px",
     margin: "0 auto",
     background: "linear-gradient(to bottom, #f8fafc 0%, #ffffff 100%)",
@@ -16,10 +16,10 @@ function Team() {
   };
 
   const titleStyle = {
-    fontSize: "3rem",
+    fontSize: "clamp(1.8rem, 5vw, 3rem)",
     fontWeight: "800",
     color: "#1e293b",
-    marginBottom: "0.5rem",
+    marginBottom: "clamp(0.3rem, 0.8vw, 0.5rem)",
   };
 
   const subtitleStyle = {
@@ -38,7 +38,7 @@ function Team() {
   const piCardStyle = {
     background: "linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%)",
     borderRadius: "16px",
-    padding: "2.5rem",
+    padding: "clamp(1.5rem, 3vw, 2.5rem)",
     textAlign: "center",
     boxShadow: "0 20px 40px rgba(59, 130, 246, 0.3)",
     maxWidth: "400px",
@@ -47,10 +47,10 @@ function Team() {
   };
 
   const photoContainerStyle = {
-    width: "180px",
-    height: "180px",
+    width: "clamp(100px, 20vw, 180px)",
+    height: "clamp(100px, 20vw, 180px)",
     borderRadius: "50%",
-    margin: "0 auto 1.5rem",
+    margin: "0 auto clamp(1rem, 2vw, 1.5rem)",
     border: "5px solid rgba(255,255,255,0.5)",
     overflow: "hidden",
     background: "#e2e8f0",
@@ -93,27 +93,31 @@ function Team() {
   // Team Grid Styles
   const teamGridStyle = {
     display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-    gap: "2rem",
-    marginBottom: "3rem",
+    gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
+    gap: "clamp(1rem, 2vw, 2rem)",
+    marginBottom: "clamp(2rem, 4vw, 3rem)",
   };
 
   const memberCardStyle = {
     background: "white",
     borderRadius: "12px",
-    padding: "2rem",
+    padding: "clamp(1rem, 2vw, 2rem)",
     textAlign: "center",
     boxShadow: "0 4px 6px rgba(0,0,0,0.05)",
     border: "2px solid #e2e8f0",
     transition: "all 0.3s ease",
     cursor: "pointer",
+    minHeight: "300px",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
   };
 
   const memberPhotoStyle = {
-    width: "140px",
-    height: "140px",
+    width: "clamp(80px, 18vw, 140px)",
+    height: "clamp(80px, 18vw, 140px)",
     borderRadius: "50%",
-    margin: "0 auto 1.5rem",
+    margin: "0 auto clamp(0.8rem, 1.5vw, 1.5rem)",
     border: "4px solid #e2e8f0",
     overflow: "hidden",
     background: "#f1f5f9",
@@ -123,10 +127,10 @@ function Team() {
   };
 
   const memberNameStyle = {
-    fontSize: "1.3rem",
+    fontSize: "clamp(1.1rem, 2vw, 1.3rem)",
     fontWeight: "700",
     color: "#1e293b",
-    marginBottom: "0.5rem",
+    marginBottom: "clamp(0.3rem, 0.6vw, 0.5rem)",
   };
 
   const memberRoleStyle = {

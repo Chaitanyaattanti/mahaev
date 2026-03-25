@@ -14,11 +14,30 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  
+  /* Responsive font sizes */
+  --font-size-h1: clamp(1.75rem, 5vw, 2.5rem);
+  --font-size-h2: clamp(1.5rem, 4vw, 2rem);
+  --font-size-h3: clamp(1.1rem, 3vw, 1.3rem);
+  --font-size-body: clamp(0.95rem, 1vw, 1rem);
+  
+  /* Spacing */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 1.5rem;
+  --spacing-lg: 2rem;
+  --spacing-xl: 3rem;
+  --spacing-2xl: 4rem;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   min-height: 100vh;
   margin: 0;
+  overflow-x: hidden;
 }
 
 #root {
@@ -29,21 +48,21 @@ body {
 h1, h2, h3 {
   color: #1e293b;
   font-weight: 700;
-  margin-bottom: 1rem;
+  margin-bottom: var(--spacing-md);
 }
 
 h1 {
-  font-size: 2.5rem;
+  font-size: var(--font-size-h1);
   color: #1e293b;
 }
 
 h2 {
-  font-size: 2rem;
+  font-size: var(--font-size-h2);
   color: #1e293b;
 }
 
 h3 {
-  font-size: 1.3rem;
+  font-size: var(--font-size-h3);
   color: #334155;
 }
 

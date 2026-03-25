@@ -19,15 +19,15 @@ function About() {
   };
 
   const titleStyle = {
-    fontSize: "3rem",
+    fontSize: "clamp(1.8rem, 5vw, 3rem)",
     fontWeight: "800",
     color: "#1e293b",
-    marginBottom: "2rem",
+    marginBottom: "clamp(1rem, 2vw, 2rem)",
     textAlign: "center",
   };
 
   const sectionStyle = {
-    padding: "4rem 2rem",
+    padding: "clamp(2rem, 6vw, 4rem) clamp(1rem, 4vw, 2rem)",
     maxWidth: "1200px",
     margin: "0 auto",
   };
@@ -39,24 +39,24 @@ function About() {
 
   const gridStyle = {
     display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-    gap: "3rem",
+    gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+    gap: "clamp(1.5rem, 3vw, 3rem)",
     maxWidth: "1200px",
     margin: "0 auto",
   };
 
   const headingStyle = {
-    fontSize: "2rem",
+    fontSize: "clamp(1.3rem, 3vw, 2rem)",
     fontWeight: "700",
     color: "#1e293b",
-    marginBottom: "1.5rem",
+    marginBottom: "clamp(0.8rem, 1.5vw, 1.5rem)",
   };
 
   const textStyle = {
-    fontSize: "1.05rem",
+    fontSize: "clamp(0.95rem, 1.3vw, 1.05rem)",
     color: "#475569",
     lineHeight: "1.8",
-    marginBottom: "1rem",
+    marginBottom: "clamp(0.75rem, 1.5vw, 1rem)",
   };
 
   const highlightTextStyle = {
@@ -68,25 +68,27 @@ function About() {
     display: "inline-flex",
     alignItems: "center",
     gap: "0.5rem",
-    padding: "1rem 2rem",
-    marginTop: "1.5rem",
+    padding: "clamp(0.7rem, 1.5vw, 1rem) clamp(1.2rem, 2.5vw, 2rem)",
+    marginTop: "clamp(1rem, 2vw, 1.5rem)",
     background: "linear-gradient(135deg, #7f1d1d 0%, #991b1b 100%)",
     color: "white",
     border: "none",
     borderRadius: "8px",
-    fontSize: "1rem",
+    fontSize: "clamp(0.9rem, 1.3vw, 1rem)",
     fontWeight: "600",
     cursor: "pointer",
     transition: "all 0.3s ease",
     boxShadow: "0 4px 12px rgba(127, 29, 29, 0.3)",
     textDecoration: "none",
+    minHeight: "44px",
+    minWidth: "44px",
   };
 
   const iconGridStyle = {
     display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-    gap: "2rem",
-    marginTop: "3rem",
+    gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))",
+    gap: "clamp(1rem, 2vw, 2rem)",
+    marginTop: "clamp(1.5rem, 3vw, 3rem)",
   };
 
   const iconBoxStyle = {

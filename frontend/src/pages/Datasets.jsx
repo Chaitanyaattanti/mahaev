@@ -85,7 +85,7 @@ function Datasets() {
   });
 
   const containerStyle = {
-    padding: "3rem 2rem",
+    padding: "clamp(1.5rem, 4vw, 3rem) clamp(1rem, 3vw, 2rem)",
     maxWidth: "1200px",
     margin: "0 auto",
     background: "white",
@@ -93,7 +93,7 @@ function Datasets() {
 
   const headerStyle = {
     textAlign: "center",
-    marginBottom: "3rem",
+    marginBottom: "clamp(1.5rem, 3vw, 3rem)",
   };
 
   const subtitleStyle = {
@@ -105,32 +105,37 @@ function Datasets() {
   const searchBarContainerStyle = {
     display: "flex",
     maxWidth: "700px",
-    margin: "2rem auto 0",
+    margin: "clamp(1rem, 2vw, 2rem) auto 0",
     boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
     borderRadius: "8px",
     overflow: "hidden",
     border: "1px solid #ddd",
+    flexDirection: window.innerWidth <= 768 ? "column" : "row",
   };
 
   const searchInputStyle = {
     flex: 1,
-    padding: "1rem 1.5rem",
+    padding: "clamp(0.75rem, 1.5vw, 1rem) clamp(1rem, 2vw, 1.5rem)",
     border: "none",
-    fontSize: "1rem",
+    fontSize: "clamp(0.85rem, 1vw, 1rem)",
     outline: "none",
     background: "white",
     color: "#334155",
+    minHeight: "44px",
   };
 
   const searchButtonStyle = {
     background: "#1e293b",
     color: "white",
     border: "none",
-    padding: "1rem 2.5rem",
-    fontSize: "1rem",
+    padding: "clamp(0.6rem, 1.5vw, 1rem) clamp(1rem, 2vw, 2.5rem)",
+    fontSize: "clamp(0.85rem, 1vw, 1rem)",
     fontWeight: "700",
     cursor: "pointer",
     transition: "all 0.3s",
+    minHeight: "44px",
+    minWidth: "44px",
+    touchAction: "manipulation",
   };
 
   const noResultsStyle = {
@@ -142,9 +147,9 @@ function Datasets() {
 
   const gridContainerStyle = {
     display: "grid",
-    gridTemplateColumns: "repeat(2, 1fr)",
-    gap: "1.5rem",
-    marginTop: "2rem",
+    gridTemplateColumns: window.innerWidth <= 768 ? "1fr" : "repeat(auto-fit, minmax(300px, 1fr))",
+    gap: "clamp(1rem, 2vw, 1.5rem)",
+    marginTop: "clamp(1rem, 2vw, 2rem)",
   };
 
   const citationStyle = (categoryColor) => ({
