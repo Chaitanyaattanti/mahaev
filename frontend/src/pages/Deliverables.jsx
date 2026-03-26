@@ -40,7 +40,7 @@ function ProjectOverview() {
 // Timeline & Deliverables Component
 function TimelineDeliverables({ onBack }) {
   const containerStyle = {
-    padding: "3rem 2rem",
+    padding: "clamp(1.5rem, 4vw, 3rem) clamp(1rem, 3vw, 2rem)",
     maxWidth: "1400px",
     margin: "0 auto",
     background: "linear-gradient(to bottom, #f8fafc 0%, #ffffff 100%)",
@@ -51,48 +51,39 @@ function TimelineDeliverables({ onBack }) {
     background: "#1e293b",
     color: "white",
     border: "none",
-    padding: "0.8rem 2rem",
+    padding: "clamp(0.6rem, 1.2vw, 0.8rem) clamp(1rem, 2vw, 2rem)",
     borderRadius: "8px",
     cursor: "pointer",
-    fontSize: "1rem",
+    fontSize: "clamp(0.85rem, 1.2vw, 1rem)",
     fontWeight: "600",
-    marginBottom: "2rem",
+    marginBottom: "clamp(1rem, 2vw, 2rem)",
     transition: "all 0.3s",
+    minHeight: "44px",
+    minWidth: "44px",
   };
 
   const headerStyle = {
     textAlign: "center",
-    marginBottom: "4rem",
+    marginBottom: "clamp(2rem, 4vw, 4rem)",
   };
 
   const timelineContainerStyle = {
     position: "relative",
-    padding: "2rem 0",
-  };
-
-  const timelineLineStyle = {
-    position: "absolute",
-    left: "50%",
-    top: "0",
-    bottom: "0",
-    width: "4px",
-    background: "linear-gradient(to bottom, #1e3a8a, #f97316, #059669)",
-    transform: "translateX(-50%)",
-    zIndex: 0,
+    padding: "clamp(1rem, 2vw, 2rem) 0",
   };
 
   const phaseStyle = (isLeft) => ({
     display: "flex",
-    justifyContent: isLeft ? "flex-end" : "flex-start",
-    marginBottom: "3rem",
+    justifyContent: window.innerWidth <= 968 ? "center" : (isLeft ? "flex-end" : "flex-start"),
+    marginBottom: "clamp(2rem, 3vw, 3rem)",
     position: "relative",
   });
 
   const phaseCardStyle = {
-    width: "45%",
+    width: window.innerWidth <= 968 ? "90%" : "45%",
     background: "white",
     borderRadius: "12px",
-    padding: "2rem",
+    padding: "clamp(1.5rem, 2.5vw, 2rem)",
     boxShadow: "0 8px 16px rgba(0,0,0,0.1)",
     border: "2px solid #e2e8f0",
     position: "relative",

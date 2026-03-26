@@ -8,14 +8,14 @@ function CurrentStatus() {
   const containerStyle = {
     minHeight: "100vh",
     background: "linear-gradient(to bottom, #f8fafc 0%, #ffffff 100%)",
-    padding: "4rem 2rem",
+    padding: "clamp(2rem, 5vw, 4rem) clamp(1rem, 3vw, 2rem)",
   };
 
   const headerStyle = {
-    fontSize: "3rem",
+    fontSize: "clamp(1.8rem, 5vw, 3rem)",
     fontWeight: "800",
     color: "#1e293b",
-    marginBottom: "1rem",
+    marginBottom: "clamp(0.75rem, 1.5vw, 1rem)",
     textAlign: "center",
   };
 
@@ -30,12 +30,12 @@ function CurrentStatus() {
     background: "linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%)",
     border: "3px solid #4b5563",
     borderRadius: "16px",
-    padding: "2rem",
-    marginBottom: "3rem",
+    padding: "clamp(1.5rem, 3vw, 2rem)",
+    marginBottom: "clamp(1.5rem, 3vw, 3rem)",
     textAlign: "center",
     boxShadow: "0 8px 16px rgba(59,130,246,0.2)",
     maxWidth: "800px",
-    margin: "0 auto 3rem",
+    margin: "0 auto clamp(1.5rem, 3vw, 3rem)",
   };
 
   const contentStyle = {
@@ -45,9 +45,9 @@ function CurrentStatus() {
 
   const imageGridStyle = {
     display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(500px, 1fr))",
-    gap: "3rem",
-    marginTop: "2rem",
+    gridTemplateColumns: "repeat(auto-fit, minmax(350px, 1fr))",
+    gap: "clamp(1.5rem, 3vw, 3rem)",
+    marginTop: "clamp(1rem, 2vw, 2rem)",
   };
 
   const imageCardStyle = {

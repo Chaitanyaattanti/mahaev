@@ -4,19 +4,19 @@ function Contact() {
   const containerStyle = {
     minHeight: "100vh",
     background: "linear-gradient(to bottom, #f8fafc 0%, #ffffff 100%)",
-    padding: "3rem 2rem",
+    padding: "clamp(2rem, 5vw, 3rem) clamp(1rem, 3vw, 2rem)",
   };
 
   const headerStyle = {
     textAlign: "center",
-    marginBottom: "4rem",
+    marginBottom: "clamp(2rem, 4vw, 4rem)",
   };
 
   const titleStyle = {
-    fontSize: "3rem",
+    fontSize: "clamp(2rem, 5vw, 3rem)",
     fontWeight: "800",
     color: "#1e293b",
-    marginBottom: "1rem",
+    marginBottom: "clamp(0.75rem, 1.5vw, 1rem)",
   };
 
   const subtitleStyle = {
@@ -32,22 +32,23 @@ function Contact() {
   const cardStyle = {
     background: "white",
     borderRadius: "16px",
-    padding: "3rem",
+    padding: "clamp(1.5rem, 3vw, 3rem)",
     boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
     border: "2px solid #e2e8f0",
-    marginBottom: "2rem",
+    marginBottom: "clamp(1rem, 2vw, 2rem)",
   };
 
   const contactItemStyle = {
     display: "flex",
     alignItems: "flex-start",
-    gap: "1.5rem",
-    marginBottom: "2rem",
-    padding: "1.5rem",
+    gap: "clamp(1rem, 2vw, 1.5rem)",
+    marginBottom: "clamp(1rem, 2vw, 2rem)",
+    padding: "clamp(1rem, 2vw, 1.5rem)",
     background: "linear-gradient(135deg, #f8fafc 0%, #ffffff 100%)",
     borderRadius: "12px",
     border: "1px solid #e2e8f0",
     transition: "all 0.3s ease",
+    flexDirection: window.innerWidth <= 768 ? "column" : "row",
   };
 
   const iconWrapperStyle = (color) => ({
@@ -72,7 +73,7 @@ function Contact() {
   };
 
   const contactValueStyle = {
-    fontSize: "1.2rem",
+    fontSize: "clamp(1rem, 1.5vw, 1.2rem)",
     color: "#1e293b",
     fontWeight: "600",
     lineHeight: "1.6",

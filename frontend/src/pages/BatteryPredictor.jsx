@@ -133,13 +133,13 @@ export default function BatteryPredictor() {
   const pageStyle = {
     minHeight: "100vh",
     background: "linear-gradient(to bottom, #f8fafc 0%, #ffffff 100%)",
-    padding: "3rem 2rem 4rem",
+    padding: "clamp(2rem, 5vw, 3rem) clamp(1rem, 3vw, 2rem) clamp(2rem, 5vw, 4rem)",
   };
 
   const cardStyle = {
     background: "white",
     borderRadius: "12px",
-    padding: "2rem",
+    padding: "clamp(1.5rem, 3vw, 2rem)",
     boxShadow: "0 2px 8px rgba(0,0,0,0.07)",
     border: "1px solid #e2e8f0",
   };
