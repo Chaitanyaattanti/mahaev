@@ -9,7 +9,7 @@ function Gauge({ score, color }) {
   const dashOffset = arc - (score / 100) * arc;
 
   return (
-    <svg viewBox="0 0 200 110" style={{ width: "280px", display: "block", margin: "0 auto", overflow: "visible" }}>
+    <svg viewBox="0 0 200 110" style={{ width: "clamp(140px, 60vw, 240px)", display: "block", margin: "0 auto", overflow: "visible" }}>
       {/* Track */}
       <path
         d={`M ${cx - r},${cy} A ${r},${r} 0 0,1 ${cx + r},${cy}`}
@@ -38,13 +38,13 @@ function Gauge({ score, color }) {
 function ScoreBar({ label, score, weight }) {
   const color = score >= 75 ? "#10b981" : score >= 50 ? "#f59e0b" : "#ef4444";
   return (
-    <div style={{ marginBottom: "1.1rem" }}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.35rem" }}>
-        <span style={{ fontSize: "0.85rem", fontWeight: "600", color: "#374151" }}>
+    <div style={{ marginBottom: "clamp(0.8rem, 2vw, 1.1rem)" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "clamp(0.25rem, 0.5vw, 0.35rem)" }}>
+        <span style={{ fontSize: "clamp(0.8rem, 1.5vw, 0.85rem)", fontWeight: "600", color: "#374151" }}>
           {label}
-          <span style={{ color: "#94a3b8", fontWeight: "400", marginLeft: "0.5rem", fontSize: "0.78rem" }}>({weight})</span>
+          <span style={{ color: "#94a3b8", fontWeight: "400", marginLeft: "0.5rem", fontSize: "clamp(0.7rem, 1vw, 0.78rem)" }}>({weight})</span>
         </span>
-        <span style={{ fontSize: "0.85rem", fontWeight: "700", color, minWidth: "50px", textAlign: "right" }}>{score}/100</span>
+        <span style={{ fontSize: "clamp(0.8rem, 1.5vw, 0.85rem)", fontWeight: "700", color, minWidth: "50px", textAlign: "right" }}>{score}/100</span>
       </div>
       <div style={{ background: "#f1f5f9", borderRadius: "99px", height: "7px", overflow: "hidden" }}>
         <div style={{
@@ -59,12 +59,12 @@ function ScoreBar({ label, score, weight }) {
 // ── Slider with live value badge ────────────────────────────────────────────
 function SliderInput({ label, value, min, max, step, unit, onChange, hint }) {
   return (
-    <div style={{ marginBottom: "1.6rem" }}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.45rem" }}>
-        <label style={{ fontWeight: "600", fontSize: "0.875rem", color: "#374151" }}>{label}</label>
+    <div style={{ marginBottom: "clamp(1rem, 2.5vw, 1.6rem)" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "clamp(0.3rem, 1vw, 0.45rem)" }}>
+        <label style={{ fontWeight: "600", fontSize: "clamp(0.8rem, 1.5vw, 0.875rem)", color: "#374151" }}>{label}</label>
         <span style={{
-          fontWeight: "700", fontSize: "0.95rem", color: "#1e293b",
-          background: "#f1f5f9", padding: "0.15rem 0.75rem", borderRadius: "99px",
+          fontWeight: "700", fontSize: "clamp(0.85rem, 1.5vw, 0.95rem)", color: "#1e293b",
+          background: "#f1f5f9", padding: "0.15rem clamp(0.5rem, 1vw, 0.75rem)", borderRadius: "99px",
           minWidth: "64px", textAlign: "center",
         }}>
           {value}{unit}
@@ -75,10 +75,10 @@ function SliderInput({ label, value, min, max, step, unit, onChange, hint }) {
         onChange={e => onChange(parseFloat(e.target.value))}
         style={{ width: "100%", accentColor: "#3b82f6", cursor: "pointer", height: "4px" }}
       />
-      <div style={{ display: "flex", justifyContent: "space-between", marginTop: "0.25rem" }}>
-        <span style={{ fontSize: "0.72rem", color: "#94a3b8" }}>{min}{unit}</span>
-        <span style={{ fontSize: "0.72rem", color: "#64748b", fontStyle: "italic" }}>{hint}</span>
-        <span style={{ fontSize: "0.72rem", color: "#94a3b8" }}>{max}{unit}</span>
+      <div style={{ display: "flex", justifyContent: "space-between", marginTop: "clamp(0.15rem, 0.5vw, 0.25rem)" }}>
+        <span style={{ fontSize: "clamp(0.65rem, 1vw, 0.72rem)", color: "#94a3b8" }}>{min}{unit}</span>
+        <span style={{ fontSize: "clamp(0.65rem, 1vw, 0.72rem)", color: "#64748b", fontStyle: "italic" }}>{hint}</span>
+        <span style={{ fontSize: "clamp(0.65rem, 1vw, 0.72rem)", color: "#94a3b8" }}>{max}{unit}</span>
       </div>
     </div>
   );
@@ -133,28 +133,28 @@ export default function BatteryPredictor() {
   const pageStyle = {
     minHeight: "100vh",
     background: "linear-gradient(to bottom, #f8fafc 0%, #ffffff 100%)",
-    padding: "clamp(2rem, 5vw, 3rem) clamp(1rem, 3vw, 2rem) clamp(2rem, 5vw, 4rem)",
+    padding: "clamp(1rem, 3vw, 2.5rem) clamp(0.75rem, 2.5vw, 1.75rem)",
   };
 
   const cardStyle = {
     background: "white",
     borderRadius: "12px",
-    padding: "clamp(1.5rem, 3vw, 2rem)",
+    padding: "clamp(0.875rem, 2.5vw, 1.5rem)",
     boxShadow: "0 2px 8px rgba(0,0,0,0.07)",
     border: "1px solid #e2e8f0",
   };
 
   const btnStyle = (disabled) => ({
     width: "100%",
-    padding: "0.9rem",
+    padding: "clamp(0.75rem, 2vw, 0.9rem)",
     borderRadius: "8px",
     background: disabled ? "#94a3b8" : "#3b82f6",
     color: "white",
     border: "none",
-    fontSize: "1rem",
+    fontSize: "clamp(0.9rem, 1.5vw, 1rem)",
     fontWeight: "700",
     cursor: disabled ? "not-allowed" : "pointer",
-    marginTop: "0.5rem",
+    marginTop: "clamp(0.4rem, 1vw, 0.5rem)",
     letterSpacing: "0.3px",
     transition: "background 0.2s",
   });
@@ -164,20 +164,20 @@ export default function BatteryPredictor() {
       <div style={{ maxWidth: "1140px", margin: "0 auto" }}>
 
         {/* ── Header ── */}
-        <div style={{ textAlign: "center", marginBottom: "3rem" }}>
-          <h1 style={{ fontSize: "2.3rem", fontWeight: "800", color: "#1e293b", margin: "0 0 0.75rem" }}>
+        <div style={{ textAlign: "center", marginBottom: "clamp(1.25rem, 3vw, 2.5rem)" }}>
+          <h1 style={{ fontSize: "clamp(1.5rem, 5vw, 2.3rem)", fontWeight: "800", color: "#1e293b", margin: "0 0 0.75rem" }}>
             Battery Health Predictor
           </h1>
-          <p style={{ color: "#64748b", fontSize: "1.05rem", maxWidth: "620px", margin: "0 auto", lineHeight: "1.6" }}>
+          <p style={{ color: "#64748b", fontSize: "clamp(0.9rem, 2vw, 1.05rem)", maxWidth: "620px", margin: "0 auto", lineHeight: "1.6" }}>
             Enter your Li-ion EV battery's operating parameters to receive an instant health rating and personalised recommendations - powered by our RandomForest model.
           </p>
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "2rem", alignItems: "start" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "clamp(0.75rem, 2vw, 1.75rem)", alignItems: "start" }}>
 
           {/* ── Left: inputs ── */}
           <div style={cardStyle}>
-            <h2 style={{ fontSize: "1.15rem", fontWeight: "700", color: "#1e293b", marginTop: 0, marginBottom: "1.75rem" }}>
+            <h2 style={{ fontSize: "clamp(1rem, 2vw, 1.15rem)", fontWeight: "700", color: "#1e293b", marginTop: 0, marginBottom: "clamp(0.75rem, 1.5vw, 1.25rem)" }}>
               Battery Parameters
             </h2>
 
@@ -212,15 +212,15 @@ export default function BatteryPredictor() {
             </button>
 
             {error && (
-              <p style={{ color: "#ef4444", fontSize: "0.85rem", marginTop: "0.75rem", textAlign: "center" }}>{error}</p>
+              <p style={{ color: "#ef4444", fontSize: "clamp(0.8rem, 1.5vw, 0.85rem)", marginTop: "clamp(0.5rem, 1vw, 0.75rem)", textAlign: "center" }}>{error}</p>
             )}
           </div>
 
           {/* ── Right: results ── */}
           <div>
             {!result ? (
-              <div style={{ ...cardStyle, textAlign: "center", padding: "4rem 2rem" }}>
-                <p style={{ color: "#94a3b8", fontSize: "1rem", lineHeight: "1.6" }}>
+              <div style={{ ...cardStyle, textAlign: "center", padding: "clamp(1.5rem, 3vw, 3rem) clamp(0.75rem, 1.5vw, 1.5rem)" }}>
+                <p style={{ color: "#94a3b8", fontSize: "clamp(0.9rem, 1.5vw, 1rem)", lineHeight: "1.6" }}>
                   Configure your battery parameters on the left and click&nbsp;
                   <strong style={{ color: "#3b82f6" }}>Predict Battery Health</strong> to see the analysis.
                 </p>
@@ -228,19 +228,19 @@ export default function BatteryPredictor() {
             ) : (
               <>
                 {/* ── Health Score card ── */}
-                <div style={{ ...cardStyle, textAlign: "center", marginBottom: "1.5rem" }}>
+                <div style={{ ...cardStyle, textAlign: "center", marginBottom: "clamp(1rem, 2vw, 1.5rem)" }}>
                   <Gauge score={result.overall} color={result.color} />
 
                   <div style={{
-                    display: "inline-block", marginTop: "1.1rem",
-                    padding: "0.45rem 1.6rem", borderRadius: "99px",
+                    display: "inline-block", marginTop: "clamp(0.75rem, 2vw, 1.1rem)",
+                    padding: "clamp(0.35rem, 1vw, 0.45rem) clamp(1rem, 2vw, 1.6rem)", borderRadius: "99px",
                     background: result.color + "1a",
-                    color: result.color, fontWeight: "700", fontSize: "1.1rem",
+                    color: result.color, fontWeight: "700", fontSize: "clamp(0.95rem, 1.5vw, 1.1rem)",
                   }}>
                     Grade {result.grade} &mdash; {result.status}
                   </div>
 
-                  <p style={{ color: "#64748b", fontSize: "0.85rem", marginTop: "0.7rem", marginBottom: 0 }}>
+                  <p style={{ color: "#64748b", fontSize: "clamp(0.8rem, 1.2vw, 0.85rem)", marginTop: "clamp(0.5rem, 1vw, 0.7rem)", marginBottom: 0 }}>
                     Estimated capacity retention:&nbsp;
                     <strong style={{ color: "#1e293b" }}>{result.capacity_retention_pct}%</strong>
                     &nbsp;of rated
@@ -248,8 +248,8 @@ export default function BatteryPredictor() {
                 </div>
 
                 {/* ── Breakdown bars ── */}
-                <div style={{ ...cardStyle, marginBottom: "1.5rem" }}>
-                  <h3 style={{ fontSize: "1rem", fontWeight: "700", color: "#1e293b", marginTop: 0, marginBottom: "1.25rem" }}>
+                <div style={{ ...cardStyle, marginBottom: "clamp(1rem, 2vw, 1.5rem)" }}>
+                  <h3 style={{ fontSize: "clamp(0.95rem, 1.8vw, 1rem)", fontWeight: "700", color: "#1e293b", marginTop: 0, marginBottom: "clamp(0.9rem, 2vw, 1.25rem)" }}>
                     Score Breakdown
                   </h3>
                   <ScoreBar label="Capacity Retention"  score={result.breakdown.capacity}    weight="35%" />
@@ -261,17 +261,17 @@ export default function BatteryPredictor() {
 
                 {/* ── Recommendations ── */}
                 <div style={cardStyle}>
-                  <h3 style={{ fontSize: "1rem", fontWeight: "700", color: "#1e293b", marginTop: 0, marginBottom: "1rem" }}>
+                  <h3 style={{ fontSize: "clamp(0.95rem, 1.8vw, 1rem)", fontWeight: "700", color: "#1e293b", marginTop: 0, marginBottom: "clamp(0.75rem, 1.5vw, 1rem)" }}>
                     Recommendations
                   </h3>
                   <ul style={{ margin: 0, padding: 0, listStyle: "none" }}>
                     {result.recommendations.map((rec, i) => (
                       <li key={i} style={{
-                        padding: "0.75rem 1rem",
+                        padding: "clamp(0.5rem, 1.5vw, 0.75rem) clamp(0.75rem, 1.5vw, 1rem)",
                         background: "#f8fafc",
                         borderRadius: "8px",
-                        marginBottom: "0.6rem",
-                        fontSize: "0.875rem",
+                        marginBottom: "clamp(0.4rem, 1vw, 0.6rem)",
+                        fontSize: "clamp(0.8rem, 1.2vw, 0.875rem)",
                         color: "#374151",
                         borderLeft: "3px solid #3b82f6",
                         lineHeight: "1.55",
@@ -287,7 +287,7 @@ export default function BatteryPredictor() {
         </div>
 
         {/* ── Disclaimer ── */}
-        <p style={{ textAlign: "center", color: "#94a3b8", fontSize: "0.78rem", marginTop: "2.5rem" }}>
+        <p style={{ textAlign: "center", color: "#94a3b8", fontSize: "clamp(0.7rem, 1.2vw, 0.78rem)", marginTop: "clamp(1.5rem, 3vw, 2.5rem)" }}>
           Scores are produced by a RandomForest model (R²=0.93) trained on CALCE cycle-degradation data, capturing real capacity-fade behaviour across hundreds of charge–discharge sessions.
           Results are indicative — always validate with laboratory measurements before safety-critical decisions.
         </p>

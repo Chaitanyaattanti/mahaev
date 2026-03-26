@@ -1,6 +1,6 @@
 function Timeline() {
   const containerStyle = {
-    padding: "3rem 2rem",
+    padding: "clamp(1.25rem, 2vw, 2.5rem) clamp(0.75rem, 1.5vw, 1.75rem)",
     maxWidth: "1400px",
     margin: "0 auto",
     background: "linear-gradient(to bottom, #f8fafc 0%, #ffffff 100%)",
@@ -67,10 +67,10 @@ function Timeline() {
   return (
     <div style={containerStyle}>
       <div style={headerStyle}>
-        <h1 style={{ fontSize: "3rem", fontWeight: "800", color: "#1e293b", marginBottom: "1rem" }}>
+        <h1 style={{ fontSize: "clamp(1.75rem, 4vw, 2.75rem)", fontWeight: "800", color: "#1e293b", marginBottom: "1rem" }}>
           Timeline & Deliverables
         </h1>
-        <p style={{ color: "#64748b", fontSize: "1.2rem" }}>
+        <p style={{ color: "#64748b", fontSize: "clamp(0.9rem, 1.5vw, 1.1rem)" }}>
           Three-year roadmap for Smart Battery Safety Diagnostic System
         </p>
       </div>
@@ -93,7 +93,7 @@ function Timeline() {
               }}>
                 Phase {phase.label} • {phase.duration}
               </div>
-              <h3 style={{ fontSize: "1.5rem", color: "#1e293b", fontWeight: "700", marginBottom: "1rem" }}>
+              <h3 style={{ fontSize: "clamp(1.3rem, 2.5vw, 1.5rem)", color: "#1e293b", fontWeight: "700", marginBottom: "1rem" }}>
                 {phase.title}
               </h3>
               <p style={{ color: "#64748b", lineHeight: "1.8" }}>

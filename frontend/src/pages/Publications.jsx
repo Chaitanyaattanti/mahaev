@@ -1,6 +1,6 @@
 function Publications() {
   const containerStyle = {
-    padding: "3rem 2rem",
+    padding: "clamp(1.25rem, 2vw, 2.5rem) clamp(0.75rem, 1.5vw, 1.75rem)",
     maxWidth: "1200px",
     margin: "0 auto",
     background: "linear-gradient(to bottom, #f8fafc 0%, #ffffff 100%)",
@@ -28,10 +28,10 @@ function Publications() {
   return (
     <div style={containerStyle}>
       <div style={{ textAlign: "center", marginBottom: "4rem" }}>
-        <h1 style={{ fontSize: "3rem", fontWeight: "800", color: "#1e293b", marginBottom: "1rem" }}>
+        <h1 style={{ fontSize: "clamp(1.75rem, 4vw, 2.75rem)", fontWeight: "800", color: "#1e293b", marginBottom: "1rem" }}>
           Outputs & Publications
         </h1>
-        <p style={{ color: "#64748b", fontSize: "1.2rem" }}>
+        <p style={{ color: "#64748b", fontSize: "clamp(0.9rem, 1.5vw, 1.1rem)" }}>
           Research contributions and achievements
         </p>
       </div>
