@@ -4,10 +4,10 @@ import { useState, useEffect } from "react";
 function Navbar() {
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 1024);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 1280);
 
   useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth < 1024);
+    const handleResize = () => setIsMobile(window.innerWidth < 1280);
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
@@ -17,36 +17,41 @@ function Navbar() {
   }, [location]);
   
   const navStyle = {
-    padding: "clamp(0.65rem, 1.5vw, 1.25rem) clamp(0.75rem, 2vw, 1.5rem)",
+    padding: "clamp(0.55rem, 1.2vw, 1rem) clamp(0.5rem, 1.5vw, 1rem)",
     background: "#ffffff",
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
     boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
     borderBottom: "1px solid #e2e8f0",
+    flexWrap: "nowrap",
+    overflow: "hidden",
   };
 
   const logoContainerStyle = {
     display: "flex",
     alignItems: "center",
-    gap: "1rem",
+    gap: "clamp(0.5rem, 1vw, 0.8rem)",
+    flexShrink: 0,
   };
 
   const leftSectionStyle = {
     display: "flex",
     alignItems: "center",
-    gap: isMobile ? "1rem" : "3rem",
+    gap: isMobile ? "clamp(0.5rem, 1vw, 0.8rem)" : "clamp(1.5rem, 2.5vw, 2.5rem)",
     flex: 1,
+    minWidth: 0,
+    overflow: "hidden",
   };
 
   const logoImageStyle = {
-    height: "clamp(35px, 6vw, 50px)",
+    height: "clamp(30px, 5vw, 45px)",
     width: "auto",
     cursor: "pointer",
   };
 
   const logoTextStyle = {
-    fontSize: "clamp(1rem, 2vw, 1.35rem)",
+    fontSize: "clamp(0.75rem, 1.8vw, 1.1rem)",
     fontWeight: "700",
     color: "#1e293b",
   };
@@ -54,8 +59,10 @@ function Navbar() {
   const logoTextContainerStyle = {
     display: "flex",
     flexDirection: "column",
-    gap: "0.1rem",
+    gap: "0.05rem",
     alignItems: "center",
+    minWidth: 0,
+    overflow: "hidden",
   };
 
   const subTextStyle = {
@@ -67,17 +74,20 @@ function Navbar() {
 
   const navLinksStyle = {
     display: "flex",
-    gap: "2rem",
+    gap: "clamp(1.2rem, 2vw, 2rem)",
     alignItems: "center",
+    flexShrink: 0,
   };
 
   const getLinkStyle = (path) => ({
     color: location.pathname === path ? "#1e293b" : "#64748b",
     fontWeight: location.pathname === path ? "600" : "500",
-    padding: "0.5rem 1rem",
+    padding: "clamp(0.3rem, 0.8vw, 0.5rem) clamp(0.6rem, 1.2vw, 0.9rem)",
     borderRadius: "5px",
     transition: "all 0.3s ease",
     background: location.pathname === path ? "#f1f5f9" : "transparent",
+    fontSize: "clamp(0.8rem, 1.5vw, 0.95rem)",
+    whiteSpace: "nowrap",
   });
 
   const hamburgerStyle = {
@@ -159,12 +169,12 @@ function Navbar() {
           )}
         </div>
 
-        <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
+        <div style={{ display: "flex", gap: "clamp(0.5rem, 1vw, 0.75rem)", alignItems: "center", minWidth: 0 }}>
           <a 
             href="https://iitgn.ac.in/" 
             target="_blank" 
             rel="noopener noreferrer"
-            style={{textDecoration: "none"}}
+            style={{textDecoration: "none", display: "flex", flexShrink: 0}}
             onMouseEnter={(e) => {
               e.currentTarget.style.opacity = "0.7";
             }}
@@ -173,7 +183,7 @@ function Navbar() {
             }}
           >
             <div style={logoContainerStyle}>
-              <img src={`${import.meta.env.BASE_URL}icon.jpeg`} alt="IIT Gandhinagar Logo" style={{...logoImageStyle, height: "55px"}} />
+              <img src={`${import.meta.env.BASE_URL}icon.jpeg`} alt="IIT Gandhinagar Logo" style={{...logoImageStyle, height: "clamp(35px, 5vw, 48px)"}} />
             </div>
           </a>
 
