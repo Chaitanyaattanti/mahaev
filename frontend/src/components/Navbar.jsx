@@ -93,7 +93,7 @@ function Navbar() {
           <Link to="/" style={getLinkStyle("/")}>Home</Link>
           <Link to="/datasets" style={getLinkStyle("/datasets")}>Datasets</Link>
           <Link to="/predictor" style={getLinkStyle("/predictor")}>Battery Predictor</Link>
-          <Link to="/deliverables#outputs" style={getLinkStyle("/deliverables#outputs")}>Outputs & Publications</Link>
+          <Link to="/publications" style={getLinkStyle("/publications")}>Outputs & Publications</Link>
           <Link to="/team" style={getLinkStyle("/team")}>Team</Link>
           <Link to="/contact" style={getLinkStyle("/contact")}>Contact Us</Link>
         </div>

@@ -4,6 +4,9 @@ import Chatbot from "./components/Chatbot";
 import Home from "./pages/Home";
 import Datasets from "./pages/Datasets";
 import Deliverables from "./pages/Deliverables";
+import Timeline from "./pages/Timeline";
+import Funding from "./pages/Funding";
+import Publications from "./pages/Publications";
 import Team from "./pages/Team";
 import Contact from "./pages/Contact";
 import About from "./pages/About";
@@ -19,6 +22,9 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/standards" element={<Standards />} />
         <Route path="/datasets" element={<Datasets />} />
+        <Route path="/timeline" element={<Timeline />} />
+        <Route path="/funding" element={<Funding />} />
+        <Route path="/publications" element={<Publications />} />
         <Route path="/deliverables" element={<Deliverables />} />
         <Route path="/team" element={<Team />} />
         <Route path="/contact" element={<Contact />} />

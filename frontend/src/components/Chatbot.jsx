@@ -331,7 +331,7 @@ function Chatbot() {
 
                 <button
                   style={{ ...submitButtonStyle, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}
-                  onClick={() => { navigate('/deliverables#timeline'); setIsOpen(false); setView('intro'); }}
+                  onClick={() => { navigate('/timeline'); setIsOpen(false); setView('intro'); }}
                   onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-2px)'}
                   onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
                 >
@@ -372,7 +372,7 @@ function Chatbot() {
 
                 <button
                   style={{ ...submitButtonStyle, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}
-                  onClick={() => { navigate('/deliverables#status'); setIsOpen(false); setView('intro'); }}
+                  onClick={() => { navigate('/about'); setIsOpen(false); setView('intro'); }}
                   onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-2px)'}
                   onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
                 >

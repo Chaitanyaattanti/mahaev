@@ -602,7 +602,7 @@ Lithium-ion batteries (LIBs) power modern EVs, but their safety is challenged by
             </button>
             <button 
               style={secondaryButtonStyle}
-              onClick={() => navigate('/deliverables#timeline')}
+              onClick={() => navigate('/timeline')}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = "translateY(-2px)";
                 e.currentTarget.style.boxShadow = "0 6px 20px rgba(220, 38, 38, 0.4)";

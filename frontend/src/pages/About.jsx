@@ -141,7 +141,7 @@ function About() {
               <strong>Solution:</strong> The MAHA-EV Project develops a Smart Battery Safety Diagnostic System using multi-modal sensing to monitor gas emissions, pressure, temperature, and voltage simultaneously, powered by physics-guided machine learning. This enables early detection of battery abuse signatures and thermal runaway prediction, ensuring safer EV battery systems.
             </p>
             <a
-              href="/mahaev/deliverables#timeline"
+              href="/mahaev/timeline"
               style={buttonStyle}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = "translateY(-2px)";
@@ -211,7 +211,7 @@ function About() {
               </p>
               <button
                 style={buttonStyle}
-                onClick={() => navigate('/deliverables#funding')}
+                onClick={() => navigate('/funding')}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.transform = "translateY(-2px)";
                   e.currentTarget.style.boxShadow = "0 6px 20px rgba(127, 29, 29, 0.4)";
