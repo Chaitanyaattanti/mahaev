@@ -1,18 +1,59 @@
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
+const fs = require("fs");
 const { spawn } = require("child_process");
+const multer = require("multer");
 
 const PREDICT_PY = path.join(__dirname, '..', 'ML', 'predict.py');
 
 const app = express();
 require('dotenv').config();
 
+// Load any previously uploaded datasets from disk so they persist across restarts
+const uploadedDatasetsPath = path.join(__dirname, "uploadedDatasets.json");
+// Simple log file to record each dataset submission (one JSON per line)
+const submissionsLogPath = path.join(__dirname, "datasetSubmissions.log");
+let uploadedDatasets = [];
+try {
+  if (fs.existsSync(uploadedDatasetsPath)) {
+    const raw = fs.readFileSync(uploadedDatasetsPath, "utf8");
+    const parsed = JSON.parse(raw);
+    if (Array.isArray(parsed)) {
+      uploadedDatasets = parsed;
+      console.log("Uploaded datasets loaded:", uploadedDatasets.length);
+    }
+  }
+} catch (err) {
+  console.error("Failed to load uploadedDatasets.json; starting with empty uploaded dataset list:", err.message);
+}
+
 app.use(cors({
   origin: ['https://chaitanyaattanti.github.io', 'http://localhost:5173'],
   credentials: true
 }));
 app.use(express.json());
+
+// File upload configuration - store uploads in the datasets folder
+// Use diskStorage so we can preserve the original filename (and extension)
+// while adding a timestamp prefix to avoid collisions.
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, path.join(__dirname, "datasets"));
+  },
+  filename: (req, file, cb) => {
+    const safeOriginal = file.originalname.replace(/\s+/g, "_");
+    const uniqueName = `${Date.now()}-${safeOriginal}`;
+    cb(null, uniqueName);
+  },
+});
+
+const upload = multer({
+  storage,
+  limits: {
+    fileSize: 200 * 1024 * 1024, // 200 MB limit
+  },
+});
 
 // Serve static files from datasets folder
 app.use('/files', express.static(path.join(__dirname, 'datasets')));
@@ -79,6 +120,22 @@ const datasets = [
     dataset_url: "https://zenodo.org/records/18944534/files/archive.zip?download=1"
   }
 ];
+
+// Merge any previously uploaded datasets, avoiding exact duplicates.
+// Currently disabled so that only the curated static datasets appear.
+// If you want to re-enable persistence later, restore the logic below.
+// if (Array.isArray(uploadedDatasets) && uploadedDatasets.length > 0) {
+//   const seen = new Set(
+//     datasets.map((d) => `${d.dataset_name}:::${d.dataset_url}`)
+//   );
+//   uploadedDatasets.forEach((d) => {
+//     const key = `${d.dataset_name}:::${d.dataset_url}`;
+//     if (!seen.has(key)) {
+//       datasets.push(d);
+//       seen.add(key);
+//     }
+//   });
+// }
 
 // ── Sub-score helpers (breakdown display & recommendations — generic Li-ion) ──
 function computeSubScores(voltage, temperature, cycle_count, soc, c_rate) {
@@ -259,7 +316,86 @@ app.get("/", (req, res) => {
 });
 
 app.get("/datasets", (req, res) => {
-  res.json(datasets);
+  const blockedNames = new Set(["Test", "cs", "wert"]);
+
+  const filtered = datasets.filter((d) => {
+    if (!d || !d.dataset_name) return false;
+    return !blockedNames.has(String(d.dataset_name).trim());
+  });
+
+  res.json(filtered);
+});
+
+// Internal-only endpoint to view all submitted datasets
+// Not linked from the public site; use for review
+app.get("/admin/dataset-submissions", (req, res) => {
+  try {
+    // Always read latest from disk to include any external edits
+    let data = uploadedDatasets;
+    if (fs.existsSync(uploadedDatasetsPath)) {
+      const raw = fs.readFileSync(uploadedDatasetsPath, "utf8");
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed)) {
+        data = parsed;
+      }
+    }
+    res.json(data || []);
+  } catch (err) {
+    console.error("Failed to read dataset submissions:", err.message);
+    res.status(500).json({ error: "Failed to read dataset submissions" });
+  }
+});
+
+// Public endpoint to register a new dataset (metadata + URL)
+// Users are expected to host the dataset elsewhere (e.g., Drive)
+// and provide a shareable URL along with the metadata.
+app.post("/admin/upload-dataset", upload.single("file"), (req, res) => {
+  try {
+    const { dataset_name, dataset_description, dataset_source, input_features, dataset_url } = req.body;
+
+    if (!dataset_name || !dataset_description || !dataset_url) {
+      return res.status(400).json({ error: "dataset_name, dataset_description and dataset_url are required" });
+    }
+
+    const newDataset = {
+      dataset_name,
+      dataset_description,
+      dataset_source: dataset_source || "",
+      dataset_url,
+      input_features: input_features || "",
+    };
+
+    // Append a simple log entry for this submission
+    try {
+      const logEntry = {
+        timestamp: new Date().toISOString(),
+        ...newDataset,
+      };
+      fs.appendFileSync(submissionsLogPath, JSON.stringify(logEntry) + "\n");
+    } catch (logErr) {
+      console.error("Failed to write dataset submission log:", logErr);
+    }
+
+    // Persist to uploadedDatasets.json, removing any older duplicates.
+    // These submitted datasets are kept for internal review only and
+    // are not included in the public /datasets listing.
+    try {
+      const base = Array.isArray(uploadedDatasets) ? uploadedDatasets : [];
+      const key = `${newDataset.dataset_name}:::${newDataset.dataset_url}`;
+      const withoutDupes = base.filter(
+        (d) => `${d.dataset_name}:::${d.dataset_url}` !== key
+      );
+      uploadedDatasets = [...withoutDupes, newDataset];
+      fs.writeFileSync(uploadedDatasetsPath, JSON.stringify(uploadedDatasets, null, 2));
+    } catch (persistErr) {
+      console.error("Failed to persist uploaded dataset:", persistErr);
+    }
+
+    res.status(201).json(newDataset);
+  } catch (err) {
+    console.error("Upload dataset error:", err);
+    res.status(500).json({ error: "Failed to upload dataset" });
+  }
 });
 
 // Download endpoint for local files
@@ -278,4 +414,16 @@ app.get("/download/:filename", (req, res) => {
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`🚀 Server running at http://localhost:${PORT}`);
+  try {
+    const routes = [];
+    app._router.stack.forEach((middleware) => {
+      if (middleware.route) {
+        const methods = Object.keys(middleware.route.methods).join(',');
+        routes.push(`${methods.toUpperCase()} ${middleware.route.path}`);
+      }
+    });
+    console.log("Registered routes:", routes);
+  } catch (e) {
+    console.log("(Debug) Unable to list routes", e.message);
+  }
 });

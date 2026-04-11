@@ -6,13 +6,30 @@ function Datasets() {
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredDatasets, setFilteredDatasets] = useState([]);
+  const [showUploadForm, setShowUploadForm] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const [uploadError, setUploadError] = useState("");
+  const [uploadSuccess, setUploadSuccess] = useState("");
+  const [uploadForm, setUploadForm] = useState({
+    name: "",
+    description: "",
+    source: "",
+    features: "",
+    url: "",
+  });
 
   useEffect(() => {
     fetch(`${API_URL}/datasets`)
       .then(res => res.json())
       .then(data => {
+        // Remove any temporary/test entries that should not appear
+        const cleaned = data.filter((d) => {
+          const name = (d.dataset_name || "").trim().toLowerCase();
+          return name !== "test" && name !== "cs" && name !== "wert";
+        });
+
         // Sort datasets by category
-        const sortedData = data.sort((a, b) => {
+        const sortedData = cleaned.sort((a, b) => {
           const getCategoryPriority = (name) => {
             const nameLower = name.toLowerCase();
             if (nameLower.includes('temperature') || nameLower.includes('thermal')) return 1;
@@ -195,6 +212,114 @@ function Datasets() {
     color: "#555",
   };
 
+  const adminSectionContainerStyle = {
+    marginTop: "2rem",
+    padding: "1.5rem",
+    borderRadius: "8px",
+    border: "1px solid #e5e7eb",
+    background: "#f9fafb",
+  };
+
+  const adminToggleButtonStyle = {
+    padding: "0.6rem 1.2rem",
+    borderRadius: "999px",
+    border: "1px solid #1e293b",
+    background: "white",
+    color: "#1e293b",
+    fontWeight: 600,
+    cursor: "pointer",
+    fontSize: "0.9rem",
+    marginTop: "1rem",
+  };
+
+  const adminInputStyle = {
+    width: "100%",
+    padding: "0.6rem 0.8rem",
+    borderRadius: "6px",
+    border: "1px solid #d1d5db",
+    fontSize: "0.9rem",
+    marginTop: "0.25rem",
+  };
+
+  const adminLabelStyle = {
+    fontSize: "0.85rem",
+    fontWeight: 600,
+    color: "#374151",
+    marginTop: "0.75rem",
+    display: "block",
+  };
+
+  const adminSubmitButtonStyle = {
+    marginTop: "1rem",
+    padding: "0.7rem 1.5rem",
+    background: "#1e293b",
+    color: "white",
+    border: "none",
+    borderRadius: "6px",
+    fontWeight: 600,
+    cursor: "pointer",
+    fontSize: "0.9rem",
+  };
+
+  const adminStatusStyle = (type) => ({
+    marginTop: "0.75rem",
+    fontSize: "0.85rem",
+    color: type === "error" ? "#b91c1c" : "#166534",
+  });
+
+  // No admin login required anymore
+
+  const handleUploadChange = (field, value) => {
+    setUploadForm((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+  };
+
+  const handleUploadSubmit = async (e) => {
+    e.preventDefault();
+    setUploadError("");
+    setUploadSuccess("");
+
+    if (!uploadForm.name || !uploadForm.description || !uploadForm.url) {
+      setUploadError("Dataset name, description, and URL are required.");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("dataset_name", uploadForm.name);
+    formData.append("dataset_description", uploadForm.description);
+    formData.append("dataset_source", uploadForm.source);
+    formData.append("input_features", uploadForm.features);
+    formData.append("dataset_url", uploadForm.url);
+
+    try {
+      setUploading(true);
+      const res = await fetch(`${API_URL}/admin/upload-dataset`, {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setUploadError(data.error || "Failed to upload dataset.");
+        return;
+      }
+
+      // Do not modify the current dataset list on this page; 
+      // submissions are stored for review only and do not
+      // affect what is shown above.
+      setUploadSuccess("Thank you. Your response has been recorded for review.");
+      setUploadForm({ name: "", description: "", source: "", features: "", url: "" });
+    } catch (err) {
+      console.error(err);
+      setUploadError("Unexpected error while uploading dataset.");
+    } finally {
+      setUploading(false);
+    }
+  };
+
   if (loading) {
     return (
       <div style={containerStyle}>
@@ -229,6 +354,89 @@ function Datasets() {
           </button>
         </div>
       </div>
+
+      <div style={adminSectionContainerStyle}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "0.75rem" }}>
+          <div>
+            <h2 style={{ margin: 0, fontSize: "1.1rem" }}>Share a Dataset With the Team</h2>
+            <p style={{ margin: "0.25rem 0", fontSize: "0.85rem", color: "#6b7280" }}>
+              Use this form to send us dataset details (by URL).
+            </p>
+          </div>
+          <button
+            type="button"
+            style={adminToggleButtonStyle}
+            onClick={() => setShowUploadForm((prev) => !prev)}
+          >
+            {showUploadForm ? "Hide Form" : "Open Form"}
+          </button>
+        </div>
+
+        {showUploadForm && (
+          <div style={{ marginTop: "1rem" }}>
+            <form onSubmit={handleUploadSubmit} style={{ marginTop: "1.0rem" }}>
+                <label style={adminLabelStyle}>
+                  Dataset Name
+                  <input
+                    type="text"
+                    placeholder="e.g., Custom SOC Drive Cycle Dataset"
+                    style={adminInputStyle}
+                    value={uploadForm.name}
+                    onChange={(e) => handleUploadChange("name", e.target.value)}
+                  />
+                </label>
+
+                <label style={adminLabelStyle}>
+                  Dataset Description
+                  <textarea
+                    placeholder="Short description of the dataset and its purpose"
+                    style={{ ...adminInputStyle, minHeight: "80px", resize: "vertical" }}
+                    value={uploadForm.description}
+                    onChange={(e) => handleUploadChange("description", e.target.value)}
+                  />
+                </label>
+
+                <label style={adminLabelStyle}>
+                  Citation / Source (optional)
+                  <textarea
+                    placeholder="Citation, DOI, or source link"
+                    style={{ ...adminInputStyle, minHeight: "60px", resize: "vertical" }}
+                    value={uploadForm.source}
+                    onChange={(e) => handleUploadChange("source", e.target.value)}
+                  />
+                </label>
+
+                <label style={adminLabelStyle}>
+                  Input Features (optional)
+                  <textarea
+                    placeholder="List the key input features used in this dataset (e.g., voltage, temperature, cycle count)"
+                    style={{ ...adminInputStyle, minHeight: "60px", resize: "vertical" }}
+                    value={uploadForm.features}
+                    onChange={(e) => handleUploadChange("features", e.target.value)}
+                  />
+                </label>
+
+                <label style={adminLabelStyle}>
+                  Dataset URL (Google Drive, etc.)
+                  <input
+                    type="url"
+                    placeholder="Paste a shareable link to the dataset"
+                    style={adminInputStyle}
+                    value={uploadForm.url}
+                    onChange={(e) => handleUploadChange("url", e.target.value)}
+                  />
+                </label>
+
+                <button type="submit" style={adminSubmitButtonStyle} disabled={uploading}>
+                  {uploading ? "Uploading..." : "Upload Dataset"}
+                </button>
+
+                {uploadError && <div style={adminStatusStyle("error")}>{uploadError}</div>}
+                {uploadSuccess && <div style={adminStatusStyle("success")}>{uploadSuccess}</div>}
+              </form>
+          </div>
+        )}
+       </div>
 
       {filteredDatasets.length === 0 ? (
         <div style={noResultsStyle}>

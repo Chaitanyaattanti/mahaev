@@ -1,0 +1,23 @@
+[
+  {
+    "dataset_name": "test",
+    "dataset_description": "dfvgb",
+    "dataset_source": "dfg",
+    "dataset_url": "https://chatgpt.com/",
+    "input_features": "adfg"
+  },
+  {
+    "dataset_name": "er",
+    "dataset_description": "nice",
+    "dataset_source": "asd",
+    "dataset_url": "https://www.youtube.com/",
+    "input_features": "asd"
+  },
+  {
+    "dataset_name": "123",
+    "dataset_description": "wer",
+    "dataset_source": "qwe",
+    "dataset_url": "https://www.youtube.com/",
+    "input_features": "qw,we,er"
+  }
+]
