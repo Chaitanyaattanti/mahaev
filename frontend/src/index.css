@@ -96,3 +96,52 @@ a {
 a:hover {
   color: #1e293b;
 }
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   RESPONSIVE MEDIA QUERIES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+/* Mobile First: Base styles above handle 320px+ */
+
+/* Tablet (768px and above) */
+@media (min-width: 768px) {
+  :root {
+    --spacing-xl: clamp(2.5rem, 3.5vw, 4rem);
+    --spacing-2xl: clamp(3rem, 5vw, 5.5rem);
+  }
+}
+
+/* Desktop (1280px and above) */
+@media (min-width: 1280px) {
+  :root {
+    --spacing-2xl: clamp(3.5rem, 6vw, 6rem);
+  }
+}
+
+/* Large Desktop (1920px and above) */
+@media (min-width: 1920px) {
+  body {
+    font-size: 18px;
+  }
+}
+
+/* Prevent overflow on ultra-small screens */
+@media (max-width: 375px) {
+  :root {
+    --font-size-h1: clamp(1.25rem, 8vw, 2rem);
+    --font-size-h2: clamp(0.95rem, 6vw, 1.5rem);
+    --font-size-body: clamp(0.8rem, 2.2vw, 0.9rem);
+  }
+
+  h1, h2, h3, p {
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
+}
+
+/* Print styles for accessibility */
+@media print {
+  nav, footer, button, .chatbot {
+    display: none;
+  }
+}

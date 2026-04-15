@@ -23,33 +23,34 @@ function Home() {
 
   const heroSectionStyle = {
     background: "linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 50%, #f9fafb 100%)",
-    padding: "clamp(2rem, 8vw, 5rem) clamp(1rem, 6vw, 4rem)",
+    padding: "clamp(2.5rem, 8vw, 5rem) clamp(1.5rem, 6vw, 4rem)",
     position: "relative",
     overflow: "hidden",
-    minHeight: "clamp(400px, 80vh, 550px)",
+    minHeight: "clamp(450px, 85vh, 600px)",
     borderBottom: "1px solid #e2e8f0",
   };
 
   const heroContentStyle = {
-    maxWidth: "650px",
+    maxWidth: "620px",
     position: "relative",
-    zIndex: 2,
+    zIndex: 3,
+    paddingRight: "clamp(1rem, 3vw, 2rem)",
   };
 
   const mainTitleStyle = {
-    fontSize: "clamp(1.8rem, 5vw, 3.5rem)",
+    fontSize: "clamp(2rem, 5.5vw, 3.8rem)",
     fontWeight: "800",
     color: "#1e293b",
-    margin: "0 0 clamp(1rem, 2vw, 1.5rem) 0",
-    lineHeight: "1.1",
+    margin: "0 0 clamp(1.25rem, 2.5vw, 2rem) 0",
+    lineHeight: "1.15",
     letterSpacing: "-0.02em",
   };
 
   const descriptionStyle = {
     fontSize: "clamp(0.95rem, 1.5vw, 1.15rem)",
     color: "#475569",
-    lineHeight: "1.7",
-    marginBottom: "clamp(1rem, 2vw, 2rem)",
+    lineHeight: "1.8",
+    marginBottom: "clamp(1.5rem, 2.5vw, 2.5rem)",
     maxWidth: "580px",
   };
 
@@ -101,14 +102,15 @@ function Home() {
 
   const decorativeCirclesStyle = {
     position: "absolute",
-    right: "3%",
+    right: "-5%",
     top: "50%",
     transform: "translateY(-50%)",
-    width: "600px",
-    height: "500px",
+    width: "700px",
+    height: "600px",
     pointerEvents: "none",
-    zIndex: 1,
-    display: window.innerWidth <= 768 ? "none" : "block",
+    zIndex: 0,
+    display: window.innerWidth <= 1024 ? "none" : "block",
+    opacity: 0.4,
   };
 
   const circleStyle = (size, color, top, left, iconSize) => ({
@@ -406,78 +408,78 @@ function Home() {
 
           {/* Large Terms - Better spacing */}
           <div className="kinetic-text" style={{ 
-            top: "8%", left: "42%", fontSize: "2.5rem", color: "#1e3a8a", 
-            animation: "float 6s ease-in-out infinite"
+            top: "5%", left: "45%", fontSize: "clamp(1.8rem, 3vw, 2.8rem)", color: "#1e3a8a", 
+            animation: "float 6s ease-in-out infinite", opacity: 0.5
           }}>
             BATTERY SAFETY
           </div>
 
           <div className="kinetic-text" style={{ 
-            top: "18%", left: "68%", fontSize: "1.6rem", color: "#f97316", 
-            animation: "floatSlow 5s ease-in-out infinite 1s"
+            top: "25%", left: "70%", fontSize: "clamp(1.2rem, 2.5vw, 1.8rem)", color: "#f97316", 
+            animation: "floatSlow 5s ease-in-out infinite 1s", opacity: 0.45
           }}>
             Battery Standards
           </div>
 
           <div className="kinetic-text" style={{ 
-            top: "38%", left: "5%", fontSize: "1.6rem", color: "#2563eb", 
-            animation: "float 7s ease-in-out infinite 2s"
+            top: "45%", left: "8%", fontSize: "clamp(1.2rem, 2.5vw, 1.8rem)", color: "#2563eb", 
+            animation: "float 7s ease-in-out infinite 2s", opacity: 0.45
           }}>
             Thermal Runaway
           </div>
 
           <div className="kinetic-text" style={{ 
-            top: "58%", left: "70%", fontSize: "2rem", color: "#1e40af", 
-            animation: "floatSlow 6s ease-in-out infinite 0.5s"
+            top: "65%", left: "72%", fontSize: "clamp(1.4rem, 3vw, 2.2rem)", color: "#1e40af", 
+            animation: "floatSlow 6s ease-in-out infinite 0.5s", opacity: 0.5
           }}>
             Machine Learning
           </div>
 
           <div className="kinetic-text" style={{ 
-            top: "78%", left: "12%", fontSize: "1.5rem", color: "#f97316", 
-            animation: "float 5.5s ease-in-out infinite 1.5s"
+            top: "82%", left: "15%", fontSize: "clamp(1.1rem, 2vw, 1.6rem)", color: "#f97316", 
+            animation: "float 5.5s ease-in-out infinite 1.5s", opacity: 0.4
           }}>
             Predictive
           </div>
 
           {/* Medium Terms */}
           <div className="kinetic-text" style={{ 
-            top: "28%", left: "12%", fontSize: "1.3rem", color: "#1e3a8a", opacity: 0.8,
+            top: "35%", left: "15%", fontSize: "clamp(1rem, 2vw, 1.4rem)", color: "#1e3a8a", opacity: 0.35,
             animation: "floatSlow 6.5s ease-in-out infinite 2.5s"
           }}>
             Diagnostics
           </div>
 
           <div className="kinetic-text" style={{ 
-            top: "52%", left: "42%", fontSize: "1.4rem", color: "#64748b", opacity: 0.7,
+            top: "58%", left: "45%", fontSize: "clamp(1rem, 2vw, 1.5rem)", color: "#64748b", opacity: 0.3,
             animation: "float 7s ease-in-out infinite 1s"
           }}>
             IoT Sensors
           </div>
 
           <div className="kinetic-text" style={{ 
-            top: "72%", left: "50%", fontSize: "1.2rem", color: "#2563eb", opacity: 0.8,
+            top: "78%", left: "55%", fontSize: "clamp(0.95rem, 1.8vw, 1.3rem)", color: "#2563eb", opacity: 0.35,
             animation: "floatSlow 5s ease-in-out infinite 2s"
           }}>
             Real-time
           </div>
 
           <div className="kinetic-text" style={{ 
-            top: "15%", left: "22%", fontSize: "1.1rem", color: "#475569", opacity: 0.7,
+            top: "20%", left: "28%", fontSize: "clamp(0.9rem, 1.8vw, 1.2rem)", color: "#475569", opacity: 0.3,
             animation: "float 6s ease-in-out infinite 3s"
           }}>
             Datasets
           </div>
 
           <div className="kinetic-text" style={{ 
-            top: "45%", left: "8%", fontSize: "1.4rem", color: "#f97316", opacity: 0.75,
+            top: "52%", left: "12%", fontSize: "clamp(1rem, 2vw, 1.5rem)", color: "#f97316", opacity: 0.35,
             animation: "float 6s ease-in-out infinite 1.5s"
           }}>
             Electric Vehicle
           </div>
 
           <div className="kinetic-text" style={{ 
-            top: "62%", left: "25%", fontSize: "1.3rem", color: "#1e40af", opacity: 0.75,
+            top: "70%", left: "30%", fontSize: "clamp(1rem, 2vw, 1.4rem)", color: "#1e40af", opacity: 0.35,
             animation: "floatSlow 6.5s ease-in-out infinite 2.5s"
           }}>
             Battery Testing
@@ -485,14 +487,14 @@ function Home() {
 
           {/* Small Terms */}
           <div className="kinetic-text" style={{ 
-            top: "68%", left: "35%", fontSize: "0.95rem", color: "#94a3b8", opacity: 0.6,
+            top: "75%", left: "40%", fontSize: "clamp(0.85rem, 1.5vw, 1.1rem)", color: "#94a3b8", opacity: 0.25,
             animation: "pulse 4.5s ease-in-out infinite 1s"
           }}>
             Monitoring
           </div>
 
           <div className="kinetic-text" style={{ 
-            top: "88%", left: "58%", fontSize: "0.9rem", color: "#94a3b8", opacity: 0.6,
+            top: "88%", left: "65%", fontSize: "clamp(0.8rem, 1.5vw, 1rem)", color: "#94a3b8", opacity: 0.25,
             animation: "pulse 5s ease-in-out infinite 0.5s"
           }}>
             Lithium Batteries

@@ -173,7 +173,12 @@ export default function BatteryPredictor() {
           </p>
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "clamp(0.75rem, 2vw, 1.75rem)", alignItems: "start" }}>
+        <div style={{ 
+          display: "grid", 
+          gridTemplateColumns: window.innerWidth < 768 ? "1fr" : "1fr 1fr", 
+          gap: "clamp(0.75rem, 2vw, 1.75rem)", 
+          alignItems: "start" 
+        }}>
 
           {/* ── Left: inputs ── */}
           <div style={cardStyle}>
