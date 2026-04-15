@@ -1,4 +1,14 @@
+import { useState, useEffect } from "react";
+
 function Timeline() {
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const containerStyle = {
     padding: "clamp(1.25rem, 2vw, 2.5rem) clamp(0.75rem, 1.5vw, 1.75rem)",
     maxWidth: "1400px",
@@ -14,32 +24,32 @@ function Timeline() {
 
   const timelineContainerStyle = {
     position: "relative",
-    padding: "2rem 0",
+    padding: isMobile ? "2rem 0 2rem 2rem" : "2rem 0",
   };
 
   const timelineLineStyle = {
     position: "absolute",
-    left: "50%",
+    left: isMobile ? "0" : "50%",
     top: "0",
     bottom: "0",
     width: "4px",
     background: "linear-gradient(to bottom, #1e3a8a, #f97316, #059669)",
-    transform: "translateX(-50%)",
+    transform: isMobile ? "translateX(0)" : "translateX(-50%)",
     zIndex: 0,
   };
 
   const phaseStyle = (isLeft) => ({
     display: "flex",
-    justifyContent: isLeft ? "flex-end" : "flex-start",
-    marginBottom: "3rem",
+    justifyContent: isMobile ? "flex-start" : (isLeft ? "flex-end" : "flex-start"),
+    marginBottom: "clamp(2rem, 4vw, 3rem)",
     position: "relative",
   });
 
   const phaseCardStyle = {
-    width: "45%",
+    width: isMobile ? "100%" : "45%",
     background: "white",
     borderRadius: "12px",
-    padding: "2rem",
+    padding: "clamp(1.25rem, 3vw, 2rem)",
     boxShadow: "0 8px 16px rgba(0,0,0,0.1)",
     border: "2px solid #e2e8f0",
     position: "relative",
@@ -47,9 +57,9 @@ function Timeline() {
 
   const phaseDotStyle = (phaseIndex) => ({
     position: "absolute",
-    left: "50%",
-    top: "50%",
-    transform: "translate(-50%, -50%)",
+    left: isMobile ? "-12px" : "50%",
+    top: "30px",
+    transform: isMobile ? "translate(-50%, -50%)" : "translate(-50%, -50%)",
     width: "24px",
     height: "24px",
     borderRadius: "50%",
