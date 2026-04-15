@@ -206,17 +206,29 @@ function mlPredict(payload) {
   return new Promise((resolve, reject) => {
     const py = spawn('python3', [PREDICT_PY]);
     let stdout = '', stderr = '';
+    
+    // Set timeout to prevent hanging
+    const timeout = setTimeout(() => {
+      py.kill();
+      reject(new Error('ML model prediction timed out (>5s)'));
+    }, 5000);
+    
     py.stdout.on('data', (d) => { stdout += d.toString(); });
     py.stderr.on('data', (d) => { stderr += d.toString(); });
     py.on('close', (code) => {
-      if (code !== 0) return reject(new Error(stderr || `Python exited ${code}`));
+      clearTimeout(timeout);
+      if (code !== 0) return reject(new Error(`Python process exited with code ${code}: ${stderr}`));
       try {
         const parsed = JSON.parse(stdout.trim());
         if (parsed.error) return reject(new Error(parsed.error));
         resolve(parsed.safety_score);
       } catch (e) {
-        reject(new Error('Failed to parse Python output'));
+        reject(new Error(`Failed to parse ML output: ${e.message}`));
       }
+    });
+    py.on('error', (err) => {
+      clearTimeout(timeout);
+      reject(new Error(`Failed to spawn Python: ${err.message}`));
     });
     py.stdin.write(JSON.stringify(payload));
     py.stdin.end();
@@ -245,19 +257,28 @@ app.post("/predict", async (req, res) => {
     const { capacityScore, voltageScore, temperatureScore, socScore, crateScore, capacityRetention } =
       computeSubScores(voltage, temperature, cycle_count, soc, c_rate);
 
-    // === Overall: ML model (RandomForest, R²=0.961) ===
-    // Falls back to weighted formula if Python unavailable
-    let overall;
+    // === Calculate Manual/Formula Score (always) ===
+    // Weighted formula: capacity 35%, voltage 25%, thermal 20%, soc 10%, c-rate 10%
+    const manualWeightedScore = capacityScore * 0.35 + voltageScore * 0.25 +
+                                temperatureScore * 0.20 + socScore * 0.10 + crateScore * 0.10;
+    const manualOverall = Math.round(manualWeightedScore);
+    console.log(`📊 MANUAL WEIGHTED SCORE: ${manualOverall}/100 (capacity:${Math.round(capacityScore)}*0.35 + voltage:${Math.round(voltageScore)}*0.25 + temp:${Math.round(temperatureScore)}*0.20 + soc:${Math.round(socScore)}*0.10 + c_rate:${Math.round(crateScore)}*0.10 = ${manualWeightedScore.toFixed(2)})`);
+    
+    // === Try ML Model (RandomForest, R²=0.961) ===
+    let mlScore = null;
+    let mlUsed = false;
     try {
-      const mlScore = await mlPredict({ voltage, temperature, cycle_count, soc, c_rate });
-      overall = Math.round(mlScore);
+      mlScore = await mlPredict({ voltage, temperature, cycle_count, soc, c_rate });
+      mlUsed = true;
+      const mlOverall = Math.round(mlScore);
+      console.log(`✅ ML PREDICTION: ${mlOverall}/100 (raw: ${mlScore.toFixed(2)})`);
     } catch (mlErr) {
-      console.warn("ML model unavailable, using formula fallback:", mlErr.message);
-      overall = Math.round(
-        capacityScore * 0.35 + voltageScore * 0.25 +
-        temperatureScore * 0.20 + socScore * 0.10 + crateScore * 0.10
-      );
+      console.error(`❌ ML MODEL FAILED: ${mlErr.message}`);
+      mlScore = null;
     }
+    
+    // Use ML if available, otherwise use manual weighted score
+    const overall = mlUsed ? Math.round(mlScore) : manualOverall;
 
     // === Grade ===
     let grade, status, color;
@@ -284,6 +305,9 @@ app.post("/predict", async (req, res) => {
 
     res.json({
       overall,
+      ml_score: mlScore ? Math.round(mlScore) : null,  // ML model prediction (if available)
+      manual_score: manualOverall,                      // Manual weighted formula score
+      ml_model_used: mlUsed,                           // Which method was used
       grade,
       status,
       color,

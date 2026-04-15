@@ -245,6 +245,41 @@ export default function BatteryPredictor() {
                     <strong style={{ color: "#1e293b" }}>{result.capacity_retention_pct}%</strong>
                     &nbsp;of rated
                   </p>
+
+                  {/* ── Score Method Info ── */}
+                  <div style={{ 
+                    marginTop: "clamp(1rem, 2vw, 1.5rem)", 
+                    paddingTop: "clamp(0.8rem, 1.5vw, 1rem)", 
+                    borderTop: "1px solid #e2e8f0",
+                    fontSize: "clamp(0.75rem, 1vw, 0.82rem)",
+                    color: "#64748b",
+                    lineHeight: "1.6"
+                  }}>
+                    <div style={{ marginBottom: "0.5rem" }}>
+                      <strong style={{ color: "#1e293b" }}>📊 Manual Weighted Score:</strong> {result.manual_score}/100
+                      <br/><span style={{ fontSize: "clamp(0.7rem, 0.9vw, 0.75rem)", color: "#94a3b8" }}>
+                        (capacity 35% + voltage 25% + thermal 20% + soc 10% + c-rate 10%)
+                      </span>
+                    </div>
+                    {result.ml_score !== null ? (
+                      <div style={{ marginBottom: "0.5rem" }}>
+                        <strong style={{ color: "#10b981" }}>🤖 ML Prediction Score:</strong> {result.ml_score}/100
+                        <br/><span style={{ fontSize: "clamp(0.7rem, 0.9vw, 0.75rem)", color: "#94a3b8" }}>
+                          (RandomForest model with R²=0.93)
+                        </span>
+                      </div>
+                    ) : (
+                      <div style={{ marginBottom: "0.5rem" }}>
+                        <strong style={{ color: "#f59e0b" }}>⚠️ ML Model:</strong> Not available
+                        <br/><span style={{ fontSize: "clamp(0.7rem, 0.9vw, 0.75rem)", color: "#94a3b8" }}>
+                          (Using manual weighted score instead)
+                        </span>
+                      </div>
+                    )}
+                    <div style={{ marginTop: "0.5rem", paddingTop: "0.5rem", borderTop: "1px solid #e5e7eb" }}>
+                      <strong style={{ color: "#1e293b" }}>✓ Final Score Used:</strong> {result.ml_model_used ? 'ML Model' : 'Manual Formula'} ({result.overall}/100)
+                    </div>
+                  </div>
                 </div>
 
                 {/* ── Breakdown bars ── */}

@@ -1,4 +1,2 @@
-// For development, always talk directly to the local backend.
-// This avoids accidentally hitting an old deployed API that still
-// expects admin credentials.
-export const API_URL = 'http://localhost:3000';
+// Use environment variable in production, localhost in development
+export const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
