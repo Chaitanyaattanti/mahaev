@@ -257,11 +257,11 @@ function Chatbot() {
             {view === 'intro' ? (
               <>
                 <div style={botMessageStyle}>
-                  👋 <strong>Welcome!</strong> I'm your MAHA-EV assistant. Get instant insights about battery safety research without navigating pages.
+                  <strong>Welcome!</strong> I'm your MAHA-EV assistant. Get instant insights about battery safety research without navigating pages.
                 </div>
                 
                 <div style={highlightMessageStyle}>
-                  <strong style={{ color: '#1e3a8a', display: 'block', marginBottom: '0.5rem' }}>⚡ Key Features:</strong>
+                  <strong style={{ color: '#1e3a8a', display: 'block', marginBottom: '0.5rem' }}>Key Features:</strong>
                   Smart predictions · Live battery analysis · Quick access to docs
                 </div>
 
@@ -369,19 +369,19 @@ function Chatbot() {
                 </button>
 
                 <div style={{ ...messageStyle, fontWeight: '700', background: 'linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%)', color: 'white', borderLeft: 'none', marginTop: '0.5rem' }}>
-                  📋 About MAHA-EV E-RIDES
+                  About MAHA-EV E-RIDES
                 </div>
 
                 <div style={messageStyle}>
-                  <strong style={{ color: '#1e3a8a' }}>🎯 Focus:</strong> Real-time early-warning system for battery abuse and fire prevention in Indian EVs.
+                  <strong style={{ color: '#1e3a8a' }}>Focus:</strong> Real-time early-warning system for battery abuse and fire prevention in Indian EVs.
                 </div>
 
                 <div style={messageStyle}>
-                  <strong style={{ color: '#1e3a8a' }}>🔥 Challenge:</strong> Indian conditions stress lithium-ion batteries, potentially triggering thermal runaway.
+                  <strong style={{ color: '#1e3a8a' }}>Challenge:</strong> Indian conditions stress lithium-ion batteries, potentially triggering thermal runaway.
                 </div>
 
                 <div style={messageStyle}>
-                  <strong style={{ color: '#1e3a8a' }}>💡 Solution:</strong> Predictive diagnostics with IoT sensors for proactive battery safety.
+                  <strong style={{ color: '#1e3a8a' }}>Solution:</strong> Predictive diagnostics with IoT sensors for proactive battery safety.
                 </div>
 
                 <button
@@ -417,21 +417,21 @@ function Chatbot() {
                 </button>
 
                 <div style={{ ...messageStyle, fontWeight: '700', background: 'linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%)', color: 'white', borderLeft: 'none', marginTop: '0.5rem' }}>
-                  📅 3-Year Research Timeline
+                  3-Year Research Timeline
                 </div>
 
                 <div style={{ ...messageStyle, borderLeft: '4px solid #1e3a8a', background: '#f0f4ff' }}>
-                  <strong style={{ color: '#1e3a8a' }}>📍 Year 1 - Phase A</strong><br/>
+                  <strong style={{ color: '#1e3a8a' }}>Year 1 - Phase A</strong><br/>
                   <span style={{ fontSize: '0.85rem', color: '#475569' }}>Experimental data collection + Battery Digital Twin development</span>
                 </div>
 
                 <div style={{ ...messageStyle, borderLeft: '4px solid #f97316', background: '#fff7ed' }}>
-                  <strong style={{ color: '#f97316' }}>📍 Year 2 - Phase B</strong><br/>
+                  <strong style={{ color: '#f97316' }}>Year 2 - Phase B</strong><br/>
                   <span style={{ fontSize: '0.85rem', color: '#475569' }}>Multimodal IoT sensing suite + AI fault detection</span>
                 </div>
 
                 <div style={{ ...messageStyle, borderLeft: '4px solid #059669', background: '#ecfdf5' }}>
-                  <strong style={{ color: '#059669' }}>📍 Year 3 - Phase C</strong><br/>
+                  <strong style={{ color: '#059669' }}>Year 3 - Phase C</strong><br/>
                   <span style={{ fontSize: '0.85rem', color: '#475569' }}>Smart battery safety diagnostic system deployment</span>
                 </div>
 
@@ -468,11 +468,11 @@ function Chatbot() {
                 </button>
 
                 <div style={{ ...messageStyle, fontWeight: '700', background: 'linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%)', color: 'white', borderLeft: 'none', marginTop: '0.5rem' }}>
-                  🚀 Current Research Status
+                  Current Research Status
                 </div>
 
                 <div style={{ ...messageStyle, background: '#dcfce7', borderLeft: '4px solid #16a34a' }}>
-                  <strong style={{ color: '#15803d' }}>🟢 IN DEVELOPMENT</strong><br/>
+                  <strong style={{ color: '#15803d' }}>IN DEVELOPMENT</strong><br/>
                   <span style={{ fontSize: '0.85rem', color: '#166534' }}>Active research phase - Multiple work streams in progress</span>
                 </div>
 
@@ -521,7 +521,7 @@ function Chatbot() {
                 </button>
 
                 <div style={{ ...messageStyle, fontWeight: '700', background: 'linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%)', color: 'white', borderLeft: 'none', marginTop: '0.5rem' }}>
-                  🔋 Battery Health Predictor
+                  Battery Health Predictor
                 </div>
 
                 <div style={messageStyle}>

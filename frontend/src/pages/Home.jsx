@@ -102,7 +102,7 @@ function Home() {
 
   const decorativeCirclesStyle = {
     position: "absolute",
-    right: "-5%",
+    left: "5%",
     top: "50%",
     transform: "translateY(-50%)",
     width: "700px",
@@ -110,7 +110,7 @@ function Home() {
     pointerEvents: "none",
     zIndex: 0,
     display: window.innerWidth <= 1024 ? "none" : "block",
-    opacity: 0.4,
+    opacity: 0.75,
   };
 
   const circleStyle = (size, color, top, left, iconSize) => ({
