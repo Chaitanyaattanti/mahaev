@@ -102,14 +102,14 @@ function Home() {
 
   const decorativeCirclesStyle = {
     position: "absolute",
-    right: "5%",
+    right: "-10%",
     top: "50%",
     transform: "translateY(-50%)",
     width: "700px",
     height: "600px",
     pointerEvents: "none",
     zIndex: 0,
-    display: window.innerWidth <= 1024 ? "none" : "block",
+    display: window.innerWidth <= 1280 ? "none" : "block",
     opacity: 1,
   };
 
