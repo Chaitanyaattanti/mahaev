@@ -26,7 +26,7 @@ function Home() {
     padding: "clamp(2.5rem, 8vw, 5rem) clamp(1.5rem, 6vw, 4rem)",
     position: "relative",
     overflow: "hidden",
-    minHeight: "clamp(450px, 85vh, 600px)",
+    minHeight: window.innerWidth <= 768 ? "auto" : window.innerWidth <= 1024 ? "75vh" : "clamp(450px, 85vh, 600px)",
     borderBottom: "1px solid #e2e8f0",
   };
 
@@ -102,14 +102,15 @@ function Home() {
 
   const decorativeCirclesStyle = {
     position: "absolute",
-    right: "-10%",
+    right: "5%",
     top: "50%",
     transform: "translateY(-50%)",
-    width: "700px",
+    width: "clamp(300px, 50vw, 600px)",
     height: "600px",
     pointerEvents: "none",
+    overflow: "hidden",
     zIndex: 0,
-    display: window.innerWidth <= 1280 ? "none" : "block",
+    display: window.innerWidth <= 1024 ? "none" : "block",
     opacity: 1,
   };
 
@@ -232,14 +233,14 @@ function Home() {
 
   const focusGridStyle = {
     display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-    gap: "clamp(1rem, 2vw, 2rem)",
-    marginTop: "clamp(1rem, 2vw, 2rem)",
+    gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+    gap: "clamp(1.5rem, 3vw, 2.5rem)",
+    marginTop: "clamp(1.5rem, 3vw, 2.5rem)",
   };
 
   const focusItemStyle = {
     background: "linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)",
-    padding: "2.5rem",
+    padding: "3rem",
     borderRadius: "12px",
     border: "2px solid #e2e8f0",
     boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
@@ -355,7 +356,7 @@ function Home() {
       <div style={heroSectionStyle}>
         <div style={heroContentStyle}>
           <h1 style={mainTitleStyle}>
-            Smart Battery Safety<br />
+            Smart Battery Safety<br />  
             Diagnostic System
           </h1>
           <p style={descriptionStyle}>
@@ -408,14 +409,14 @@ function Home() {
 
           {/* Large Terms - Better spacing */}
           <div className="kinetic-text" style={{ 
-            top: "5%", left: "45%", fontSize: "clamp(1.8rem, 3vw, 2.8rem)", color: "#1e3a8a", 
+            top: "5%", left: "35%", fontSize: "clamp(1.8rem, 3vw, 2.8rem)", color: "#1e3a8a", 
             animation: "float 6s ease-in-out infinite", opacity: 0.95
           }}>
             BATTERY SAFETY
           </div>
 
           <div className="kinetic-text" style={{ 
-            top: "25%", left: "70%", fontSize: "clamp(1.2rem, 2.5vw, 1.8rem)", color: "#f97316", 
+            top: "25%", left: "45%", fontSize: "clamp(1.2rem, 2.5vw, 1.8rem)", color: "#f97316", 
             animation: "floatSlow 5s ease-in-out infinite 1s", opacity: 0.92
           }}>
             Battery Standards
@@ -429,7 +430,7 @@ function Home() {
           </div>
 
           <div className="kinetic-text" style={{ 
-            top: "65%", left: "72%", fontSize: "clamp(1.4rem, 3vw, 2.2rem)", color: "#1e40af", 
+            top: "65%", left: "45%", fontSize: "clamp(1.4rem, 3vw, 2.2rem)", color: "#1e40af", 
             animation: "floatSlow 6s ease-in-out infinite 0.5s", opacity: 0.95
           }}>
             Machine Learning
@@ -494,15 +495,15 @@ function Home() {
           </div>
 
           <div className="kinetic-text" style={{ 
-            top: "88%", left: "65%", fontSize: "clamp(0.8rem, 1.5vw, 1rem)", color: "#94a3b8", opacity: 0.78,
+            top: "88%", left: "50%", fontSize: "clamp(0.8rem, 1.5vw, 1rem)", color: "#94a3b8", opacity: 0.78,
             animation: "pulse 5s ease-in-out infinite 0.5s"
           }}>
             Lithium Batteries
           </div>
 
           {/* Floating Icons - Better spacing */}
-          <div className="kinetic-icon" style={{ 
-            top: "32%", left: "60%", color: "#f97316",
+          <div className="kinetic-text" style={{ 
+            top: "32%", left: "45%", color: "#f97316",
             animation: "float 5s ease-in-out infinite 0.5s"
           }}>
             <FaCar size={45} />
@@ -581,7 +582,7 @@ function Home() {
               src="/mahaev/EV_charging_station_fire_Delhi_1654666921139_1654666944812.jpeg" 
               alt="EV Charging Station Fire Delhi" 
               style={{
-                maxWidth: "600px",
+                maxWidth: "800px",
                 width: "100%",
                 height: "auto",
                 borderRadius: "8px",
