@@ -93,9 +93,36 @@ function Datasets() {
   });
 
   useEffect(() => {
-    fetch(`${API_URL}/datasets`)
-      .then(res => res.json())
+    // Check if on production (github.io)
+    const isProduction = typeof window !== 'undefined' && window.location.hostname.includes('github.io');
+    
+    if (isProduction) {
+      // Always use fallback on production immediately
+      setDatasets(FALLBACK_DATASETS);
+      setFilteredDatasets(FALLBACK_DATASETS);
+      setLoading(false);
+      return;
+    }
+
+    // For local development, try to fetch from API
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
+
+    fetch(`${API_URL}/datasets`, { signal: controller.signal })
+      .then(res => {
+        clearTimeout(timeoutId);
+        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+        return res.json();
+      })
       .then(data => {
+        // Check if data is empty
+        if (!Array.isArray(data) || data.length === 0) {
+          setDatasets(FALLBACK_DATASETS);
+          setFilteredDatasets(FALLBACK_DATASETS);
+          setLoading(false);
+          return;
+        }
+
         // Remove any temporary/test entries that should not appear
         const cleaned = data.filter((d) => {
           const name = (d.dataset_name || "").trim().toLowerCase();
@@ -120,6 +147,7 @@ function Datasets() {
         setLoading(false);
       })
       .catch(err => {
+        clearTimeout(timeoutId);
         console.error(err);
         // Use fallback datasets when API fails
         setDatasets(FALLBACK_DATASETS);
