@@ -96,7 +96,10 @@ function Datasets() {
   useEffect(() => {
     // Try to fetch from API (works for both production and local development)
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 8000); // 8 second timeout for deployed backend
+    // Longer timeout for production (Render free tier needs ~30s to wake up from sleep)
+    const isProduction = typeof window !== 'undefined' && window.location.hostname.includes('github.io');
+    const timeoutMs = isProduction ? 15000 : 8000; // 15s for Render, 8s for local
+    const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
 
     fetch(`${API_URL}/datasets`, { signal: controller.signal })
       .then(res => {
