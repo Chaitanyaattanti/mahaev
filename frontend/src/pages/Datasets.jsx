@@ -94,27 +94,28 @@ function Datasets() {
   });
 
   useEffect(() => {
-    // Immediately show fallback datasets first
+    // Show fallback datasets immediately (never show an empty state)
     setDatasets(FALLBACK_DATASETS);
     setFilteredDatasets(FALLBACK_DATASETS);
-    
-    // Then try to fetch fresh data from API in background
+    setBackendAvailable(false);
+    setLoading(false);
+
+    // Then try to fetch fresh data from API in the background
     const controller = new AbortController();
     const isProduction = typeof window !== 'undefined' && window.location.hostname.includes('github.io');
     const timeoutMs = isProduction ? 15000 : 8000;
     const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
 
     fetch(`${API_URL}/datasets`, { signal: controller.signal })
-      .then(res => {
+      .then((res) => {
         clearTimeout(timeoutId);
         if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
         return res.json();
       })
-      .then(data => {
+      .then((data) => {
         // Check if data is valid and not empty
         if (!Array.isArray(data) || data.length === 0) {
-          console.log("✅ API returned empty, using fallback");
-          setBackendAvailable(false);
+          console.log("✅ API returned empty, keeping fallback");
           return;
         }
 
@@ -128,29 +129,25 @@ function Datasets() {
         const sortedData = cleaned.sort((a, b) => {
           const getCategoryPriority = (name) => {
             const nameLower = name.toLowerCase();
-            if (nameLower.includes('temperature') || nameLower.includes('thermal')) return 1;
-            if (nameLower.includes('pressure')) return 2;
-            if (nameLower.includes('aging') || nameLower.includes('degradation') || nameLower.includes('cycle')) return 3;
-            if (nameLower.includes('voltage') || nameLower.includes('impedance')) return 4;
-            if (nameLower.includes('gas') || nameLower.includes('emission')) return 5;
+            if (nameLower.includes("temperature") || nameLower.includes("thermal")) return 1;
+            if (nameLower.includes("pressure")) return 2;
+            if (nameLower.includes("aging") || nameLower.includes("degradation") || nameLower.includes("cycle")) return 3;
+            if (nameLower.includes("voltage") || nameLower.includes("impedance")) return 4;
+            if (nameLower.includes("gas") || nameLower.includes("emission")) return 5;
             return 6;
           };
           return getCategoryPriority(a.dataset_name) - getCategoryPriority(b.dataset_name);
         });
-        
+
         // Update with fresh API data
         setDatasets(sortedData);
         setFilteredDatasets(sortedData);
         setBackendAvailable(true);
         console.log("✅ Datasets loaded from API:", API_URL);
       })
-      .catch(err => {
+      .catch((err) => {
         clearTimeout(timeoutId);
         console.log("⚠️ API failed, keeping fallback datasets:", err.message);
-        setBackendAvailable(false);
-      })
-      .finally(() => {
-        setLoading(false);
       });
   }, []);
 
