@@ -94,11 +94,14 @@ function Datasets() {
   });
 
   useEffect(() => {
-    // Try to fetch from API (works for both production and local development)
+    // Immediately show fallback datasets first
+    setDatasets(FALLBACK_DATASETS);
+    setFilteredDatasets(FALLBACK_DATASETS);
+    
+    // Then try to fetch fresh data from API in background
     const controller = new AbortController();
-    // Longer timeout for production (Render free tier needs ~30s to wake up from sleep)
     const isProduction = typeof window !== 'undefined' && window.location.hostname.includes('github.io');
-    const timeoutMs = isProduction ? 15000 : 8000; // 15s for Render, 8s for local
+    const timeoutMs = isProduction ? 15000 : 8000;
     const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
 
     fetch(`${API_URL}/datasets`, { signal: controller.signal })
@@ -108,16 +111,14 @@ function Datasets() {
         return res.json();
       })
       .then(data => {
-        // Check if data is empty
+        // Check if data is valid and not empty
         if (!Array.isArray(data) || data.length === 0) {
-          setDatasets(FALLBACK_DATASETS);
-          setFilteredDatasets(FALLBACK_DATASETS);
-          setLoading(false);
+          console.log("✅ API returned empty, using fallback");
           setBackendAvailable(false);
           return;
         }
 
-        // Remove any temporary/test entries that should not appear
+        // Remove any temporary/test entries
         const cleaned = data.filter((d) => {
           const name = (d.dataset_name || "").trim().toLowerCase();
           return name !== "test" && name !== "cs" && name !== "wert";
@@ -136,20 +137,20 @@ function Datasets() {
           };
           return getCategoryPriority(a.dataset_name) - getCategoryPriority(b.dataset_name);
         });
+        
+        // Update with fresh API data
         setDatasets(sortedData);
         setFilteredDatasets(sortedData);
-        setLoading(false);
         setBackendAvailable(true);
         console.log("✅ Datasets loaded from API:", API_URL);
       })
       .catch(err => {
         clearTimeout(timeoutId);
-        console.error("⚠️ Failed to load datasets from backend, using fallback:", err.message);
-        // Use fallback datasets when API fails
-        setDatasets(FALLBACK_DATASETS);
-        setFilteredDatasets(FALLBACK_DATASETS);
-        setLoading(false);
+        console.log("⚠️ API failed, keeping fallback datasets:", err.message);
         setBackendAvailable(false);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }, []);
 
