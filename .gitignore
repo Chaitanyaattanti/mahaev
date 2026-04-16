@@ -8,7 +8,6 @@ backend/datasets/datasets/
 .env.production
 *.log
 .DS_Store
-dist/
 backend/datasets/*.csv
 backend/datasets/*.xlsx
 backend/datasets/*.json
