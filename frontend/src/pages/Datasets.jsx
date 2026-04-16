@@ -1,6 +1,80 @@
 import { useEffect, useState } from "react";
 import { API_URL } from "../config";
 
+// Fallback datasets for when API is unavailable
+const FALLBACK_DATASETS = [
+  {
+    dataset_name: "LG 18650HG2 Li-ion Battery Data",
+    dataset_description: "Deep neural network SOC estimator script with comprehensive Li-ion battery dataset",
+    dataset_source: "https://www.data.nrel.gov/",
+    dataset_features: "Voltage, Current, Temperature, SOC",
+    dataset_url: "https://www.data.nrel.gov/"
+  },
+  {
+    dataset_name: "Mechanically Induced Thermal Runaway - V1",
+    dataset_description: "Thermal runaway analysis for Li-ion batteries under mechanical stress",
+    dataset_source: "NREL Battery Research",
+    dataset_features: "Temperature, Pressure, Time Series",
+    dataset_url: "https://www.data.nrel.gov/"
+  },
+  {
+    dataset_name: "Mechanically Induced Thermal Runaway - V2",
+    dataset_description: "Advanced thermal runaway testing with extended measurements",
+    dataset_source: "NREL Battery Research",
+    dataset_features: "Temperature, Pressure, Voltage",
+    dataset_url: "https://www.data.nrel.gov/"
+  },
+  {
+    dataset_name: "Temperature Effects on SOC Estimation",
+    dataset_description: "Impact of temperature on state-of-charge estimation accuracy",
+    dataset_source: "NREL Battery Research",
+    dataset_features: "Temperature, SOC, Voltage",
+    dataset_url: "https://www.data.nrel.gov/"
+  },
+  {
+    dataset_name: "Drive Cycle SOC Analysis",
+    dataset_description: "SOC behavior under real-world driving cycles",
+    dataset_source: "NREL Battery Research",
+    dataset_features: "Current, Voltage, SOC, Time",
+    dataset_url: "https://www.data.nrel.gov/"
+  },
+  {
+    dataset_name: "Open Circuit Voltage Curves",
+    dataset_description: "OCV characteristics across different battery states and temperatures",
+    dataset_source: "Stanford Battery Lab",
+    dataset_features: "Voltage, SOC, Temperature",
+    dataset_url: "https://www.data.nrel.gov/"
+  },
+  {
+    dataset_name: "Cycle Degradation Study",
+    dataset_description: "Battery performance degradation over charge-discharge cycles",
+    dataset_source: "Argonne National Lab",
+    dataset_features: "Cycle Number, Capacity, Voltage",
+    dataset_url: "https://www.data.nrel.gov/"
+  },
+  {
+    dataset_name: "Pulsed Loading Test Data",
+    dataset_description: "Battery response to pulsed current loads",
+    dataset_source: "NREL Battery Research",
+    dataset_features: "Current Pulse, Voltage Response, Temperature",
+    dataset_url: "https://www.data.nrel.gov/"
+  },
+  {
+    dataset_name: "Partial SOC Cycling",
+    dataset_description: "Extended cycling within partial state-of-charge operating window",
+    dataset_source: "NREL Battery Research",
+    dataset_features: "SOC Range, Cycle Count, Capacity Fade",
+    dataset_url: "https://www.data.nrel.gov/"
+  },
+  {
+    dataset_name: "Calendar Aging Analysis",
+    dataset_description: "Battery aging under storage conditions at various temperatures",
+    dataset_source: "Argonne National Lab",
+    dataset_features: "Time, Temperature, Capacity Retention",
+    dataset_url: "https://www.data.nrel.gov/"
+  }
+];
+
 function Datasets() {
   const [datasets, setDatasets] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -19,9 +93,36 @@ function Datasets() {
   });
 
   useEffect(() => {
-    fetch(`${API_URL}/datasets`)
-      .then(res => res.json())
+    // Check if on production (github.io)
+    const isProduction = typeof window !== 'undefined' && window.location.hostname.includes('github.io');
+    
+    if (isProduction) {
+      // Always use fallback on production immediately
+      setDatasets(FALLBACK_DATASETS);
+      setFilteredDatasets(FALLBACK_DATASETS);
+      setLoading(false);
+      return;
+    }
+
+    // For local development, try to fetch from API
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
+
+    fetch(`${API_URL}/datasets`, { signal: controller.signal })
+      .then(res => {
+        clearTimeout(timeoutId);
+        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+        return res.json();
+      })
       .then(data => {
+        // Check if data is empty
+        if (!Array.isArray(data) || data.length === 0) {
+          setDatasets(FALLBACK_DATASETS);
+          setFilteredDatasets(FALLBACK_DATASETS);
+          setLoading(false);
+          return;
+        }
+
         // Remove any temporary/test entries that should not appear
         const cleaned = data.filter((d) => {
           const name = (d.dataset_name || "").trim().toLowerCase();
@@ -46,7 +147,11 @@ function Datasets() {
         setLoading(false);
       })
       .catch(err => {
+        clearTimeout(timeoutId);
         console.error(err);
+        // Use fallback datasets when API fails
+        setDatasets(FALLBACK_DATASETS);
+        setFilteredDatasets(FALLBACK_DATASETS);
         setLoading(false);
       });
   }, []);
