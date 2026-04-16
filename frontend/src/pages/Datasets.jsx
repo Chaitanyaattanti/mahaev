@@ -84,6 +84,7 @@ function Datasets() {
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState("");
   const [uploadSuccess, setUploadSuccess] = useState("");
+  const [backendAvailable, setBackendAvailable] = useState(true);
   const [uploadForm, setUploadForm] = useState({
     name: "",
     description: "",
@@ -93,20 +94,9 @@ function Datasets() {
   });
 
   useEffect(() => {
-    // Check if on production (github.io)
-    const isProduction = typeof window !== 'undefined' && window.location.hostname.includes('github.io');
-    
-    if (isProduction) {
-      // Always use fallback on production immediately
-      setDatasets(FALLBACK_DATASETS);
-      setFilteredDatasets(FALLBACK_DATASETS);
-      setLoading(false);
-      return;
-    }
-
-    // For local development, try to fetch from API
+    // Try to fetch from API (works for both production and local development)
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
+    const timeoutId = setTimeout(() => controller.abort(), 8000); // 8 second timeout for deployed backend
 
     fetch(`${API_URL}/datasets`, { signal: controller.signal })
       .then(res => {
@@ -120,6 +110,7 @@ function Datasets() {
           setDatasets(FALLBACK_DATASETS);
           setFilteredDatasets(FALLBACK_DATASETS);
           setLoading(false);
+          setBackendAvailable(false);
           return;
         }
 
@@ -145,14 +136,17 @@ function Datasets() {
         setDatasets(sortedData);
         setFilteredDatasets(sortedData);
         setLoading(false);
+        setBackendAvailable(true);
+        console.log("✅ Datasets loaded from API:", API_URL);
       })
       .catch(err => {
         clearTimeout(timeoutId);
-        console.error(err);
+        console.error("⚠️ Failed to load datasets from backend, using fallback:", err.message);
         // Use fallback datasets when API fails
         setDatasets(FALLBACK_DATASETS);
         setFilteredDatasets(FALLBACK_DATASETS);
         setLoading(false);
+        setBackendAvailable(false);
       });
   }, []);
 
@@ -386,6 +380,13 @@ function Datasets() {
     setUploadError("");
     setUploadSuccess("");
 
+    if (!backendAvailable) {
+      setUploadError(
+        `Backend server is not running. To submit datasets, start the backend with: cd backend && node server.js`
+      );
+      return;
+    }
+
     if (!uploadForm.name || !uploadForm.description || !uploadForm.url) {
       setUploadError("Dataset name, description, and URL are required.");
       return;
@@ -419,7 +420,7 @@ function Datasets() {
       setUploadForm({ name: "", description: "", source: "", features: "", url: "" });
     } catch (err) {
       console.error(err);
-      setUploadError("Unexpected error while uploading dataset.");
+      setUploadError("Unexpected error while uploading dataset. Backend may not be running.");
     } finally {
       setUploading(false);
     }
@@ -467,11 +468,21 @@ function Datasets() {
             <p style={{ margin: "0.25rem 0", fontSize: "0.85rem", color: "#6b7280" }}>
               Use this form to send us dataset details (by URL).
             </p>
+            {!backendAvailable && (
+              <p style={{ margin: "0.5rem 0", fontSize: "0.85rem", color: "#dc2626", fontWeight: "600" }}>
+                ⚠️ Backend server is offline. Dataset submissions are currently unavailable.
+              </p>
+            )}
           </div>
           <button
             type="button"
-            style={adminToggleButtonStyle}
+            style={{
+              ...adminToggleButtonStyle,
+              opacity: backendAvailable ? 1 : 0.6,
+              cursor: backendAvailable ? "pointer" : "not-allowed"
+            }}
             onClick={() => setShowUploadForm((prev) => !prev)}
+            disabled={!backendAvailable}
           >
             {showUploadForm ? "Hide Form" : "Open Form"}
           </button>
