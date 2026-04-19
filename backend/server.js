@@ -6,6 +6,8 @@ const { spawn, spawnSync } = require("child_process");
 const multer = require("multer");
 
 const PREDICT_PY = path.join(__dirname, '..', 'ML', 'predict.py');
+const VENV_PY = path.join(__dirname, '.venv', 'bin', 'python');
+const PYTHON_BIN = fs.existsSync(VENV_PY) ? VENV_PY : 'python3';
 
 const app = express();
 require('dotenv').config();
@@ -211,7 +213,7 @@ function mlPredict(payload) {
     }
 
     return new Promise((resolve, reject) => {
-      const py = spawn('python3', [PREDICT_PY]);
+      const py = spawn(PYTHON_BIN, [PREDICT_PY]);
       let stdout = '', stderr = '';
 
       // Allow cold starts/model load in production and local first request
@@ -247,7 +249,7 @@ function ensurePythonDeps() {
   if (pythonDepsPromise) return pythonDepsPromise;
 
   pythonDepsPromise = new Promise((resolve) => {
-    const check = spawnSync('python3', ['-c', 'import numpy, sklearn, pandas, joblib'], {
+    const check = spawnSync(PYTHON_BIN, ['-c', 'import numpy, sklearn, pandas, joblib'], {
       encoding: 'utf8',
       timeout: 7000,
     });
@@ -258,7 +260,7 @@ function ensurePythonDeps() {
 
     const reqPath = path.join(__dirname, 'requirements.txt');
     console.warn('⚠️  Python deps missing. Attempting runtime install from backend/requirements.txt ...');
-    const install = spawnSync('python3', ['-m', 'pip', 'install', '--no-cache-dir', '-r', reqPath], {
+    const install = spawnSync(PYTHON_BIN, ['-m', 'pip', 'install', '--no-cache-dir', '-r', reqPath], {
       encoding: 'utf8',
       timeout: 240000,
     });
@@ -268,7 +270,7 @@ function ensurePythonDeps() {
       return resolve(false);
     }
 
-    const recheck = spawnSync('python3', ['-c', 'import numpy, sklearn, pandas, joblib'], {
+    const recheck = spawnSync(PYTHON_BIN, ['-c', 'import numpy, sklearn, pandas, joblib'], {
       encoding: 'utf8',
       timeout: 7000,
     });
@@ -383,7 +385,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/status", (req, res) => {
-  const py = spawnSync("python3", [
+  const py = spawnSync(PYTHON_BIN, [
     "-c",
     "import numpy, sklearn, pandas, joblib; print('ok')"
   ], { encoding: "utf8", timeout: 5000 });
@@ -395,14 +397,14 @@ app.get("/status", (req, res) => {
   if (!pythonWorking) {
     installAttempted = true;
     const reqPath = path.join(__dirname, 'requirements.txt');
-    const install = spawnSync('python3', ['-m', 'pip', 'install', '--no-cache-dir', '-r', reqPath], {
+    const install = spawnSync(PYTHON_BIN, ['-m', 'pip', 'install', '--no-cache-dir', '-r', reqPath], {
       encoding: 'utf8',
       timeout: 240000,
     });
     if (install.status !== 0) {
       installError = String(install.stderr || 'runtime pip install failed').trim();
     }
-    const recheck = spawnSync('python3', ['-c', "import numpy, sklearn, pandas, joblib; print('ok')"], {
+    const recheck = spawnSync(PYTHON_BIN, ['-c', "import numpy, sklearn, pandas, joblib; print('ok')"], {
       encoding: 'utf8',
       timeout: 7000,
     });
