@@ -10,6 +10,8 @@ const PREDICT_PY = path.join(__dirname, '..', 'ML', 'predict.py');
 const app = express();
 require('dotenv').config();
 
+let pythonDepsPromise = null;
+
 // Load any previously uploaded datasets from disk so they persist across restarts
 const uploadedDatasetsPath = path.join(__dirname, "uploadedDatasets.json");
 // Simple log file to record each dataset submission (one JSON per line)
@@ -203,36 +205,77 @@ function computeSubScores(voltage, temperature, cycle_count, soc, c_rate) {
 
 // ── ML model prediction via Python subprocess ──
 function mlPredict(payload) {
-  return new Promise((resolve, reject) => {
-    const py = spawn('python3', [PREDICT_PY]);
-    let stdout = '', stderr = '';
-    
-    // Allow cold starts/model load in production and local first request
-    const timeout = setTimeout(() => {
-      py.kill();
-      reject(new Error('ML model prediction timed out (>15s)'));
-    }, 15000);
-    
-    py.stdout.on('data', (d) => { stdout += d.toString(); });
-    py.stderr.on('data', (d) => { stderr += d.toString(); });
-    py.on('close', (code) => {
-      clearTimeout(timeout);
-      if (code !== 0) return reject(new Error(`Python process exited with code ${code}: ${stderr}`));
-      try {
-        const parsed = JSON.parse(stdout.trim());
-        if (parsed.error) return reject(new Error(parsed.error));
-        resolve(parsed.safety_score);
-      } catch (e) {
-        reject(new Error(`Failed to parse ML output: ${e.message}`));
-      }
+  return ensurePythonDeps().then((ready) => {
+    if (!ready) {
+      throw new Error('Python dependencies unavailable after bootstrap attempt');
+    }
+
+    return new Promise((resolve, reject) => {
+      const py = spawn('python3', [PREDICT_PY]);
+      let stdout = '', stderr = '';
+
+      // Allow cold starts/model load in production and local first request
+      const timeout = setTimeout(() => {
+        py.kill();
+        reject(new Error('ML model prediction timed out (>15s)'));
+      }, 15000);
+
+      py.stdout.on('data', (d) => { stdout += d.toString(); });
+      py.stderr.on('data', (d) => { stderr += d.toString(); });
+      py.on('close', (code) => {
+        clearTimeout(timeout);
+        if (code !== 0) return reject(new Error(`Python process exited with code ${code}: ${stderr}`));
+        try {
+          const parsed = JSON.parse(stdout.trim());
+          if (parsed.error) return reject(new Error(parsed.error));
+          resolve(parsed.safety_score);
+        } catch (e) {
+          reject(new Error(`Failed to parse ML output: ${e.message}`));
+        }
+      });
+      py.on('error', (err) => {
+        clearTimeout(timeout);
+        reject(new Error(`Failed to spawn Python: ${err.message}`));
+      });
+      py.stdin.write(JSON.stringify(payload));
+      py.stdin.end();
     });
-    py.on('error', (err) => {
-      clearTimeout(timeout);
-      reject(new Error(`Failed to spawn Python: ${err.message}`));
-    });
-    py.stdin.write(JSON.stringify(payload));
-    py.stdin.end();
   });
+}
+
+function ensurePythonDeps() {
+  if (pythonDepsPromise) return pythonDepsPromise;
+
+  pythonDepsPromise = new Promise((resolve) => {
+    const check = spawnSync('python3', ['-c', 'import numpy, sklearn, pandas, joblib'], {
+      encoding: 'utf8',
+      timeout: 7000,
+    });
+
+    if (check.status === 0) {
+      return resolve(true);
+    }
+
+    const reqPath = path.join(__dirname, 'requirements.txt');
+    console.warn('⚠️  Python deps missing. Attempting runtime install from backend/requirements.txt ...');
+    const install = spawnSync('python3', ['-m', 'pip', 'install', '--no-cache-dir', '-r', reqPath], {
+      encoding: 'utf8',
+      timeout: 240000,
+    });
+
+    if (install.status !== 0) {
+      console.error('❌ Runtime pip install failed:', (install.stderr || '').trim());
+      return resolve(false);
+    }
+
+    const recheck = spawnSync('python3', ['-c', 'import numpy, sklearn, pandas, joblib'], {
+      encoding: 'utf8',
+      timeout: 7000,
+    });
+    resolve(recheck.status === 0);
+  });
+
+  return pythonDepsPromise;
 }
 
 // Battery health prediction endpoint
@@ -345,12 +388,34 @@ app.get("/status", (req, res) => {
     "import numpy, sklearn, pandas, joblib; print('ok')"
   ], { encoding: "utf8", timeout: 5000 });
 
-  const pythonWorking = py.status === 0 && String(py.stdout || "").trim() === "ok";
+  let pythonWorking = py.status === 0 && String(py.stdout || "").trim() === "ok";
+  let installAttempted = false;
+  let installError = null;
+
+  if (!pythonWorking) {
+    installAttempted = true;
+    const reqPath = path.join(__dirname, 'requirements.txt');
+    const install = spawnSync('python3', ['-m', 'pip', 'install', '--no-cache-dir', '-r', reqPath], {
+      encoding: 'utf8',
+      timeout: 240000,
+    });
+    if (install.status !== 0) {
+      installError = String(install.stderr || 'runtime pip install failed').trim();
+    }
+    const recheck = spawnSync('python3', ['-c', "import numpy, sklearn, pandas, joblib; print('ok')"], {
+      encoding: 'utf8',
+      timeout: 7000,
+    });
+    pythonWorking = recheck.status === 0 && String(recheck.stdout || '').trim() === 'ok';
+  }
+
   res.json({
     status: "ok",
     python_working: pythonWorking,
     python_error: pythonWorking ? null : String(py.stderr || "python check failed").trim(),
-    commit_hint: "109f217"
+    install_attempted: installAttempted,
+    install_error: installError,
+    commit_hint: "runtime-bootstrap"
   });
 });
 
