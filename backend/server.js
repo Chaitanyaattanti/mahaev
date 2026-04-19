@@ -207,11 +207,11 @@ function mlPredict(payload) {
     const py = spawn('python3', [PREDICT_PY]);
     let stdout = '', stderr = '';
     
-    // Set timeout to prevent hanging
+    // Allow cold starts/model load in production and local first request
     const timeout = setTimeout(() => {
       py.kill();
-      reject(new Error('ML model prediction timed out (>5s)'));
-    }, 5000);
+      reject(new Error('ML model prediction timed out (>15s)'));
+    }, 15000);
     
     py.stdout.on('data', (d) => { stdout += d.toString(); });
     py.stderr.on('data', (d) => { stderr += d.toString(); });

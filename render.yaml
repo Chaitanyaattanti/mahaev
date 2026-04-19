@@ -1,13 +1,19 @@
 services:
   - type: web
     name: maha-ev-backend
-    env: node
-    rootDir: backend
-    buildCommand: npm install
-    startCommand: npm start
+    env: python
+    pythonVersion: 3.11
+    buildCommand: >
+      pip install --upgrade pip &&
+      pip install -r requirements.txt &&
+      cd backend &&
+      npm install
+    startCommand: cd backend && npm start
     plan: free
     envVars:
       - key: NODE_ENV
         value: production
+      - key: PYTHONUNBUFFERED
+        value: "1"
       - key: FRONTEND_URL
         value: https://chaitanyaattanti.github.io/MAHA-EV-DASHBOARD
