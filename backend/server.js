@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const path = require("path");
 const fs = require("fs");
-const { spawn } = require("child_process");
+const { spawn, spawnSync } = require("child_process");
 const multer = require("multer");
 
 const PREDICT_PY = path.join(__dirname, '..', 'ML', 'predict.py');
@@ -336,6 +336,21 @@ app.get("/", (req, res) => {
       datasets: "GET /datasets - Get all dataset metadata",
       download: "GET /download/:filename - Download dataset file"
     }
+  });
+});
+
+app.get("/status", (req, res) => {
+  const py = spawnSync("python3", [
+    "-c",
+    "import numpy, sklearn, pandas, joblib; print('ok')"
+  ], { encoding: "utf8", timeout: 5000 });
+
+  const pythonWorking = py.status === 0 && String(py.stdout || "").trim() === "ok";
+  res.json({
+    status: "ok",
+    python_working: pythonWorking,
+    python_error: pythonWorking ? null : String(py.stderr || "python check failed").trim(),
+    commit_hint: "109f217"
   });
 });
 
