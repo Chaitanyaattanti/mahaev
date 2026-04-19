@@ -7,7 +7,36 @@ const multer = require("multer");
 
 const PREDICT_PY = path.join(__dirname, '..', 'ML', 'predict.py');
 const VENV_PY = path.join(__dirname, '.venv', 'bin', 'python');
-const PYTHON_BIN = fs.existsSync(VENV_PY) ? VENV_PY : 'python3';
+const ROOT_VENV_PY = path.join(__dirname, '..', '.venv', 'bin', 'python');
+
+function canImportPythonDeps(pythonBin) {
+  const check = spawnSync(pythonBin, ['-c', 'import numpy, sklearn, pandas, joblib'], {
+    encoding: 'utf8',
+    timeout: 7000,
+  });
+  return check.status === 0;
+}
+
+function resolvePythonBin() {
+  const candidates = [
+    process.env.PYTHON_BIN,
+    VENV_PY,
+    ROOT_VENV_PY,
+    'python3',
+  ].filter(Boolean);
+
+  for (const bin of candidates) {
+    try {
+      if (!bin.includes('python3') && !fs.existsSync(bin)) continue;
+      if (canImportPythonDeps(bin)) return bin;
+    } catch (err) {
+      // try next candidate
+    }
+  }
+  return candidates[candidates.length - 1];
+}
+
+const PYTHON_BIN = resolvePythonBin();
 
 const app = express();
 require('dotenv').config();
@@ -249,32 +278,12 @@ function ensurePythonDeps() {
   if (pythonDepsPromise) return pythonDepsPromise;
 
   pythonDepsPromise = new Promise((resolve) => {
-    const check = spawnSync(PYTHON_BIN, ['-c', 'import numpy, sklearn, pandas, joblib'], {
-      encoding: 'utf8',
-      timeout: 7000,
-    });
-
-    if (check.status === 0) {
+    if (canImportPythonDeps(PYTHON_BIN)) {
       return resolve(true);
     }
 
-    const reqPath = path.join(__dirname, 'requirements.txt');
-    console.warn('⚠️  Python deps missing. Attempting runtime install from backend/requirements.txt ...');
-    const install = spawnSync(PYTHON_BIN, ['-m', 'pip', 'install', '--no-cache-dir', '-r', reqPath], {
-      encoding: 'utf8',
-      timeout: 240000,
-    });
-
-    if (install.status !== 0) {
-      console.error('❌ Runtime pip install failed:', (install.stderr || '').trim());
-      return resolve(false);
-    }
-
-    const recheck = spawnSync(PYTHON_BIN, ['-c', 'import numpy, sklearn, pandas, joblib'], {
-      encoding: 'utf8',
-      timeout: 7000,
-    });
-    resolve(recheck.status === 0);
+    console.error('❌ Python dependencies unavailable for ML. Checked python bin:', PYTHON_BIN);
+    resolve(false);
   });
 
   return pythonDepsPromise;
@@ -391,36 +400,17 @@ app.get("/status", (req, res) => {
   ], { encoding: "utf8", timeout: 5000 });
 
   let pythonWorking = py.status === 0 && String(py.stdout || "").trim() === "ok";
-  let installAttempted = false;
-  let installError = null;
-
-  if (!pythonWorking) {
-    installAttempted = true;
-    const reqPath = path.join(__dirname, 'requirements.txt');
-    const install = spawnSync(PYTHON_BIN, ['-m', 'pip', 'install', '--no-cache-dir', '-r', reqPath], {
-      encoding: 'utf8',
-      timeout: 240000,
-    });
-    if (install.status !== 0) {
-      installError = String(install.stderr || 'runtime pip install failed').trim();
-    }
-    const recheck = spawnSync(PYTHON_BIN, ['-c', "import numpy, sklearn, pandas, joblib; print('ok')"], {
-      encoding: 'utf8',
-      timeout: 7000,
-    });
-    pythonWorking = recheck.status === 0 && String(recheck.stdout || '').trim() === 'ok';
-  }
 
   res.json({
     status: "ok",
-    deploy_marker: "c992457-venv-fix-v2",
+    deploy_marker: "venv-resolver-v3",
     python_working: pythonWorking,
     python_bin: PYTHON_BIN,
-    venv_exists: fs.existsSync(VENV_PY),
+    venv_exists: fs.existsSync(VENV_PY) || fs.existsSync(ROOT_VENV_PY),
     python_error: pythonWorking ? null : String(py.stderr || "python check failed").trim(),
-    install_attempted: installAttempted,
-    install_error: installError,
-    commit_hint: "c992457"
+    install_attempted: false,
+    install_error: null,
+    commit_hint: "venv-resolver-v3"
   });
 });
 
