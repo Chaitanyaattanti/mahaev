@@ -17,7 +17,7 @@ import { useNavigate } from 'react-router-dom';
 function Home() {
   const navigate = useNavigate();
   const containerStyle = {
-    minHeight: "100vh",
+    minHeight: window.innerWidth <= 1024 ? "auto" : "100vh",
     background: "linear-gradient(to bottom, #f8fafc 0%, #ffffff 100%)",
   };
 
@@ -110,7 +110,6 @@ function Home() {
     pointerEvents: "none",
     overflow: "hidden",
     zIndex: 0,
-    display: window.innerWidth <= 1024 ? "none" : "block",
     opacity: 1,
   };
 
@@ -365,7 +364,8 @@ function Home() {
           </p>
         </div>
 
-        {/* Kinetic Typography Cloud */}
+        {/* Kinetic Typography Cloud - Only show on desktop */}
+        {window.innerWidth > 1024 && (
         <div style={decorativeCirclesStyle}>
           <style>
             {`
@@ -501,6 +501,63 @@ function Home() {
             Lithium Batteries
           </div>
 
+          {/* Additional Keywords for Rich Design */}
+          <div className="kinetic-text" style={{ 
+            top: "40%", left: "70%", fontSize: "clamp(1rem, 2vw, 1.4rem)", color: "#1e40af", opacity: 0.85,
+            animation: "float 6s ease-in-out infinite 2s"
+          }}>
+            Safety Systems
+          </div>
+
+          <div className="kinetic-text" style={{ 
+            top: "60%", left: "60%", fontSize: "clamp(0.95rem, 1.8vw, 1.3rem)", color: "#f97316", opacity: 0.82,
+            animation: "floatSlow 5.5s ease-in-out infinite 1.5s"
+          }}>
+            Energy Storage
+          </div>
+
+          <div className="kinetic-text" style={{ 
+            top: "28%", left: "48%", fontSize: "clamp(0.9rem, 1.8vw, 1.2rem)", color: "#64748b", opacity: 0.80,
+            animation: "pulse 5s ease-in-out infinite 2.5s"
+          }}>
+            Smart Tech
+          </div>
+
+          <div className="kinetic-text" style={{ 
+            top: "85%", left: "72%", fontSize: "clamp(0.85rem, 1.5vw, 1.1rem)", color: "#2563eb", opacity: 0.75,
+            animation: "float 6.5s ease-in-out infinite 0.8s"
+          }}>
+            AI Analysis
+          </div>
+
+          <div className="kinetic-text" style={{ 
+            top: "15%", left: "62%", fontSize: "clamp(0.9rem, 1.8vw, 1.2rem)", color: "#f97316", opacity: 0.78,
+            animation: "floatSlow 6.2s ease-in-out infinite 1.2s"
+          }}>
+            EV Safety
+          </div>
+
+          <div className="kinetic-text" style={{ 
+            top: "92%", left: "35%", fontSize: "clamp(0.8rem, 1.5vw, 1rem)", color: "#1e3a8a", opacity: 0.73,
+            animation: "pulse 4.8s ease-in-out infinite 1.8s"
+          }}>
+            Data Science
+          </div>
+
+          <div className="kinetic-text" style={{ 
+            top: "48%", left: "75%", fontSize: "clamp(0.85rem, 1.6vw, 1.15rem)", color: "#64748b", opacity: 0.76,
+            animation: "float 5.8s ease-in-out infinite 2.2s"
+          }}>
+            Analytics
+          </div>
+
+          <div className="kinetic-text" style={{ 
+            top: "10%", left: "38%", fontSize: "clamp(0.85rem, 1.5vw, 1.1rem)", color: "#1e40af", opacity: 0.77,
+            animation: "floatSlow 6.8s ease-in-out infinite 0.9s"
+          }}>
+            Real-time Monitoring
+          </div>
+
           {/* Floating Icons - Better spacing */}
           <div className="kinetic-text" style={{ 
             top: "32%", left: "45%", color: "#f97316",
@@ -566,6 +623,7 @@ function Home() {
           </div>
 
         </div>
+        )}
       </div>
 
       {/* Project Overview Section */}
