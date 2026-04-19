@@ -84,6 +84,7 @@ function Datasets() {
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState("");
   const [uploadSuccess, setUploadSuccess] = useState("");
+  const [backendAvailable, setBackendAvailable] = useState(true);
   const [uploadForm, setUploadForm] = useState({
     name: "",
     description: "",
@@ -93,37 +94,32 @@ function Datasets() {
   });
 
   useEffect(() => {
-    // Check if on production (github.io)
-    const isProduction = typeof window !== 'undefined' && window.location.hostname.includes('github.io');
-    
-    if (isProduction) {
-      // Always use fallback on production immediately
-      setDatasets(FALLBACK_DATASETS);
-      setFilteredDatasets(FALLBACK_DATASETS);
-      setLoading(false);
-      return;
-    }
+    // Show fallback datasets immediately (never show an empty state)
+    setDatasets(FALLBACK_DATASETS);
+    setFilteredDatasets(FALLBACK_DATASETS);
+    setBackendAvailable(false);
+    setLoading(false);
 
-    // For local development, try to fetch from API
+    // Then try to fetch fresh data from API in the background
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
+    const isProduction = typeof window !== 'undefined' && window.location.hostname.includes('github.io');
+    const timeoutMs = isProduction ? 15000 : 8000;
+    const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
 
     fetch(`${API_URL}/datasets`, { signal: controller.signal })
-      .then(res => {
+      .then((res) => {
         clearTimeout(timeoutId);
         if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
         return res.json();
       })
-      .then(data => {
-        // Check if data is empty
+      .then((data) => {
+        // Check if data is valid and not empty
         if (!Array.isArray(data) || data.length === 0) {
-          setDatasets(FALLBACK_DATASETS);
-          setFilteredDatasets(FALLBACK_DATASETS);
-          setLoading(false);
+          console.log("✅ API returned empty, keeping fallback");
           return;
         }
 
-        // Remove any temporary/test entries that should not appear
+        // Remove any temporary/test entries
         const cleaned = data.filter((d) => {
           const name = (d.dataset_name || "").trim().toLowerCase();
           return name !== "test" && name !== "cs" && name !== "wert";
@@ -133,26 +129,25 @@ function Datasets() {
         const sortedData = cleaned.sort((a, b) => {
           const getCategoryPriority = (name) => {
             const nameLower = name.toLowerCase();
-            if (nameLower.includes('temperature') || nameLower.includes('thermal')) return 1;
-            if (nameLower.includes('pressure')) return 2;
-            if (nameLower.includes('aging') || nameLower.includes('degradation') || nameLower.includes('cycle')) return 3;
-            if (nameLower.includes('voltage') || nameLower.includes('impedance')) return 4;
-            if (nameLower.includes('gas') || nameLower.includes('emission')) return 5;
+            if (nameLower.includes("temperature") || nameLower.includes("thermal")) return 1;
+            if (nameLower.includes("pressure")) return 2;
+            if (nameLower.includes("aging") || nameLower.includes("degradation") || nameLower.includes("cycle")) return 3;
+            if (nameLower.includes("voltage") || nameLower.includes("impedance")) return 4;
+            if (nameLower.includes("gas") || nameLower.includes("emission")) return 5;
             return 6;
           };
           return getCategoryPriority(a.dataset_name) - getCategoryPriority(b.dataset_name);
         });
+
+        // Update with fresh API data
         setDatasets(sortedData);
         setFilteredDatasets(sortedData);
-        setLoading(false);
+        setBackendAvailable(true);
+        console.log("✅ Datasets loaded from API:", API_URL);
       })
-      .catch(err => {
+      .catch((err) => {
         clearTimeout(timeoutId);
-        console.error(err);
-        // Use fallback datasets when API fails
-        setDatasets(FALLBACK_DATASETS);
-        setFilteredDatasets(FALLBACK_DATASETS);
-        setLoading(false);
+        console.log("⚠️ API failed, keeping fallback datasets:", err.message);
       });
   }, []);
 
@@ -386,6 +381,13 @@ function Datasets() {
     setUploadError("");
     setUploadSuccess("");
 
+    if (!backendAvailable) {
+      setUploadError(
+        `Backend server is not running. To submit datasets, start the backend with: cd backend && node server.js`
+      );
+      return;
+    }
+
     if (!uploadForm.name || !uploadForm.description || !uploadForm.url) {
       setUploadError("Dataset name, description, and URL are required.");
       return;
@@ -419,7 +421,7 @@ function Datasets() {
       setUploadForm({ name: "", description: "", source: "", features: "", url: "" });
     } catch (err) {
       console.error(err);
-      setUploadError("Unexpected error while uploading dataset.");
+      setUploadError("Unexpected error while uploading dataset. Backend may not be running.");
     } finally {
       setUploading(false);
     }
@@ -467,11 +469,21 @@ function Datasets() {
             <p style={{ margin: "0.25rem 0", fontSize: "0.85rem", color: "#6b7280" }}>
               Use this form to send us dataset details (by URL).
             </p>
+            {!backendAvailable && (
+              <p style={{ margin: "0.5rem 0", fontSize: "0.85rem", color: "#dc2626", fontWeight: "600" }}>
+                ⚠️ Backend server is offline. Dataset submissions are currently unavailable.
+              </p>
+            )}
           </div>
           <button
             type="button"
-            style={adminToggleButtonStyle}
+            style={{
+              ...adminToggleButtonStyle,
+              opacity: backendAvailable ? 1 : 0.6,
+              cursor: backendAvailable ? "pointer" : "not-allowed"
+            }}
             onClick={() => setShowUploadForm((prev) => !prev)}
+            disabled={!backendAvailable}
           >
             {showUploadForm ? "Hide Form" : "Open Form"}
           </button>
@@ -612,3 +624,4 @@ function Datasets() {
 }
 
 export default Datasets;
+// Updated at Thu Apr 16 23:32:49 IST 2026
