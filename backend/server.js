@@ -413,11 +413,14 @@ app.get("/status", (req, res) => {
 
   res.json({
     status: "ok",
+    deploy_marker: "c992457-venv-fix-v2",
     python_working: pythonWorking,
+    python_bin: PYTHON_BIN,
+    venv_exists: fs.existsSync(VENV_PY),
     python_error: pythonWorking ? null : String(py.stderr || "python check failed").trim(),
     install_attempted: installAttempted,
     install_error: installError,
-    commit_hint: "runtime-bootstrap"
+    commit_hint: "c992457"
   });
 });
 
