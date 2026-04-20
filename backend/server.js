@@ -9,31 +9,37 @@ const PREDICT_PY = path.join(__dirname, '..', 'ML', 'predict.py');
 const VENV_PY = path.join(__dirname, '.venv', 'bin', 'python');
 const ROOT_VENV_PY = path.join(__dirname, '..', '.venv', 'bin', 'python');
 
+const DEPLOY_MARKER = "venv-resolver-v4";
+
+function isExecutable(filePath) {
+  try {
+    fs.accessSync(filePath, fs.constants.X_OK);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 function canImportPythonDeps(pythonBin) {
   const check = spawnSync(pythonBin, ['-c', 'import numpy, sklearn, pandas, joblib'], {
     encoding: 'utf8',
-    timeout: 7000,
+    timeout: 15000,
   });
   return check.status === 0;
 }
 
 function resolvePythonBin() {
-  const candidates = [
-    process.env.PYTHON_BIN,
-    VENV_PY,
-    ROOT_VENV_PY,
-    'python3',
-  ].filter(Boolean);
+  // Deterministic resolver:
+  // - Render/Node builds install deps into a venv (see backend/package.json postinstall)
+  // - Import-based selection at startup is fragile (cold start timeouts) and can lock us to system python.
+  // So: prefer env override, then venv python if present, then system python.
+  const env = process.env.PYTHON_BIN;
+  if (env) return env;
 
-  for (const bin of candidates) {
-    try {
-      if (!bin.includes('python3') && !fs.existsSync(bin)) continue;
-      if (canImportPythonDeps(bin)) return bin;
-    } catch (err) {
-      // try next candidate
-    }
-  }
-  return candidates[candidates.length - 1];
+  if (isExecutable(VENV_PY)) return VENV_PY;
+  if (isExecutable(ROOT_VENV_PY)) return ROOT_VENV_PY;
+
+  return 'python3';
 }
 
 const PYTHON_BIN = resolvePythonBin();
@@ -397,20 +403,20 @@ app.get("/status", (req, res) => {
   const py = spawnSync(PYTHON_BIN, [
     "-c",
     "import numpy, sklearn, pandas, joblib; print('ok')"
-  ], { encoding: "utf8", timeout: 5000 });
+  ], { encoding: "utf8", timeout: 15000 });
 
   let pythonWorking = py.status === 0 && String(py.stdout || "").trim() === "ok";
 
   res.json({
     status: "ok",
-    deploy_marker: "venv-resolver-v3",
+    deploy_marker: DEPLOY_MARKER,
     python_working: pythonWorking,
     python_bin: PYTHON_BIN,
     venv_exists: fs.existsSync(VENV_PY) || fs.existsSync(ROOT_VENV_PY),
     python_error: pythonWorking ? null : String(py.stderr || "python check failed").trim(),
     install_attempted: false,
     install_error: null,
-    commit_hint: "venv-resolver-v3"
+    commit_hint: DEPLOY_MARKER
   });
 });
 
