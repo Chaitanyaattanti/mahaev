@@ -2,13 +2,52 @@ const express = require("express");
 const cors = require("cors");
 const path = require("path");
 const fs = require("fs");
-const { spawn } = require("child_process");
+const { spawn, spawnSync } = require("child_process");
 const multer = require("multer");
 
 const PREDICT_PY = path.join(__dirname, '..', 'ML', 'predict.py');
+const VENV_PY = path.join(__dirname, '.venv', 'bin', 'python');
+const ROOT_VENV_PY = path.join(__dirname, '..', '.venv', 'bin', 'python');
+
+const DEPLOY_MARKER = "venv-resolver-v4";
+
+function isExecutable(filePath) {
+  try {
+    fs.accessSync(filePath, fs.constants.X_OK);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+function canImportPythonDeps(pythonBin) {
+  const check = spawnSync(pythonBin, ['-c', 'import numpy, sklearn, pandas, joblib'], {
+    encoding: 'utf8',
+    timeout: 15000,
+  });
+  return check.status === 0;
+}
+
+function resolvePythonBin() {
+  // Deterministic resolver:
+  // - Render/Node builds install deps into a venv (see backend/package.json postinstall)
+  // - Import-based selection at startup is fragile (cold start timeouts) and can lock us to system python.
+  // So: prefer env override, then venv python if present, then system python.
+  const env = process.env.PYTHON_BIN;
+  if (env) return env;
+
+  if (isExecutable(VENV_PY)) return VENV_PY;
+  if (isExecutable(ROOT_VENV_PY)) return ROOT_VENV_PY;
+
+  return 'python3';
+}
+
+const PYTHON_BIN = resolvePythonBin();
 
 const app = express();
 require('dotenv').config();
+
+let pythonDepsPromise = null;
 
 // Load any previously uploaded datasets from disk so they persist across restarts
 const uploadedDatasetsPath = path.join(__dirname, "uploadedDatasets.json");
@@ -203,36 +242,51 @@ function computeSubScores(voltage, temperature, cycle_count, soc, c_rate) {
 
 // ── ML model prediction via Python subprocess ──
 function mlPredict(payload) {
-  return new Promise((resolve, reject) => {
-    const py = spawn('python3', [PREDICT_PY]);
-    let stdout = '', stderr = '';
-    
-    // Set timeout to prevent hanging
-    const timeout = setTimeout(() => {
-      py.kill();
-      reject(new Error('ML model prediction timed out (>5s)'));
-    }, 5000);
-    
-    py.stdout.on('data', (d) => { stdout += d.toString(); });
-    py.stderr.on('data', (d) => { stderr += d.toString(); });
-    py.on('close', (code) => {
-      clearTimeout(timeout);
-      if (code !== 0) return reject(new Error(`Python process exited with code ${code}: ${stderr}`));
-      try {
-        const parsed = JSON.parse(stdout.trim());
-        if (parsed.error) return reject(new Error(parsed.error));
-        resolve(parsed.safety_score);
-      } catch (e) {
-        reject(new Error(`Failed to parse ML output: ${e.message}`));
-      }
+  return ensurePythonDeps().then((ready) => {
+    if (!ready) {
+      throw new Error('Python dependencies unavailable after bootstrap attempt');
+    }
+
+    return new Promise((resolve, reject) => {
+      const py = spawn(PYTHON_BIN, [PREDICT_PY]);
+      let stdout = '', stderr = '';
+
+      // Allow cold starts/model load in production and local first request
+      const timeout = setTimeout(() => {
+        py.kill();
+        reject(new Error('ML model prediction timed out (>45s)'));
+      }, 45000);
+
+      py.stdout.on('data', (d) => { stdout += d.toString(); });
+      py.stderr.on('data', (d) => { stderr += d.toString(); });
+      py.on('close', (code) => {
+        clearTimeout(timeout);
+        if (code !== 0) return reject(new Error(`Python process exited with code ${code}: ${stderr}`));
+        try {
+          const parsed = JSON.parse(stdout.trim());
+          if (parsed.error) return reject(new Error(parsed.error));
+          resolve(parsed.safety_score);
+        } catch (e) {
+          reject(new Error(`Failed to parse ML output: ${e.message}`));
+        }
+      });
+      py.on('error', (err) => {
+        clearTimeout(timeout);
+        reject(new Error(`Failed to spawn Python: ${err.message}`));
+      });
+      py.stdin.write(JSON.stringify(payload));
+      py.stdin.end();
     });
-    py.on('error', (err) => {
-      clearTimeout(timeout);
-      reject(new Error(`Failed to spawn Python: ${err.message}`));
-    });
-    py.stdin.write(JSON.stringify(payload));
-    py.stdin.end();
   });
+}
+
+function ensurePythonDeps() {
+  // IMPORTANT: Do not run a blocking "import check" here.
+  // Doing so makes cold starts very slow (it spawns Python twice).
+  // The ML subprocess itself will fail fast with a clear error if deps are missing.
+  if (pythonDepsPromise) return pythonDepsPromise;
+  pythonDepsPromise = Promise.resolve(true);
+  return pythonDepsPromise;
 }
 
 // Battery health prediction endpoint
@@ -336,6 +390,27 @@ app.get("/", (req, res) => {
       datasets: "GET /datasets - Get all dataset metadata",
       download: "GET /download/:filename - Download dataset file"
     }
+  });
+});
+
+app.get("/status", (req, res) => {
+  const py = spawnSync(PYTHON_BIN, [
+    "-c",
+    "import numpy, sklearn, pandas, joblib; print('ok')"
+  ], { encoding: "utf8", timeout: 15000 });
+
+  let pythonWorking = py.status === 0 && String(py.stdout || "").trim() === "ok";
+
+  res.json({
+    status: "ok",
+    deploy_marker: DEPLOY_MARKER,
+    python_working: pythonWorking,
+    python_bin: PYTHON_BIN,
+    venv_exists: fs.existsSync(VENV_PY) || fs.existsSync(ROOT_VENV_PY),
+    python_error: pythonWorking ? null : String(py.stderr || "python check failed").trim(),
+    install_attempted: false,
+    install_error: null,
+    commit_hint: DEPLOY_MARKER
   });
 });
 
