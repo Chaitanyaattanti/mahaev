@@ -254,8 +254,8 @@ function mlPredict(payload) {
       // Allow cold starts/model load in production and local first request
       const timeout = setTimeout(() => {
         py.kill();
-        reject(new Error('ML model prediction timed out (>15s)'));
-      }, 15000);
+        reject(new Error('ML model prediction timed out (>45s)'));
+      }, 45000);
 
       py.stdout.on('data', (d) => { stdout += d.toString(); });
       py.stderr.on('data', (d) => { stderr += d.toString(); });
@@ -281,17 +281,11 @@ function mlPredict(payload) {
 }
 
 function ensurePythonDeps() {
+  // IMPORTANT: Do not run a blocking "import check" here.
+  // Doing so makes cold starts very slow (it spawns Python twice).
+  // The ML subprocess itself will fail fast with a clear error if deps are missing.
   if (pythonDepsPromise) return pythonDepsPromise;
-
-  pythonDepsPromise = new Promise((resolve) => {
-    if (canImportPythonDeps(PYTHON_BIN)) {
-      return resolve(true);
-    }
-
-    console.error('❌ Python dependencies unavailable for ML. Checked python bin:', PYTHON_BIN);
-    resolve(false);
-  });
-
+  pythonDepsPromise = Promise.resolve(true);
   return pythonDepsPromise;
 }
 
